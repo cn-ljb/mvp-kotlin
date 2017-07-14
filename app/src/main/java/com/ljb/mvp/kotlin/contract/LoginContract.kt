@@ -14,6 +14,10 @@ interface LoginContract {
 
         fun loginError(msg: String)
 
+        fun goHome()
+        
+        fun showLogin()
+
     }
 
     interface ILoginPresenter : IBasePresenter<ILoginView> {
