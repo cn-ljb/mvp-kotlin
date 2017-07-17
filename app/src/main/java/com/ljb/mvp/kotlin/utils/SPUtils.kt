@@ -57,7 +57,7 @@ object SPUtils {
      * @return 没有返回0
      */
     fun getLong(key: String): Long {
-        return instance.getLong(key, 0)
+        return instance.getLong(key, 0L)
     }
 
     fun putInt(key: String, value: Int) {

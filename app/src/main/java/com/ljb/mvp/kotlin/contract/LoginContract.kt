@@ -12,17 +12,17 @@ interface LoginContract {
 
         fun loginSuccess()
 
-        fun loginError(msg: String)
+        fun loginError(errorMsg: String?)
 
         fun goHome()
-        
+
         fun showLogin()
 
     }
 
     interface ILoginPresenter : IBasePresenter<ILoginView> {
 
-        fun login(user: String)
+        fun login(userName: String)
     }
 
 }

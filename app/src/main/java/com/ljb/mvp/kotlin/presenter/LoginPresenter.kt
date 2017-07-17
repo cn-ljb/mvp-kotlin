@@ -2,7 +2,10 @@ package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.common.Constant
 import com.ljb.mvp.kotlin.contract.LoginContract
+import com.ljb.mvp.kotlin.protocol.dao.UsersDaoProtocol
 import com.ljb.mvp.kotlin.utils.RxUtils
+import com.wuba.weizhang.mvp.getContext
+import com.wuba.weizhang.protocol.http.UsersProtocol
 import com.wuba.weizhang.utils.SPUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,38 +20,43 @@ class LoginPresenter(private val mLoginView: LoginContract.ILoginView) : LoginCo
 
     override fun getMvpView() = mLoginView
 
-    val mTimerObservable: Observable<Long> by lazy { Observable.timer(3000, TimeUnit.MILLISECONDS) }
-    val mIsLoggedObservable: Observable<Boolean> by lazy {
-        Observable.create<Boolean> {
-            it.onNext(!SPUtils.getString(Constant.SPConstant.USER_ID).isNullOrEmpty())
-            it.onComplete()
-        }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-    }
+    val mUsersProtocol by lazy { UsersProtocol() }
+    val mUsersDaoProtocol by lazy { UsersDaoProtocol(getContext()) }
+    val mTimerObservable: Observable<Long> by lazy { Observable.timer(1500, TimeUnit.MILLISECONDS) }
 
-    lateinit var mTimerDisposable: Disposable
-    lateinit var mIsLoggedDisposable: Disposable
+    var mTimerDisposable: Disposable? = null
+    var mLoginDisposable: Disposable? = null
 
     override fun startTask() {
-        mTimerDisposable = mTimerObservable.subscribe { mLoginView.goHome() }
-        mIsLoggedDisposable = mIsLoggedObservable.subscribe {
-            if (it) {  //已登录
-                mLoginView.goHome()
-            } else {  //未登录
-                RxUtils.dispose(mTimerDisposable)
-                mLoginView.showLogin()
-            }
+        if (SPUtils.getLong(Constant.SPConstant.CUR_USER_ID) == 0L) {
+            mLoginView.showLogin()
+        } else {
+            mTimerDisposable = mTimerObservable.subscribe { mLoginView.goHome() }
         }
-
     }
 
-    override fun login(user: String) {
-        mLoginView.loginSuccess()
+    override fun login(userName: String) {
+        mLoginDisposable = mUsersProtocol.loginForUserName(userName)
+                .map {
+                    if (it.message.isNullOrBlank()) mUsersDaoProtocol.saveUser(it)
+                    it
+                }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    if (it.message.isNullOrBlank()) {
+                        SPUtils.putLong(Constant.SPConstant.CUR_USER_ID, it.id)
+                        getMvpView().loginSuccess()
+                    } else {
+                        getMvpView().loginError(it.message)
+                    }
+                }, {
+                    getMvpView().loginError(null)
+                })
     }
 
     override fun onDestroy() {
         RxUtils.dispose(mTimerDisposable)
-        RxUtils.dispose(mIsLoggedDisposable)
+        RxUtils.dispose(mLoginDisposable)
     }
 
 }

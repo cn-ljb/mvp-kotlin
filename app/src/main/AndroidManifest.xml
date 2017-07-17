@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ljb.mvp.kotlin">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".KotlinApplication"
         android:allowBackup="true"
@@ -18,7 +22,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".act.HomeActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".act.HomeActivity"
+            android:screenOrientation="portrait" />
+
+        <provider
+            android:name=".db.DatabaseProvider"
+            android:authorities="com.ljb.mvp.kotlin.provider"
+            android:exported="false" />
+
     </application>
 
 </manifest>
