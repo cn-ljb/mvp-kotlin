@@ -3,6 +3,7 @@ package com.ljb.mvp.kotlin.protocol.dao
 import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.net.Uri
 import com.ljb.mvp.kotlin.common.Constant.DBProvider.TABLE_USERS
 import com.ljb.mvp.kotlin.db.DatabaseProvider
@@ -107,15 +108,16 @@ class UsersDaoProtocol(c: Context) : BaseDAOProtocol(c) {
     }
 
     fun findUserByUserId(userId: Long): User? {
-        XgoLog.d("findUserByUserId")
+        XgoLog.d("findUserByUserId:$userId")
         var user: User? = null
+        var c: Cursor? = null
         try {
-            val c = mContext.contentResolver.query(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
+            c = mContext.contentResolver.query(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
                     null,
                     "${TABLE_USERS.COLUMN_USER_ID}=?",
                     arrayOf("$userId"),
-                    "DESC")
-            if (c.moveToFirst()) {
+                    null)
+            if (c.moveToNext()) {
                 val login = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_LOGIN))
                 val userID = c.getLong(c.getColumnIndex(TABLE_USERS.COLUMN_USER_ID))
                 val avatar_url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_AVATAR_URL))
@@ -150,6 +152,8 @@ class UsersDaoProtocol(c: Context) : BaseDAOProtocol(c) {
             }
         } catch (e: Exception) {
             e.printStackTrace()
+        } finally {
+            c?.close()
         }
         return user
     }

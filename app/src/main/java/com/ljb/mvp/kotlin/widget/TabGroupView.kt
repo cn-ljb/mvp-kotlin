@@ -42,17 +42,14 @@ class TabGroupView : LinearLayout {
 
     fun setSelectedPosition(position: Int) {
         initUnSelected()
-        val view = getChildAt(position).findViewById(R.id.bottom_tab_icon)
-        if (view != null) {
-            view.isSelected = true
-        }
+        getChildAt(position).findViewById(R.id.bottom_tab_icon).let { it.isSelected = true }
+        getChildAt(position).findViewById(R.id.bottom_tab_text).let { it.isSelected = true }
     }
 
     private fun initUnSelected() {
         (0..childCount - 1).mapNotNull {
-            getChildAt(it).findViewById(R.id.bottom_tab_icon)
-        }.forEach {
-            it.isSelected = false
+            getChildAt(it).findViewById(R.id.bottom_tab_icon).let { it.isSelected = false }
+            getChildAt(it).findViewById(R.id.bottom_tab_text).let { it.isSelected = false }
         }
     }
 

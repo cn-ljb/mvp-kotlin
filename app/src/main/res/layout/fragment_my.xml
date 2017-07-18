@@ -81,6 +81,7 @@
                 </RelativeLayout>
 
                 <Button
+                    android:id="@+id/btn_logout"
                     android:textSize="12sp"
                     android:background="@drawable/shape_round_white"
                     android:layout_width="120dp"
@@ -91,7 +92,6 @@
                     android:text="@string/logout"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white" />
-
 
             </RelativeLayout>
 

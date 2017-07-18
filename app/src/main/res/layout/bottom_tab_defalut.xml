@@ -18,6 +18,7 @@
         android:layout_marginTop="5dip" />
 
     <TextView
+        android:textColor="@drawable/selector_tab_text"
         android:id="@+id/bottom_tab_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
