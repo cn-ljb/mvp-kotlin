@@ -38,7 +38,13 @@ class LoginPresenter(private val mLoginView: LoginContract.ILoginView) : LoginCo
     override fun login(userName: String) {
         mLoginDisposable = mUsersProtocol.loginForUserName(userName)
                 .map {
-                    if (it.message.isNullOrBlank()) mUsersDaoProtocol.saveUser(it)
+                    if (it.message.isNullOrBlank()) {
+                        if (mUsersDaoProtocol.findUserByUserId(it.id) == null) {
+                            mUsersDaoProtocol.saveUser(it)
+                        } else {
+                            mUsersDaoProtocol.updateUser(it)
+                        }
+                    }
                     it
                 }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
