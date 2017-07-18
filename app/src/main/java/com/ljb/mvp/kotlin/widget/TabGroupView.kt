@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.ljb.mvp.kotlin.R
 
 
 /**
@@ -27,8 +28,8 @@ class TabGroupView : LinearLayout {
     }
 
     fun setAdapter(adapter: TabAdapter?) {
-        if (adapter != null && adapter.count > 0) {
-            for (i in 0..adapter.count - 1) {
+        if (adapter != null && adapter.getCount() > 0) {
+            for (i in 0..adapter.getCount() - 1) {
                 val tabView = adapter.getTabView(i)
                 val params = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT)
                 params.weight = 1f
@@ -41,18 +42,23 @@ class TabGroupView : LinearLayout {
 
     fun setSelectedPosition(position: Int) {
         initUnSelected()
-        getChildAt(position).isSelected = true
+        val view = getChildAt(position).findViewById(R.id.bottom_tab_icon)
+        if (view != null) {
+            view.isSelected = true
+        }
     }
 
     private fun initUnSelected() {
-        for (i in 0..childCount - 1) {
-            getChildAt(i).isSelected = false
+        (0..childCount - 1).mapNotNull {
+            getChildAt(it).findViewById(R.id.bottom_tab_icon)
+        }.forEach {
+            it.isSelected = false
         }
     }
 
 
     interface TabAdapter {
-        val count: Int
+        fun getCount(): Int
         fun getTabView(position: Int): View
     }
 

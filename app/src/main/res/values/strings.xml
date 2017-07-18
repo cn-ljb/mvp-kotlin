@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">MVPKotlin</string>
-    <string name="github_user">Github UserName</string>
-    <string name="login">登录</string>
-    <string name="input_user">请输入github用户名</string>
-    <string name="net_error">网络异常</string>
-    <string name="not_found_user">该用户不存在</string>
+    <string name="github_user">github username</string>
+    <string name="login">Login</string>
+    <string name="input_user">input github username</string>
+    <string name="net_error">net error</string>
+    <string name="repos">repos</string>
+    <string name="my">my</string>
+    <string name="following">following</string>
 </resources>
