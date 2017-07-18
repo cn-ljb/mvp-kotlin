@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MVPKotlin</string>
+    <string name="app_name">MVP-Kotlin</string>
     <string name="github_user">github username</string>
     <string name="login">Login</string>
     <string name="input_user">input github username</string>
@@ -7,4 +7,5 @@
     <string name="repos">repos</string>
     <string name="my">my</string>
     <string name="following">following</string>
+    <string name="logout">Logout</string>
 </resources>

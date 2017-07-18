@@ -16,9 +16,9 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by L on 2017/7/13.
  */
-class LoginPresenter(private val mLoginView: LoginContract.ILoginView) : LoginContract.ILoginPresenter {
+class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContract.ILoginPresenter {
 
-    override fun getMvpView() = mLoginView
+    override fun getMvpView() = mView
 
     val mUsersProtocol by lazy { UsersProtocol() }
     val mUsersDaoProtocol by lazy { UsersDaoProtocol(getContext()) }
@@ -29,9 +29,9 @@ class LoginPresenter(private val mLoginView: LoginContract.ILoginView) : LoginCo
 
     override fun startTask() {
         if (SPUtils.getLong(Constant.SPConstant.CUR_USER_ID) == 0L) {
-            mLoginView.showLogin()
+            mView.showLogin()
         } else {
-            mTimerDisposable = mTimerObservable.subscribe { mLoginView.goHome() }
+            mTimerDisposable = mTimerObservable.subscribe { mView.goHome() }
         }
     }
 
