@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="PushEvent"
-                android:textColor="@color/colorOrange"
+                android:textColor="@color/colorGreen"
                 android:textSize="15sp" />
 
 
@@ -33,7 +33,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_gravity="right"
                 android:text="cn-ljb/mvp-kotlin"
                 android:textColor="@color/color333"
                 android:textSize="18sp"
