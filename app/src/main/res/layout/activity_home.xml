@@ -3,11 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/fl_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <com.ljb.mvp.kotlin.widget.TabGroupView
         android:id="@+id/tgv_group"
         android:layout_width="match_parent"
@@ -15,6 +10,12 @@
         android:layout_alignParentBottom="true"
         android:background="@android:color/transparent"
         android:orientation="horizontal" />
+
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tgv_group" />
 
 
 </RelativeLayout>

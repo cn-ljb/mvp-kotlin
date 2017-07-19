@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,23 +13,21 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            app:elevation="0dp">
+            android:layout_height="270dp"
+            android:background="@drawable/bg_my_header">
 
             <RelativeLayout
+                android:id="@+id/rl_header"
                 android:layout_width="match_parent"
-                android:layout_height="270dp"
-                android:background="@drawable/bg_my_header"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="scroll|snap">
 
                 <ImageView
                     android:id="@+id/iv_header"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="45dp"
                     android:src="@drawable/test_header" />
 
                 <TextView
@@ -45,7 +42,7 @@
                     android:textSize="14sp" />
 
                 <RelativeLayout
-                    android:id="@+id/rl_user_info"
+                    android:id="@+id/rl_info"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:layout_below="@+id/tv_name"
@@ -82,21 +79,20 @@
 
                 <Button
                     android:id="@+id/btn_logout"
-                    android:textSize="12sp"
-                    android:background="@drawable/shape_round_white"
                     android:layout_width="120dp"
                     android:layout_height="30dp"
-                    android:layout_below="@id/rl_user_info"
+                    android:layout_below="@id/rl_info"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/shape_round_white_transparent"
                     android:text="@string/logout"
                     android:textAllCaps="false"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:textSize="12sp" />
 
             </RelativeLayout>
 
         </android.support.design.widget.AppBarLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -104,10 +100,17 @@
             android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <View
-                android:id="@+id/tabstrip"
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tablayout"
                 android:layout_width="match_parent"
-                android:layout_height="40dp" />
+                android:layout_height="40dp"
+                android:background="@android:color/white"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@color/colorBlue"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/colorBlue"
+                app:tabTextAppearance="@style/TabLayoutTextLower"
+                app:tabTextColor="@color/colorTabDef" />
 
             <View
                 android:layout_width="match_parent"

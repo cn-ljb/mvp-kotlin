@@ -4,8 +4,11 @@
     <string name="login">Login</string>
     <string name="input_user">input github username</string>
     <string name="net_error">net error</string>
-    <string name="repos">repos</string>
-    <string name="my">my</string>
-    <string name="following">following</string>
+    <string name="repos">Repos</string>
+    <string name="my">My</string>
+    <string name="following">Following</string>
     <string name="logout">Logout</string>
+    <string name="events">events</string>
+    <string name="starred">starred</string>
+    <string name="followers">followers</string>
 </resources>

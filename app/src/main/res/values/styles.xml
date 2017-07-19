@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="TabLayoutTextLower">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
 </resources>
