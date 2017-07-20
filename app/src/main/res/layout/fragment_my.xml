@@ -23,12 +23,13 @@
                 app:layout_scrollFlags="scroll|snap">
 
                 <ImageView
+                    android:src="@drawable/default_header"
                     android:id="@+id/iv_header"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="45dp"
-                    android:src="@drawable/test_header" />
+                  />
 
                 <TextView
                     android:id="@+id/tv_name"
@@ -37,7 +38,6 @@
                     android:layout_below="@id/iv_header"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:text="cn-ljb"
                     android:textColor="@android:color/white"
                     android:textSize="14sp" />
 
@@ -63,7 +63,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@id/line_center"
-                        android:text="BeiJing"
                         android:textColor="@android:color/white"
                         android:textSize="13sp" />
 
@@ -72,7 +71,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/line_center"
-                        android:text="58"
                         android:textColor="@android:color/white"
                         android:textSize="13sp" />
                 </RelativeLayout>

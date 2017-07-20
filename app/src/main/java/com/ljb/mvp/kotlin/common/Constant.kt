@@ -8,13 +8,12 @@ import android.provider.BaseColumns
  */
 class Constant {
 
-
     /**
      *  SharedPreferences常量池
      * */
     class SPConstant {
         companion object {
-            val CUR_USER_ID = "user_id"
+            val CUR_USER_NAME = "user_name"
         }
     }
 

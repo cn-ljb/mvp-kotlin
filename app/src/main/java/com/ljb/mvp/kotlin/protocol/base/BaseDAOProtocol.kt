@@ -19,4 +19,5 @@ abstract class BaseDAOProtocol(val mContext: Context) {
             }
         }
     }
+
 }

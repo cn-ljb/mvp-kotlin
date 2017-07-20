@@ -1,12 +1,11 @@
 package com.ljb.mvp.kotlin.presenter
 
-import com.ljb.mvp.kotlin.common.Constant
 import com.ljb.mvp.kotlin.contract.LoginContract
 import com.ljb.mvp.kotlin.protocol.dao.UsersDaoProtocol
 import com.ljb.mvp.kotlin.utils.RxUtils
+import com.wuba.weizhang.common.LoginUser
 import com.wuba.weizhang.mvp.getContext
 import com.wuba.weizhang.protocol.http.UsersProtocol
-import com.wuba.weizhang.utils.SPUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -28,7 +27,7 @@ class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContrac
     var mLoginDisposable: Disposable? = null
 
     override fun startTask() {
-        if (SPUtils.getLong(Constant.SPConstant.CUR_USER_ID) == 0L) {
+        if (LoginUser.name.isNullOrBlank()) {
             mView.showLogin()
         } else {
             mTimerDisposable = mTimerObservable.subscribe { mView.goHome() }
@@ -36,7 +35,7 @@ class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContrac
     }
 
     override fun login(userName: String) {
-        mLoginDisposable = mUsersProtocol.loginForUserName(userName)
+        mLoginDisposable = mUsersProtocol.getUserInfoByName(userName)
                 .map {
                     if (it.message.isNullOrBlank()) {
                         if (mUsersDaoProtocol.findUserByUserId(it.id) == null) {
@@ -50,7 +49,7 @@ class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContrac
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     if (it.message.isNullOrBlank()) {
-                        SPUtils.putLong(Constant.SPConstant.CUR_USER_ID, it.id)
+                        LoginUser.name = it.login
                         getMvpView().loginSuccess()
                     } else {
                         getMvpView().loginError(it.message)

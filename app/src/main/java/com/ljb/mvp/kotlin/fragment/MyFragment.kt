@@ -5,13 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.act.LoginActivity
 import com.ljb.mvp.kotlin.adapter.MyTabAdapter
 import com.ljb.mvp.kotlin.contract.MyContract
 import com.ljb.mvp.kotlin.domain.MyTabBean
+import com.ljb.mvp.kotlin.domain.User
+import com.ljb.mvp.kotlin.img.GlideCircleTransform
 import com.ljb.mvp.kotlin.presenter.MyPresenter
-import com.ljb.rxjava.kotlin.log.XgoLog
 import com.wuba.weizhang.mvp.BaseMvpFragment
 import kotlinx.android.synthetic.main.fragment_my.*
 
@@ -41,22 +43,15 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyContract.IMyView {
     }
 
     private fun initView() {
-
-        appbar.addOnOffsetChangedListener { _, verticalOffset ->
-            XgoLog.i("$verticalOffset")
-        }
-
-        btn_logout.setOnClickListener {
-            mPresenter.logout()
-        }
-
         viewpager.offscreenPageLimit = 0
         viewpager.adapter = MyTabAdapter(childFragmentManager, mTabArr)
         tablayout.setupWithViewPager(viewpager)
+
+        btn_logout.setOnClickListener { mPresenter.logout() }
     }
 
     private fun initData() {
-
+        mPresenter.startTask()
     }
 
     override fun logoutSuccess() {
@@ -67,4 +62,18 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyContract.IMyView {
         startActivity(Intent(activity, LoginActivity::class.java))
         activity.finish()
     }
+
+    override fun showUserInfo(user: User) {
+        //TODO fix bug
+        Glide.with(this)
+                .load(user.avatar_url)
+                .placeholder(R.drawable.default_header)
+                .transform(GlideCircleTransform(context))
+                .into(iv_header)
+
+        tv_name.text = user.login
+        tv_location.text = user.location
+        tv_company.text = user.company
+    }
+
 }

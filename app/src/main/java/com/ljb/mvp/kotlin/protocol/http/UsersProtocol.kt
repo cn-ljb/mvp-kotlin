@@ -12,9 +12,9 @@ import io.reactivex.Observable
  */
 class UsersProtocol : BaseHttpProtocol() {
 
-    fun loginForUserName(userName: String): Observable<User> {
+    fun getUserInfoByName(userName: String): Observable<User> {
         val url = "$HTTP_API_DOMAIN/users/${nvl(userName)}"
-        return createObservable(url, XgoHttpClient.METHOD_GET) {
+        return createObservable<User>(url, XgoHttpClient.METHOD_GET) {
             JsonParser.getDefault().fromJson(it, User::class.java)
         }
     }

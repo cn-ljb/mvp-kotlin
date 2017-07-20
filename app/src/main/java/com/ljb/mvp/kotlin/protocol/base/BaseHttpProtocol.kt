@@ -8,13 +8,14 @@ import io.reactivex.Observable
  * Created by L on 2017/6/8.
  */
 abstract class BaseHttpProtocol {
+
     /**
      *  创建一个被观察者(被订阅者)对象
      *  @param url
      *  @param method
      *  @param params
      */
-    protected fun createObservable(url: String, method: String, params: Map<String, String>?): Observable<String> {
+    fun createObservable(url: String, method: String, params: Map<String, String>?): Observable<String> {
         return Observable.create<String> {
             val request = XgoHttpClient.getRequest(url, method, params)
             val response = XgoHttpClient.execute(request)
@@ -28,7 +29,7 @@ abstract class BaseHttpProtocol {
         }
     }
 
-    protected fun createObservable(url: String, method: String): Observable<String> {
+    fun createObservable(url: String, method: String): Observable<String> {
         return createObservable(url, method, null)
     }
 
@@ -36,7 +37,7 @@ abstract class BaseHttpProtocol {
     /**
      * 创建指定解析器的Observable
      * */
-    protected fun <T> createObservable(url: String, method: String, params: Map<String, String>?, parser: (String) -> T): Observable<T> {
+    fun <T> createObservable(url: String, method: String, params: Map<String, String>?, parser: (String) -> T): Observable<T> {
         return Observable.create {
             val request = XgoHttpClient.getRequest(url, method, params)
             val response = XgoHttpClient.execute(request)
@@ -50,7 +51,7 @@ abstract class BaseHttpProtocol {
         }
     }
 
-    protected fun <T> createObservable(url: String, method: String, parser: (String) -> T): Observable<T> {
+    fun <T> createObservable(url: String, method: String, parser: (String) -> T): Observable<T> {
         return createObservable(url, method, null, parser)
     }
 

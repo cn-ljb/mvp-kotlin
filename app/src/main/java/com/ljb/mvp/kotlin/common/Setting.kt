@@ -1,9 +1,21 @@
 package com.wuba.weizhang.common
 
+import com.ljb.mvp.kotlin.common.Constant
+import com.wuba.weizhang.utils.SPUtils
+
 /**
  * 项目相关配置
  * Created by L on 2017/7/12.
  */
+
+
+class LoginUser {
+    companion object {
+        var name: String
+            get() = SPUtils.getString(Constant.SPConstant.CUR_USER_NAME)
+            set(value) = SPUtils.putString(Constant.SPConstant.CUR_USER_NAME, value)
+    }
+}
 
 /**
  * 服务器Host

@@ -11,6 +11,7 @@ import com.ljb.mvp.kotlin.domain.User
 import com.ljb.rxjava.kotlin.log.XgoLog
 import com.wuba.weizhang.protocol.base.BaseDAOProtocol
 
+@Suppress("UNUSED_EXPRESSION")
 /**
  * Created by L on 2017/7/17.
  */
@@ -19,6 +20,7 @@ class UsersDaoProtocol(c: Context) : BaseDAOProtocol(c) {
 
     fun saveUser(user: User): Boolean {
         XgoLog.d("saveUser")
+        var result: Boolean = false
         val values = ContentValues()
         values.put(TABLE_USERS.COLUMN_LOGIN, user.login)
         values.put(TABLE_USERS.COLUMN_USER_ID, user.id)
@@ -53,16 +55,18 @@ class UsersDaoProtocol(c: Context) : BaseDAOProtocol(c) {
         try {
             val uri = mContext.contentResolver.insert(Uri.parse(DatabaseProvider.USER_CONTENT_URI), values)
             if (uri != null && ContentUris.parseId(uri) > 0) {
-                return true
+                result = true
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        return false
+        return result
     }
+
 
     fun updateUser(user: User): Int {
         XgoLog.d("updateUser")
+        var count = 0
         val values = ContentValues()
         values.put(TABLE_USERS.COLUMN_LOGIN, user.login)
         values.put(TABLE_USERS.COLUMN_USER_ID, user.id)
@@ -96,15 +100,14 @@ class UsersDaoProtocol(c: Context) : BaseDAOProtocol(c) {
         values.put(TABLE_USERS.COLUMN_UPDATED_AT, user.updated_at)
 
         try {
-            val count = mContext.contentResolver.update(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
+            count = mContext.contentResolver.update(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
                     values,
                     "${TABLE_USERS.COLUMN_USER_ID}=?",
                     arrayOf("${user.id}"))
-            return count
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        return 0
+        return count
     }
 
     fun findUserByUserId(userId: Long): User? {
@@ -116,6 +119,57 @@ class UsersDaoProtocol(c: Context) : BaseDAOProtocol(c) {
                     null,
                     "${TABLE_USERS.COLUMN_USER_ID}=?",
                     arrayOf("$userId"),
+                    null)
+            if (c.moveToNext()) {
+                val login = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_LOGIN))
+                val userID = c.getLong(c.getColumnIndex(TABLE_USERS.COLUMN_USER_ID))
+                val avatar_url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_AVATAR_URL))
+                val gravatar_id = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_GRAVATAR_ID))
+                val url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_URL))
+                val html_url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_HTML_URL))
+                val followers_url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_FOLLOWERS_URL))
+                val following_url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_FOLLOWING_URL))
+                val gists_url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_GISTS_URL))
+                val starred_url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_STARRED_URL))
+                val subscriptions_url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_SUBSCRIPTIONS_URL))
+                val organizations_url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_ORGANIZATIONS_URL))
+                val repos_url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_REPOS_URL))
+                val events_url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_EVENTS_URL))
+                val received_events_url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_RECEIVED_EVENTS_URL))
+                val type = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_TYPE))
+                val site_admin = c.getInt(c.getColumnIndex(TABLE_USERS.COLUMN_SITE_ADMIN))
+                val name = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_NAME))
+                val company = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_COMPANY))
+                val blog = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_BLOG))
+                val location = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_LOCATION))
+                val email = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_EMAIL))
+                val hireable = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_HIREABLE))
+                val bio = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_BIO))
+                val public_repos = c.getInt(c.getColumnIndex(TABLE_USERS.COLUMN_PUBLIC_REPOS))
+                val public_gists = c.getInt(c.getColumnIndex(TABLE_USERS.COLUMN_PUBLIC_GISTS))
+                val followers = c.getInt(c.getColumnIndex(TABLE_USERS.COLUMN_FOLLOWERS))
+                val following = c.getInt(c.getColumnIndex(TABLE_USERS.COLUMN_FOLLOWING))
+                val created_at = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_CREATED_AT))
+                val updated_at = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_UPDATED_AT))
+                return User(login, userID, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin == 1, name, company, blog, location, email, hireable, bio, public_repos, public_gists, followers, following, created_at, updated_at)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            c?.close()
+        }
+        return user
+    }
+
+    fun findUserByName(name: String): User? {
+        XgoLog.d("findUserByUserId:$name")
+        var user: User? = null
+        var c: Cursor? = null
+        try {
+            c = mContext.contentResolver.query(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
+                    null,
+                    "${TABLE_USERS.COLUMN_LOGIN}=?",
+                    arrayOf("$name"),
                     null)
             if (c.moveToNext()) {
                 val login = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_LOGIN))
