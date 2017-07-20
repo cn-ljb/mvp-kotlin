@@ -48,7 +48,14 @@ class HomeActivity : FragmentActivity() {
             2 -> mMyFragment
             else -> null
         }?.let {
-            supportFragmentManager.beginTransaction().replace(R.id.fl_content, it).commit()
+            val ft = supportFragmentManager.beginTransaction()
+            ft.hide(mRepositoriesFragment).hide(mFollowingFragment).hide(mMyFragment)
+            val f = supportFragmentManager.findFragmentByTag(it.javaClass.simpleName)
+            if (f == null) {
+                ft.add(R.id.fl_content, it, it.javaClass.simpleName).show(it).commit()
+            } else {
+                ft.show(f).commit()
+            }
         }
     }
 
