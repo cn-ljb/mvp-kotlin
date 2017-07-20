@@ -64,13 +64,11 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyContract.IMyView {
     }
 
     override fun showUserInfo(user: User) {
-        //TODO fix bug
         Glide.with(this)
                 .load(user.avatar_url)
                 .placeholder(R.drawable.default_header)
                 .transform(GlideCircleTransform(context))
                 .into(iv_header)
-
         tv_name.text = user.login
         tv_location.text = user.location
         tv_company.text = user.company
