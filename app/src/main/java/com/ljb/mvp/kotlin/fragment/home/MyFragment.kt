@@ -1,4 +1,4 @@
-package com.ljb.mvp.kotlin.fragment
+package com.ljb.mvp.kotlin.fragment.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,9 @@ import com.ljb.mvp.kotlin.adapter.MyTabAdapter
 import com.ljb.mvp.kotlin.contract.MyContract
 import com.ljb.mvp.kotlin.domain.MyTabBean
 import com.ljb.mvp.kotlin.domain.User
+import com.ljb.mvp.kotlin.fragment.EventsFragment
+import com.ljb.mvp.kotlin.fragment.FollowersFragment
+import com.ljb.mvp.kotlin.fragment.StarredFragment
 import com.ljb.mvp.kotlin.img.GlideCircleTransform
 import com.ljb.mvp.kotlin.presenter.MyPresenter
 import com.wuba.weizhang.mvp.BaseMvpFragment

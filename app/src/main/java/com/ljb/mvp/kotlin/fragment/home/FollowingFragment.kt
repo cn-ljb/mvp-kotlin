@@ -1,4 +1,4 @@
-package com.ljb.mvp.kotlin.fragment
+package com.ljb.mvp.kotlin.fragment.home
 
 import android.os.Bundle
 import android.support.v4.app.Fragment

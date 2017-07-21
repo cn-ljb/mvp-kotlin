@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.domain.TabBean
-import com.ljb.mvp.kotlin.fragment.FollowingFragment
-import com.ljb.mvp.kotlin.fragment.MyFragment
-import com.ljb.mvp.kotlin.fragment.RepositoriesFragment
+import com.ljb.mvp.kotlin.fragment.home.FollowingFragment
+import com.ljb.mvp.kotlin.fragment.home.MyFragment
+import com.ljb.mvp.kotlin.fragment.home.RepositoriesFragment
 import com.wuba.weizhang.adapter.MainTabAdapter
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -28,6 +28,7 @@ class HomeActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        savedInstanceState.let { supportFragmentManager.popBackStackImmediate(null,1)}
         setContentView(R.layout.activity_home)
         initView()
     }
