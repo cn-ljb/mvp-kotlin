@@ -2,21 +2,19 @@ package com.ljb.mvp.kotlin.protocol.dao
 
 import android.content.ContentUris
 import android.content.ContentValues
-import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import com.ljb.mvp.kotlin.KotlinApplication
 import com.ljb.mvp.kotlin.common.Constant.DBProvider.TABLE_USERS
 import com.ljb.mvp.kotlin.db.DatabaseProvider
 import com.ljb.mvp.kotlin.domain.User
 import com.ljb.rxjava.kotlin.log.XgoLog
 import com.wuba.weizhang.protocol.base.BaseDAOProtocol
 
-@Suppress("UNUSED_EXPRESSION")
 /**
  * Created by L on 2017/7/17.
  */
-class UsersDaoProtocol(c: Context) : BaseDAOProtocol(c) {
-
+object UsersDaoProtocol : BaseDAOProtocol(KotlinApplication.mContext) {
 
     fun saveUser(user: User): Boolean {
         XgoLog.d("saveUser")

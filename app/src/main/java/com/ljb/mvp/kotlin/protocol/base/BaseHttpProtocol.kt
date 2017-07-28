@@ -40,13 +40,17 @@ abstract class BaseHttpProtocol {
     fun <T> createObservable(url: String, method: String, params: Map<String, String>?, parser: (String) -> T): Observable<T> {
         return Observable.create {
             val request = XgoHttpClient.getRequest(url, method, params)
-            val response = XgoHttpClient.execute(request)
-            val json = response.body()?.string()
-            if (json.isNullOrBlank()) {
-                it.onError(Throwable("not http data"))
-            } else {
-                it.onNext(parser.invoke(json!!))
-                it.onComplete()
+            try {
+                val response = XgoHttpClient.execute(request)
+                val json = response.body()?.string()
+                if (json.isNullOrBlank()) {
+                    it.onError(Throwable("not http data"))
+                } else {
+                    it.onNext(parser.invoke(json!!))
+                    it.onComplete()
+                }
+            } catch (e: Exception) {
+                it.onError(Throwable("net error"))
             }
         }
     }

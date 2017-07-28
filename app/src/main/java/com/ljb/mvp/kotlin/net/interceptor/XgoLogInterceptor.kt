@@ -165,8 +165,7 @@ class XgoLogInterceptor @JvmOverloads constructor(lv: XgoLogInterceptor.Level = 
         }
 
         val startNs = System.nanoTime()
-        val response: Response
-        response = chain.proceed(request)
+        val response = chain.proceed(request)
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
 
         val responseBody = response.body()

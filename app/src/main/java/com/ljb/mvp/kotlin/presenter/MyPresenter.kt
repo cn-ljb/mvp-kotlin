@@ -3,7 +3,6 @@ package com.ljb.mvp.kotlin.presenter
 import com.ljb.mvp.kotlin.contract.MyContract
 import com.ljb.mvp.kotlin.protocol.dao.UsersDaoProtocol
 import com.wuba.weizhang.common.LoginUser
-import com.wuba.weizhang.mvp.getContext
 import com.wuba.weizhang.protocol.http.UsersProtocol
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,16 +15,17 @@ class MyPresenter(private val mView: MyContract.IMyView) : MyContract.IMyPresent
 
     override fun getMvpView() = mView
 
-    val mUsersProtocol by lazy { UsersProtocol() }
-    val mUsersDaoProtocol by lazy { UsersDaoProtocol(getContext()) }
 
     override fun startTask() {
         Observable.concat(
-                mUsersDaoProtocol.createObservable { mUsersDaoProtocol.findUserByName(LoginUser.name) },
-                mUsersProtocol.getUserInfoByName(LoginUser.name))
+                UsersDaoProtocol.createObservable { UsersDaoProtocol.findUserByName(LoginUser.name) },
+                UsersProtocol.getUserInfoByName(LoginUser.name))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { getMvpView().showUserInfo(it) }
+                .subscribe(
+                        { getMvpView().showUserInfo(it) },
+                        { it.printStackTrace() }
+                )
     }
 
 

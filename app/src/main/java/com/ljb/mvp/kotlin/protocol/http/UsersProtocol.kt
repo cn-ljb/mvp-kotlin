@@ -10,7 +10,7 @@ import io.reactivex.Observable
 /**
  * Created by L on 2017/7/12.
  */
-class UsersProtocol : BaseHttpProtocol() {
+object UsersProtocol : BaseHttpProtocol() {
 
     fun getUserInfoByName(userName: String): Observable<User> {
         val url = "$HTTP_API_DOMAIN/users/${nvl(userName)}"
@@ -18,5 +18,4 @@ class UsersProtocol : BaseHttpProtocol() {
             JsonParser.getDefault().fromJson(it, User::class.java)
         }
     }
-
 }

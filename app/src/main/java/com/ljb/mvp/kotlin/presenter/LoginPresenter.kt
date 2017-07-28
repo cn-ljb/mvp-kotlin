@@ -4,7 +4,6 @@ import com.ljb.mvp.kotlin.contract.LoginContract
 import com.ljb.mvp.kotlin.protocol.dao.UsersDaoProtocol
 import com.ljb.mvp.kotlin.utils.RxUtils
 import com.wuba.weizhang.common.LoginUser
-import com.wuba.weizhang.mvp.getContext
 import com.wuba.weizhang.protocol.http.UsersProtocol
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,10 +18,7 @@ class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContrac
 
     override fun getMvpView() = mView
 
-    val mUsersProtocol by lazy { UsersProtocol() }
-    val mUsersDaoProtocol by lazy { UsersDaoProtocol(getContext()) }
     val mTimerObservable: Observable<Long> by lazy { Observable.timer(1500, TimeUnit.MILLISECONDS) }
-
     var mTimerDisposable: Disposable? = null
     var mLoginDisposable: Disposable? = null
 
@@ -35,13 +31,13 @@ class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContrac
     }
 
     override fun login(userName: String) {
-        mLoginDisposable = mUsersProtocol.getUserInfoByName(userName)
+        mLoginDisposable = UsersProtocol.getUserInfoByName(userName)
                 .map {
                     if (it.message.isNullOrBlank()) {
-                        if (mUsersDaoProtocol.findUserByUserId(it.id) == null) {
-                            mUsersDaoProtocol.saveUser(it)
+                        if (UsersDaoProtocol.findUserByUserId(it.id) == null) {
+                            UsersDaoProtocol.saveUser(it)
                         } else {
-                            mUsersDaoProtocol.updateUser(it)
+                            UsersDaoProtocol.updateUser(it)
                         }
                     }
                     it
