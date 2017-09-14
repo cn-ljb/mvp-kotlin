@@ -2,7 +2,7 @@ package com.wuba.weizhang.mvp
 
 import android.app.Activity
 
-abstract class BaseMvpActivity<out T : IBasePresenter<out IBaseView>> : Activity() {
+abstract class BaseMvpActivity<out T : IBasePresenter<*>> : Activity() {
 
     protected val mPresenter: T by lazy { createPresenter() }
 

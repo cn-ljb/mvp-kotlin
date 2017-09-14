@@ -15,7 +15,7 @@ object UsersProtocol : BaseHttpProtocol() {
     fun getUserInfoByName(userName: String): Observable<User> {
         val url = "$HTTP_API_DOMAIN/users/${nvl(userName)}"
         return createObservable(url, XgoHttpClient.METHOD_GET) {
-            JsonParser.getDefault().fromJson(it, User::class.java)
+            JsonParser.fromJsonObj(it, User::class.java)
         }
     }
 }

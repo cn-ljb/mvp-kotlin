@@ -17,10 +17,10 @@ class MyPresenter(private val mView: MyContract.IMyView) : MyContract.IMyPresent
 
     override fun getMvpView() = mView
 
-    private var mDataDisposable: Disposable? = null
+    private var mUserInfoDisposable: Disposable? = null
 
     override fun startTask() {
-        mDataDisposable = Observable.concat(
+        mUserInfoDisposable = Observable.concat(
                 UsersDaoProtocol.createObservable { UsersDaoProtocol.findUserByName(LoginUser.name) },
                 UsersProtocol.getUserInfoByName(LoginUser.name))
                 .subscribeOn(Schedulers.io())
@@ -38,7 +38,7 @@ class MyPresenter(private val mView: MyContract.IMyView) : MyContract.IMyPresent
     }
 
     override fun onDestroy() {
-        RxUtils.dispose(mDataDisposable)
+        RxUtils.dispose(mUserInfoDisposable)
     }
 
 }

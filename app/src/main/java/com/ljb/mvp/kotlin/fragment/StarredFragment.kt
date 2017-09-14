@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.adapter.StarredAdapter
-import kotlinx.android.synthetic.main.fragment_events.*
+import kotlinx.android.synthetic.main.fragment_starred.*
 
 /**
  * Created by L on 2017/7/19.

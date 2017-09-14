@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment
 /**
  * Created by L on 2017/7/10.
  */
-abstract class BaseMvpFragment<out T : IBasePresenter<out IBaseView>> : Fragment() {
+abstract class BaseMvpFragment<out T : IBasePresenter<*>> : Fragment() {
 
     protected val mPresenter: T by lazy { createPresenter() }
 

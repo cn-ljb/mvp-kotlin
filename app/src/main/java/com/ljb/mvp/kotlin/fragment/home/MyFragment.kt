@@ -20,6 +20,7 @@ import com.ljb.mvp.kotlin.presenter.MyPresenter
 import com.wuba.weizhang.mvp.BaseMvpFragment
 import kotlinx.android.synthetic.main.fragment_my.*
 
+
 /**
  * Created by L on 2017/7/18.
  */

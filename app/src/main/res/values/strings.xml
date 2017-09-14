@@ -11,4 +11,6 @@
     <string name="events">events</string>
     <string name="starred">starred</string>
     <string name="followers">followers</string>
+    <string name="load_error">Network error</string>
+    <string name="reload">Reload</string>
 </resources>
