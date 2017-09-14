@@ -12,7 +12,7 @@ object SPUtils {
 
     private val SP_NAME = "sp_58che"
 
-    val instance: SharedPreferences
+    private val instance: SharedPreferences
         get() = KotlinApplication.mContext.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
 
     fun putString(key: String, value: String) {

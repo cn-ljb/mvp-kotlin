@@ -21,7 +21,6 @@ interface LoginContract {
     }
 
     interface ILoginPresenter : IBasePresenter<ILoginView> {
-
         fun login(userName: String)
     }
 

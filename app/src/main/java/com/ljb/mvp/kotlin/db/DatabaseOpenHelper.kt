@@ -31,7 +31,7 @@ class DatabaseOpenHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     }
 
     //表字段管理器
-    val databaseColumnsHelper = DatabaseColumnsHelper()
+    private val mDatabaseColumnsHelper = DatabaseColumnsHelper()
 
     override fun onCreate(db: SQLiteDatabase) {
         XgoLog.i("database onCreate")
@@ -43,11 +43,11 @@ class DatabaseOpenHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     }
 
     private fun createTables(db: SQLiteDatabase) {
-        databaseColumnsHelper.getTableNames().map { createTable(db, it) }
+        mDatabaseColumnsHelper.getTableNames().map { createTable(db, it) }
     }
 
     private fun createTable(db: SQLiteDatabase, tableName: String) {
-        val columns = databaseColumnsHelper.getCreateTableSql(tableName)
+        val columns = mDatabaseColumnsHelper.getCreateTableSql(tableName)
         db.execSQL("create table if not exists $tableName$columns")
     }
 

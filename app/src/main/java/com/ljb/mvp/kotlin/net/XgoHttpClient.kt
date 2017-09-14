@@ -31,9 +31,7 @@ object XgoHttpClient {
     /**
      * 同步
      * */
-    fun execute(request: Request): Response {
-        return mHttpClient.newCall(request).execute()
-    }
+    fun execute(request: Request): Response = mHttpClient.newCall(request).execute()
 
     /**
      * 异步
@@ -67,7 +65,7 @@ object XgoHttpClient {
     /**
      * 创建Body请求体
      * */
-    fun initRequestBody(params: Map<String, String>?): RequestBody {
+    private fun initRequestBody(params: Map<String, String>?): RequestBody {
         val bodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
         params!!.map {
             bodyBuilder.addFormDataPart(it.key, it.value)
@@ -79,7 +77,7 @@ object XgoHttpClient {
     /**
      * 创建Get链接
      * */
-    fun initGetRequest(url: String, params: Map<String, String>?): String {
+    private fun initGetRequest(url: String, params: Map<String, String>?): String {
         if (params != null && params.isNotEmpty()) {
             val sb = StringBuilder(url).append("?")
             var count = 0

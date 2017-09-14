@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment
  */
 abstract class BaseMvpFragment<out T : IBasePresenter<out IBaseView>> : Fragment() {
 
-    val mPresenter: T by lazy { createPresenter() }
+    protected val mPresenter: T by lazy { createPresenter() }
 
     protected abstract fun createPresenter(): T
 

@@ -15,7 +15,7 @@ import com.ljb.mvp.kotlin.R
  */
 class TabGroupView : LinearLayout {
 
-    var mOnItemClickListener: ((position: Int) -> Unit)? = null
+    private var mOnItemClickListener: ((position: Int) -> Unit)? = null
 
     constructor(context: Context) : super(context)
 
@@ -29,7 +29,7 @@ class TabGroupView : LinearLayout {
 
     fun setAdapter(adapter: TabAdapter?) {
         if (adapter != null && adapter.getCount() > 0) {
-            for (i in 0..adapter.getCount() - 1) {
+            for (i in 0 until adapter.getCount()) {
                 val tabView = adapter.getTabView(i)
                 val params = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT)
                 params.weight = 1f

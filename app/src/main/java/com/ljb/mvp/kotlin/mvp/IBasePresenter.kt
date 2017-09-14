@@ -17,14 +17,10 @@ interface IBasePresenter<out V : IBaseView> {
 
 }
 
-fun IBasePresenter<IBaseView>.getContext(): Context {
-    if (getMvpView() is Context) {
-        return getMvpView() as Context
-    } else if (getMvpView() is Fragment) {
-        return (getMvpView() as Fragment).context
-    } else {
-        return KotlinApplication.mContext
-    }
+fun IBasePresenter<IBaseView>.getContext(): Context = when {
+    getMvpView() is Context -> getMvpView() as Context
+    getMvpView() is Fragment -> (getMvpView() as Fragment).context
+    else -> KotlinApplication.mContext
 }
 
 

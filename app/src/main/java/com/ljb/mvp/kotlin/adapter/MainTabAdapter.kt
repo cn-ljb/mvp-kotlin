@@ -13,10 +13,7 @@ import com.ljb.mvp.kotlin.widget.TabGroupView
  */
 class MainTabAdapter(val mContext: Context, val mData: List<TabBean>) : TabGroupView.TabAdapter {
 
-    override fun getCount(): Int {
-        return mData.size
-    }
-
+    override fun getCount() = mData.size
 
     override fun getTabView(position: Int): View {
         val itemBean = mData[position]

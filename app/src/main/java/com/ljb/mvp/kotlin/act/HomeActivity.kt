@@ -15,12 +15,12 @@ import kotlinx.android.synthetic.main.activity_home.*
  */
 class HomeActivity : FragmentActivity() {
 
-    val mRepositoriesFragment by lazy { RepositoriesFragment() }
-    val mFollowingFragment by lazy { FollowingFragment() }
-    val mMyFragment by lazy { MyFragment() }
+    private val mRepositoriesFragment by lazy { RepositoriesFragment() }
+    private val mFollowingFragment by lazy { FollowingFragment() }
+    private val mMyFragment by lazy { MyFragment() }
 
 
-    val mTabList = listOf(
+    private  val mTabList = listOf(
             TabBean(R.drawable.bottom_tab_repos, R.string.repos),
             TabBean(R.drawable.bottom_tab_following, R.string.following),
             TabBean(R.drawable.bottom_tab_my, R.string.my)
@@ -28,7 +28,7 @@ class HomeActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        savedInstanceState.let { supportFragmentManager.popBackStackImmediate(null,1)}
+        savedInstanceState.let { supportFragmentManager.popBackStackImmediate(null, 1) }
         setContentView(R.layout.activity_home)
         initView()
     }

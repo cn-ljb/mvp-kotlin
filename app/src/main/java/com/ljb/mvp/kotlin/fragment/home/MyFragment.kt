@@ -27,7 +27,7 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyContract.IMyView {
 
     override fun createPresenter() = MyPresenter(this)
 
-    val mTabArr by lazy {
+    private val mTabArr by lazy {
         arrayOf(
                 MyTabBean(getString(R.string.events), EventsFragment()),
                 MyTabBean(getString(R.string.starred), StarredFragment()),
@@ -35,9 +35,8 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyContract.IMyView {
         )
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_my, null)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_my, null)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

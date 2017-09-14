@@ -18,9 +18,9 @@ class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContrac
 
     override fun getMvpView() = mView
 
-    val mTimerObservable: Observable<Long> by lazy { Observable.timer(1500, TimeUnit.MILLISECONDS) }
-    var mTimerDisposable: Disposable? = null
-    var mLoginDisposable: Disposable? = null
+    private val mTimerObservable: Observable<Long> by lazy { Observable.timer(1500, TimeUnit.MILLISECONDS) }
+    private var mTimerDisposable: Disposable? = null
+    private var mLoginDisposable: Disposable? = null
 
     override fun startTask() {
         if (LoginUser.name.isNullOrBlank()) {

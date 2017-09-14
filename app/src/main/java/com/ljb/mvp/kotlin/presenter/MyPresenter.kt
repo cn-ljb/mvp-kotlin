@@ -2,10 +2,12 @@ package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.contract.MyContract
 import com.ljb.mvp.kotlin.protocol.dao.UsersDaoProtocol
+import com.ljb.mvp.kotlin.utils.RxUtils
 import com.wuba.weizhang.common.LoginUser
 import com.wuba.weizhang.protocol.http.UsersProtocol
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
 /**
@@ -15,9 +17,10 @@ class MyPresenter(private val mView: MyContract.IMyView) : MyContract.IMyPresent
 
     override fun getMvpView() = mView
 
+    private var mDataDisposable: Disposable? = null
 
     override fun startTask() {
-        Observable.concat(
+        mDataDisposable = Observable.concat(
                 UsersDaoProtocol.createObservable { UsersDaoProtocol.findUserByName(LoginUser.name) },
                 UsersProtocol.getUserInfoByName(LoginUser.name))
                 .subscribeOn(Schedulers.io())
@@ -35,7 +38,7 @@ class MyPresenter(private val mView: MyContract.IMyView) : MyContract.IMyPresent
     }
 
     override fun onDestroy() {
-
+        RxUtils.dispose(mDataDisposable)
     }
 
 }

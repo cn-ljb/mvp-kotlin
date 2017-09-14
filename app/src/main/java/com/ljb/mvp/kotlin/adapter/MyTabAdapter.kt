@@ -7,7 +7,7 @@ import com.ljb.mvp.kotlin.domain.MyTabBean
 /**
  * Created by L on 2017/7/19.
  */
-class MyTabAdapter(fm: FragmentManager?, val mData: Array<MyTabBean>) : FragmentPagerAdapter(fm) {
+class MyTabAdapter(fm: FragmentManager?, private val mData: Array<MyTabBean>) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int) = mData[position].fragment
 

@@ -12,8 +12,7 @@ class DatabaseColumnsHelper {
     private val DATA_TYPE_LONG = "LONG"
     private val DATA_TYPE_INTEGER = "INTEGER"
 
-
-    private val tables = HashMap<String, HashMap<String, String>>()
+    private val mTables = HashMap<String, HashMap<String, String>>()
 
     init {
         initTableUserColumns()
@@ -26,7 +25,7 @@ class DatabaseColumnsHelper {
      * @return
      */
     fun getCreateTableSql(tableName: String): String {
-        val tabColumns = tables[tableName]
+        val tabColumns = mTables[tableName]
         val iterator = tabColumns!!.entries.iterator()
         val sql = StringBuilder()
         sql.append(" (")
@@ -48,7 +47,7 @@ class DatabaseColumnsHelper {
      * @return
      */
     fun getColumns(table: String): Array<String> {
-        val tabColumns = tables[table]
+        val tabColumns = mTables[table]
         return tabColumns!!.keys.toTypedArray()
     }
 
@@ -56,7 +55,7 @@ class DatabaseColumnsHelper {
      * 所有表名
      * */
     fun getTableNames(): MutableSet<String> {
-        return tables.keys
+        return mTables.keys
     }
 
     private fun initTableUserColumns() {
@@ -92,6 +91,6 @@ class DatabaseColumnsHelper {
         tableUserColumns.put(TABLE_USERS.COLUMN_FOLLOWING, DATA_TYPE_INTEGER)
         tableUserColumns.put(TABLE_USERS.COLUMN_CREATED_AT, DATA_TYPE_TEXT)
         tableUserColumns.put(TABLE_USERS.COLUMN_UPDATED_AT, DATA_TYPE_TEXT)
-        tables.put(TABLE_USERS.TABLE_NAME, tableUserColumns)
+        mTables.put(TABLE_USERS.TABLE_NAME, tableUserColumns)
     }
 }
