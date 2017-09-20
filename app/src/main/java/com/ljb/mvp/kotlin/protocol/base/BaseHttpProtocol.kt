@@ -15,7 +15,7 @@ abstract class BaseHttpProtocol {
      *  @param method
      *  @param params
      */
-    fun createObservable(url: String, method: String, params: Map<String, String>?): Observable<String> {
+    protected fun createObservable(url: String, method: String, params: Map<String, String>?): Observable<String> {
         return Observable.create<String> {
             val request = XgoHttpClient.getRequest(url, method, params)
             val response = XgoHttpClient.execute(request)
@@ -29,7 +29,7 @@ abstract class BaseHttpProtocol {
         }
     }
 
-    fun createObservable(url: String, method: String): Observable<String> {
+    protected fun createObservable(url: String, method: String): Observable<String> {
         return createObservable(url, method, null)
     }
 
@@ -37,7 +37,7 @@ abstract class BaseHttpProtocol {
     /**
      * 创建指定解析器的Observable
      * */
-    fun <T> createObservable(url: String, method: String, params: Map<String, String>?, parser: (String) -> T): Observable<T> {
+    protected fun <T> createObservable(url: String, method: String, params: Map<String, String>?, parser: (String) -> T): Observable<T> {
         return Observable.create {
             val request = XgoHttpClient.getRequest(url, method, params)
             try {
@@ -55,16 +55,16 @@ abstract class BaseHttpProtocol {
         }
     }
 
-    fun <T> createObservable(url: String, method: String, parser: (String) -> T): Observable<T> {
+    protected fun <T> createObservable(url: String, method: String, parser: (String) -> T): Observable<T> {
         return createObservable(url, method, null, parser)
     }
 
 
-    fun nvl(param: String): String {
-        if (TextUtils.isEmpty(param)) {
-            return ""
+    protected fun nvl(param: String): String {
+        return if (TextUtils.isEmpty(param)) {
+            ""
         } else {
-            return param.trim { it <= ' ' }
+            param.trim { it <= ' ' }
         }
     }
 

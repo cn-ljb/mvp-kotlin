@@ -14,7 +14,7 @@ import com.wuba.weizhang.protocol.base.BaseDAOProtocol
 /**
  * Created by L on 2017/7/17.
  */
-object UsersDaoProtocol : BaseDAOProtocol(KotlinApplication.mContext) {
+object UserDaoProtocol : BaseDAOProtocol(KotlinApplication.mContext) {
 
     fun saveUser(user: User): Boolean {
         XgoLog.d("saveUser")
@@ -159,15 +159,15 @@ object UsersDaoProtocol : BaseDAOProtocol(KotlinApplication.mContext) {
         return user
     }
 
-    fun findUserByName(name: String): User? {
-        XgoLog.d("findUserByUserId:$name")
+    fun findUserByName(userName: String): User? {
+        XgoLog.d("findUserByUserId:$userName")
         var user: User? = null
         var c: Cursor? = null
         try {
             c = mContext.contentResolver.query(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
                     null,
                     "${TABLE_USERS.COLUMN_LOGIN}=?",
-                    arrayOf("$name"),
+                    arrayOf(userName),
                     null)
             if (c.moveToNext()) {
                 val login = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_LOGIN))

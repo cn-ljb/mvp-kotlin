@@ -9,26 +9,22 @@ import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.adapter.EventAdapter
 import com.ljb.mvp.kotlin.contract.EventsContract
 import com.ljb.mvp.kotlin.domain.Event
-import com.ljb.mvp.kotlin.presenter.EventsPresenter
+import com.ljb.mvp.kotlin.presenter.EventPresenter
 import com.wuba.weizhang.mvp.BaseMvpFragment
 import com.yimu.store.widget.PageStateLayout
+import com.yimu.store.widget.loadmore.LoadMoreRecyclerAdapter
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 
 /**
  * Created by L on 2017/7/19.
  */
-class EventsFragment : BaseMvpFragment<EventsPresenter>(), EventsContract.IEventsView, PageStateLayout.PageStateCallBack {
+class EventsFragment : BaseMvpFragment<EventPresenter>(), EventsContract.IEventsView, PageStateLayout.PageStateCallBack, LoadMoreRecyclerAdapter.LoadMoreListener {
 
     private var mView: View? = null
     private lateinit var mPageLayout: PageStateLayout
-    private val mAdapter by lazy { EventAdapter(activity) }
+    private var mAdapter: EventAdapter? = null
 
-    override fun createPresenter() = EventsPresenter(this)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
-    }
+    override fun createPresenter() = EventPresenter(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (mView == null) {
@@ -55,23 +51,55 @@ class EventsFragment : BaseMvpFragment<EventsPresenter>(), EventsContract.IEvent
     private fun initView() {
         val manager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recyclerview.layoutManager = manager
-        recyclerview.adapter = mAdapter
     }
 
     private fun initData() {
-        mPresenter.startTask()
+        mPresenter.onRefresh()
+    }
+
+    override fun onLoadMore() {
+        mPresenter.onLoadMore()
     }
 
     override fun onErrorClick() {
         mPageLayout.setPage(PageStateLayout.STATE_LOADING)
-        initData()
+        mPresenter.onRefresh()
     }
 
-    override fun showEvents(it: List<Event>) {
-        mAdapter.mData.clear()
-        mAdapter.mData.addAll(it)
-        mAdapter.notifyDataSetChanged()
-        mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
+    override fun showPage(data: MutableList<Event>, page: Int) {
+        if (page == 1) {
+            if (data.isEmpty()) {
+                mPageLayout.setPage(PageStateLayout.STATE_EMPTY)
+            } else {
+                mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
+                if (mAdapter == null) {
+                    mAdapter = EventAdapter(activity, data)
+                    recyclerview.adapter = mAdapter
+                    mAdapter!!.setOnLoadMoreListener(this)
+                } else {
+                    mAdapter!!.mData.clear()
+                    mAdapter!!.mData.addAll(data)
+                    mAdapter!!.initLoadStatusForSize(data)
+                    mAdapter!!.notifyDataSetChanged()
+                }
+            }
+        } else {
+            if (data.isEmpty()) {
+                mAdapter!!.onNotMore()
+            } else {
+                mAdapter!!.mData.addAll(data)
+                mAdapter!!.initLoadStatusForSize(data)
+                mAdapter!!.notifyDataSetChanged()
+            }
+        }
+    }
+
+    override fun errorPage(t: Throwable, page: Int) {
+        if (page == 1) {
+            mPageLayout.setPage(PageStateLayout.STATE_ERROR)
+        } else {
+            mAdapter!!.onError()
+        }
     }
 
 }

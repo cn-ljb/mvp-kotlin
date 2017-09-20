@@ -142,7 +142,7 @@ class DatabaseProvider : ContentProvider() {
             try {
                 // 数据库操作
                 numValues = values.size
-                for (i in 0..numValues - 1) {
+                for (i in 0 until numValues) {
                     id = db.insertOrThrow(table, null, values[i])
                 }
                 db.setTransactionSuccessful() // Commit
@@ -175,8 +175,6 @@ class DatabaseProvider : ContentProvider() {
     }
 
 
-    override fun getType(p0: Uri?): String? {
-        return null
-    }
+    override fun getType(p0: Uri?): String? = null
 
 }

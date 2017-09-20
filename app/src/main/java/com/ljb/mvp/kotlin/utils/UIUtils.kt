@@ -33,13 +33,13 @@ object UIUtils {
             val wm = context.getSystemService(
                     Context.WINDOW_SERVICE) as WindowManager
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
                 val size = Point()
                 wm.defaultDisplay.getSize(size)
-                return size.x
+                size.x
             } else {
                 val d = wm.defaultDisplay
-                return d.width
+                d.width
             }
         }
 
@@ -149,9 +149,7 @@ object UIUtils {
      * *
      * @return
      */
-    fun getColor(id: Int): Int {
-        return resources.getColor(id)
-    }
+    fun getColor(id: Int): Int = resources.getColor(id)
 
     fun getDrawable(id: Int): Drawable {
         return resources.getDrawable(id)

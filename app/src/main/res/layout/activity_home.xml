@@ -6,7 +6,7 @@
     <com.ljb.mvp.kotlin.widget.TabGroupView
         android:id="@+id/tgv_group"
         android:layout_width="match_parent"
-        android:layout_height="61.5dp"
+        android:layout_height="50dip"
         android:layout_alignParentBottom="true"
         android:background="@android:color/transparent"
         android:orientation="horizontal" />

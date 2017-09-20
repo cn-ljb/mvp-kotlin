@@ -46,10 +46,9 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyContract.IMyView {
     }
 
     private fun initView() {
-        viewpager.offscreenPageLimit = 0
+        viewpager.offscreenPageLimit = mTabArr.size
         viewpager.adapter = MyTabAdapter(childFragmentManager, mTabArr)
         tablayout.setupWithViewPager(viewpager)
-
         btn_logout.setOnClickListener { mPresenter.logout() }
     }
 

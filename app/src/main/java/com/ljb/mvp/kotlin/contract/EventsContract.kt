@@ -10,10 +10,14 @@ import com.wuba.weizhang.mvp.IBaseView
 interface EventsContract {
 
     interface IEventsView : IBaseView {
-        fun showEvents(it: List<Event>)
+        fun showPage(data: MutableList<Event>, page: Int)
+        fun errorPage(t: Throwable, page: Int)
     }
 
     interface IEventsPresenter : IBasePresenter<IEventsView> {
 
+        fun onRefresh()
+
+        fun onLoadMore()
     }
 }

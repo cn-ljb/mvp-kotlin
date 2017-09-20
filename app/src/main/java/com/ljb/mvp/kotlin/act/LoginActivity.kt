@@ -36,13 +36,13 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.ILoginVie
         goHome()
     }
 
-    override fun loginError(error: String?) {
+    override fun loginError(errorMsg: String?) {
         tv_tip.visibility = View.VISIBLE
-        if (error.isNullOrEmpty()) {
+        if (errorMsg.isNullOrEmpty()) {
             tv_tip.setText(R.string.net_error)
             Toast.makeText(this, R.string.net_error, Toast.LENGTH_SHORT).show()
         } else {
-            tv_tip.text = error
+            tv_tip.text = errorMsg
         }
     }
 

@@ -1,10 +1,10 @@
 package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.contract.LoginContract
-import com.ljb.mvp.kotlin.protocol.dao.UsersDaoProtocol
+import com.ljb.mvp.kotlin.protocol.dao.UserDaoProtocol
 import com.ljb.mvp.kotlin.utils.RxUtils
 import com.wuba.weizhang.common.LoginUser
-import com.wuba.weizhang.protocol.http.UsersProtocol
+import com.wuba.weizhang.protocol.http.UserProtocol
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -31,13 +31,13 @@ class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContrac
     }
 
     override fun login(userName: String) {
-        mLoginDisposable = UsersProtocol.getUserInfoByName(userName)
+        mLoginDisposable = UserProtocol.getUserInfoByName(userName)
                 .map {
                     if (it.message.isNullOrBlank()) {
-                        if (UsersDaoProtocol.findUserByUserId(it.id) == null) {
-                            UsersDaoProtocol.saveUser(it)
+                        if (UserDaoProtocol.findUserByUserId(it.id) == null) {
+                            UserDaoProtocol.saveUser(it)
                         } else {
-                            UsersDaoProtocol.updateUser(it)
+                            UserDaoProtocol.updateUser(it)
                         }
                     }
                     it

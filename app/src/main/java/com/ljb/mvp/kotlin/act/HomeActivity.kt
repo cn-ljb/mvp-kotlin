@@ -15,12 +15,15 @@ import kotlinx.android.synthetic.main.activity_home.*
  */
 class HomeActivity : FragmentActivity() {
 
-    private val mRepositoriesFragment by lazy { RepositoriesFragment() }
-    private val mFollowingFragment by lazy { FollowingFragment() }
-    private val mMyFragment by lazy { MyFragment() }
+    private val mFragments = listOf(
+            RepositoriesFragment(),
+            FollowingFragment(),
+            MyFragment())
+
+    private var mCurIndex: Int = 0
 
 
-    private  val mTabList = listOf(
+    private val mTabList = listOf(
             TabBean(R.drawable.bottom_tab_repos, R.string.repos),
             TabBean(R.drawable.bottom_tab_following, R.string.following),
             TabBean(R.drawable.bottom_tab_my, R.string.my)
@@ -30,34 +33,39 @@ class HomeActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         savedInstanceState.let { supportFragmentManager.popBackStackImmediate(null, 1) }
         setContentView(R.layout.activity_home)
-        initView()
+        initView(savedInstanceState)
     }
 
-    private fun initView() {
+    private fun initView(savedInstanceState: Bundle?) {
         tgv_group.setOnItemClickListener { openTabFragment(it) }
         tgv_group.setAdapter(MainTabAdapter(this, mTabList))
 
-        //默认首页
-        openTabFragment(0)
+        if (savedInstanceState == null) {
+            //默认首页
+            openTabFragment(0)
+        } else {
+            val index = savedInstanceState.getInt("index")
+            openTabFragment(index)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putInt("index", mCurIndex)
     }
 
     private fun openTabFragment(position: Int) {
         tgv_group.setSelectedPosition(position)
-        when (position) {
-            0 -> mRepositoriesFragment
-            1 -> mFollowingFragment
-            2 -> mMyFragment
-            else -> null
-        }?.let {
-            val ft = supportFragmentManager.beginTransaction()
-            ft.hide(mRepositoriesFragment).hide(mFollowingFragment).hide(mMyFragment)
-            val f = supportFragmentManager.findFragmentByTag(it.javaClass.simpleName)
-            if (f == null) {
-                ft.add(R.id.fl_content, it, it.javaClass.simpleName).show(it).commit()
-            } else {
-                ft.show(f).commit()
-            }
+        val ft = supportFragmentManager.beginTransaction()
+        mFragments.filterIndexed { index, _ -> index != position }
+                .forEach { ft.hide(it) }
+        var f = supportFragmentManager.findFragmentByTag(mFragments[position].javaClass.simpleName)
+        if (f == null) {
+            f = mFragments[position]
+            ft.add(R.id.fl_content, f, f.javaClass.simpleName).show(f).commit()
+        } else {
+            ft.show(f).commit()
         }
+        mCurIndex = position
     }
 
 }
