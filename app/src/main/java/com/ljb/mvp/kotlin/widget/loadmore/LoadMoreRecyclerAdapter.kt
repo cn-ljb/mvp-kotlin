@@ -73,7 +73,7 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
 
     fun initLoadStatusForSize(data: List<T>) {
         if (data.size < PAGE_DATA_SIZE) {
-            setLoadMoreStatus(LoadMoreHolder.LoadMoreType.notMore)
+            setLoadMoreStatus(LoadMoreHolder.LoadMoreType.noMore)
         } else {
             setLoadMoreStatus(LoadMoreHolder.LoadMoreType.loading)
         }
@@ -85,15 +85,16 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
     }
 
     fun onNotMore() {
-        setLoadMoreStatus(LoadMoreHolder.LoadMoreType.notMore)
+        setLoadMoreStatus(LoadMoreHolder.LoadMoreType.noMore)
     }
 
 
     /**
-     *  创建加载更多View时触发
+     *  1、创建加载更多View时触发
+     *  2、点击重新加载时触发
      * */
     fun loadMore() {
-        if (!isLoading && mLoadMoreListener != null && mLoadMoreHolder.getCurType() == LoadMoreHolder.LoadMoreType.loading) {
+        if (!isLoading && mLoadMoreListener != null && mLoadMoreHolder.getType() == LoadMoreHolder.LoadMoreType.loading) {
             isLoading = true
             mLoadMoreListener!!.onLoadMore()
         }

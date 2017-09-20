@@ -17,7 +17,7 @@ class LoadMoreHolder(view: View, private val mAdapter: LoadMoreRecyclerAdapter<*
     private var rl_more_not: RelativeLayout? = null
 
     enum class LoadMoreType {
-        loading, error, notMore
+        loading, error, noMore
     }
 
     init {
@@ -35,7 +35,7 @@ class LoadMoreHolder(view: View, private val mAdapter: LoadMoreRecyclerAdapter<*
     private fun initStatus() {
         rl_more_loading!!.visibility = if (mCurType == LoadMoreType.loading) View.VISIBLE else View.GONE
         rl_more_error!!.visibility = if (mCurType == LoadMoreType.error) View.VISIBLE else View.GONE
-        rl_more_not!!.visibility = if (mCurType == LoadMoreType.notMore) View.VISIBLE else View.GONE
+        rl_more_not!!.visibility = if (mCurType == LoadMoreType.noMore) View.VISIBLE else View.GONE
     }
 
     private fun reLoadMore() {
@@ -46,7 +46,7 @@ class LoadMoreHolder(view: View, private val mAdapter: LoadMoreRecyclerAdapter<*
         }
     }
 
-    fun getCurType(): LoadMoreType = mCurType
+    fun getType(): LoadMoreType = mCurType
 
     fun setStatus(mCurType: LoadMoreType) {
         this.mCurType = mCurType
