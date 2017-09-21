@@ -45,9 +45,12 @@ class EventAdapter(mContext: Context, mData: MutableList<Event>) : LoadMoreRecyc
         var commentStr = "commits:\n"
         for ((index, comment) in commits.withIndex()) {
             if (index <= 3) {
-                commentStr = "$commentStr\t\t${comment.message}\n"
+                if (index != 0) {
+                    commentStr = "$commentStr--- --- ---\n"
+                }
+                commentStr = "$commentStr${comment.message}\n"
             } else {
-                commentStr = "$commentStr\t\t..."
+                commentStr = "$commentStr..."
                 break
             }
         }

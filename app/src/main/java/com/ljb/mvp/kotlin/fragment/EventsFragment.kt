@@ -20,24 +20,17 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
  */
 class EventsFragment : BaseMvpFragment<EventPresenter>(), EventsContract.IEventsView, PageStateLayout.PageStateCallBack, LoadMoreRecyclerAdapter.LoadMoreListener {
 
-    private var mView: View? = null
     private lateinit var mPageLayout: PageStateLayout
     private var mAdapter: EventAdapter? = null
 
     override fun createPresenter() = EventPresenter(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if (mView == null) {
-            mView = inflater.inflate(R.layout.fragment_events, null)
-            val contentView = View.inflate(activity, R.layout.layout_recycler_view, null)
-            mPageLayout = mView!!.findViewById(R.id.page_layout) as PageStateLayout
-            mPageLayout.setContentView(contentView)
-            mPageLayout.addCallBack(this)
-        } else {
-            val parent = mView!!.parent
-            (parent as? ViewGroup)?.removeView(mView)
-        }
-        return mView
+        val view = inflater.inflate(R.layout.fragment_events, null)
+        mPageLayout = view.findViewById(R.id.page_layout) as PageStateLayout
+        mPageLayout.setContentView(View.inflate(activity, R.layout.layout_recycler_view, null))
+        mPageLayout.addCallBack(this)
+        return view
     }
 
 
