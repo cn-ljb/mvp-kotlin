@@ -16,7 +16,7 @@ class GlideCircleTransform : BitmapTransformation {
     private var mBorderWidth: Float = 0f
 
 
-    constructor(context: Context) : super(context) {}
+    constructor(context: Context) : super(context)
 
     constructor(context: Context, borderWidth: Int, borderColor: Int) : super(context) {
         mBorderWidth = Resources.getSystem().displayMetrics.density * borderWidth
@@ -29,9 +29,8 @@ class GlideCircleTransform : BitmapTransformation {
     }
 
 
-    override fun transform(pool: BitmapPool, toTransform: Bitmap, outWidth: Int, outHeight: Int): Bitmap? {
-        return circleCrop(pool, toTransform)
-    }
+    override fun transform(pool: BitmapPool, toTransform: Bitmap, outWidth: Int, outHeight: Int): Bitmap? =
+            circleCrop(pool, toTransform)
 
     private fun circleCrop(pool: BitmapPool, source: Bitmap?): Bitmap? {
 
@@ -63,7 +62,5 @@ class GlideCircleTransform : BitmapTransformation {
         return result
     }
 
-    override fun getId(): String {
-        return javaClass.name
-    }
+    override fun getId(): String = javaClass.name
 }

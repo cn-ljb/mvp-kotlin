@@ -16,4 +16,5 @@
     <string name="loading">loading...</string>
     <string name="load_error_click">load failed, click retry</string>
     <string name="load_not_more">no more data</string>
+    <string name="followers_count">count: %s people</string>
 </resources>

@@ -23,7 +23,7 @@ class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContrac
     private var mLoginDisposable: Disposable? = null
 
     override fun startTask() {
-        if (LoginUser.name.isNullOrBlank()) {
+        if (LoginUser.name.isBlank()) {
             mView.showLogin()
         } else {
             mTimerDisposable = mTimerObservable.subscribe { mView.goHome() }

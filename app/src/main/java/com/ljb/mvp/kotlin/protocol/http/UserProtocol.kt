@@ -1,6 +1,7 @@
 package com.wuba.weizhang.protocol.http
 
 import com.ljb.mvp.kotlin.domain.Event
+import com.ljb.mvp.kotlin.domain.Follower
 import com.ljb.mvp.kotlin.domain.Starred
 import com.ljb.mvp.kotlin.domain.User
 import com.ljb.mvp.kotlin.utils.JsonParser
@@ -21,7 +22,6 @@ object UserProtocol : BaseHttpProtocol() {
         }
     }
 
-
     fun getEventsByName(userName: String, page: Int): Observable<MutableList<Event>> {
         val url = "$HTTP_API_DOMAIN/users/${nvl(userName)}/events"
         return createObservable(url, XgoHttpClient.METHOD_GET, mapOf("page" to "$page")) {
@@ -35,4 +35,14 @@ object UserProtocol : BaseHttpProtocol() {
             JsonParser.fromJsonArr(it, Starred::class.java)
         }
     }
+
+
+    fun getFollowersByName(userName: String, page: Int): Observable<MutableList<Follower>> {
+        val url = "$HTTP_API_DOMAIN/users/${nvl(userName)}/followers"
+        return createObservable(url, XgoHttpClient.METHOD_GET, mapOf("page" to "$page")) {
+            JsonParser.fromJsonArr(it, Follower::class.java)
+        }
+    }
+
+
 }

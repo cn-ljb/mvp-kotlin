@@ -4,24 +4,41 @@ import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.ljb.mvp.kotlin.R
+import com.ljb.mvp.kotlin.domain.Follower
+import com.ljb.mvp.kotlin.img.GlideRoundTransform
+import com.yimu.store.widget.loadmore.LoadMoreRecyclerAdapter
 
 /**
  * Created by L on 2017/7/19.
  */
-class FollowersAdapter(val mContext: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FollowersAdapter(mContext: Context, mData: MutableList<Follower>) : LoadMoreRecyclerAdapter<Follower>(mContext, mData) {
+    override fun getItemHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder =
+            FollowersViewHolder(View.inflate(mContext, R.layout.item_followers, null))
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+    override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is FollowersViewHolder) {
+            val item = mData[position]
+            Glide.with(mContext).load(item.avatar_url)
+                    .crossFade()
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .placeholder(R.drawable.default_header)
+                    .error(R.drawable.default_header)
+                    .transform(GlideRoundTransform(mContext))
+                    .into(holder.iv_avatar)
+            holder.tv_follower_name.text = item.login
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
-        return FollowersViewHolder(View.inflate(mContext, R.layout.item_followers, null))
-    }
 
-    override fun getItemCount(): Int {
-        return 30
+    class FollowersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val iv_avatar by lazy { itemView.findViewById(R.id.iv_avatar) as ImageView }
+        val tv_follower_name by lazy { itemView.findViewById(R.id.tv_follower_name) as TextView }
     }
-
-    class FollowersViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView)
 
 }

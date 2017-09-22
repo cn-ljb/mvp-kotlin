@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.act.LoginActivity
 import com.ljb.mvp.kotlin.adapter.MyTabAdapter
@@ -66,9 +67,12 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyContract.IMyView {
     }
 
     override fun showUserInfo(user: User) {
-        Glide.with(this)
-                .load(user.avatar_url)
+        Glide.with(this).load(user.avatar_url)
+                .crossFade()
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.drawable.default_header)
+                .error(R.drawable.default_header)
                 .transform(GlideCircleTransform(context))
                 .into(iv_header)
         tv_name.text = user.login
