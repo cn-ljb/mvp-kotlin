@@ -7,19 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.ljb.mvp.kotlin.R
-import com.ljb.mvp.kotlin.domain.Starred
+import com.ljb.mvp.kotlin.domain.Repository
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 
 /**
- * Created by L on 2017/7/19.
+ * Created by L on 2017/9/27.
  */
-class StarredAdapter(mContext: Context, mData: MutableList<Starred>) : LoadMoreRecyclerAdapter<Starred>(mContext, mData) {
+class RepositoriesAdapter(mContext: Context, mData: MutableList<Repository>) : LoadMoreRecyclerAdapter<Repository>(mContext, mData) {
 
     override fun getItemHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder =
-            StarredViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_starred, parent, false))
+            RepositoriesViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_starred, parent, false))
 
     override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is StarredViewHolder) {
+        if (holder is RepositoriesViewHolder) {
             val item = mData[position]
             holder.tv_project_name.text = item.name
             holder.tv_language.text = item.language
@@ -34,7 +34,7 @@ class StarredAdapter(mContext: Context, mData: MutableList<Starred>) : LoadMoreR
     }
 
 
-    class StarredViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class RepositoriesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tv_project_name by lazy { itemView.findViewById(R.id.tv_project_name) as TextView }
         val tv_language by lazy { itemView.findViewById(R.id.tv_language) as TextView }
         val tv_author by lazy { itemView.findViewById(R.id.tv_author) as TextView }

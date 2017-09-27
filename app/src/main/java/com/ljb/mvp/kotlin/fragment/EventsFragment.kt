@@ -12,7 +12,7 @@ import com.ljb.mvp.kotlin.domain.Event
 import com.ljb.mvp.kotlin.presenter.EventPresenter
 import com.wuba.weizhang.mvp.BaseMvpFragment
 import com.yimu.store.widget.PageStateLayout
-import com.yimu.store.widget.loadmore.LoadMoreRecyclerAdapter
+import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 
 /**

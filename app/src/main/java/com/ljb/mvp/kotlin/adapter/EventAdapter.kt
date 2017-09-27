@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.domain.Event
 import com.ljb.mvp.kotlin.domain.EventCommit
-import com.yimu.store.widget.loadmore.LoadMoreRecyclerAdapter
+import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 
 /**
  * Created by L on 2017/7/19.

@@ -1,10 +1,9 @@
-package com.yimu.store.widget.loadmore
+package com.ljb.mvp.kotlin.widget.loadmore
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.RelativeLayout
 import com.ljb.mvp.kotlin.R
-
 
 /**
  * Created by L on 2017/1/16.

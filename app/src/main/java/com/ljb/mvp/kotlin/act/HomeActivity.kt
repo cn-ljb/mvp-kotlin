@@ -22,7 +22,6 @@ class HomeActivity : FragmentActivity() {
 
     private var mCurIndex: Int = 0
 
-
     private val mTabList = listOf(
             TabBean(R.drawable.bottom_tab_repos, R.string.repos),
             TabBean(R.drawable.bottom_tab_following, R.string.following),
