@@ -49,4 +49,11 @@ object UserProtocol : BaseHttpProtocol() {
         }
     }
 
+    fun getFollowingByName(userName: String, page: Int): Observable<MutableList<Following>> {
+        val url = "$HTTP_API_DOMAIN/users/${nvl(userName)}/following"
+        return createObservable(url, XgoHttpClient.METHOD_GET, mapOf("page" to "$page")) {
+            JsonParser.fromJsonArr(it, Following::class.java)
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.ljb.mvp.kotlin.act
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.domain.TabBean
@@ -15,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_home.*
  */
 class HomeActivity : FragmentActivity() {
 
-    private val mFragments = listOf(
+    private val mFragments = listOf<Fragment>(
             RepositoriesFragment(),
             FollowingFragment(),
             MyFragment())
