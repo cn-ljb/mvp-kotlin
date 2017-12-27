@@ -1,73 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginBottom="5dp"
+        android:layout_gravity="center"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/shape_round_gray"
-        android:orientation="horizontal">
-
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <ImageView
             android:id="@+id/iv_avatar"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/ic_launcher" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/test_header" />
+
+        <TextView
+            android:id="@+id/tv_following_name"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@id/iv_avatar"
+            android:layout_centerHorizontal="true"
+            android:text="cn-ljb"
+            android:textColor="@color/color333"
+            android:textSize="16sp" />
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp">
-
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="cn-ljb"
-                android:textColor="@color/color333"
-                android:textSize="18sp" />
-
-
-            <TextView
-                android:id="@+id/tv_company"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:drawableLeft="@drawable/icon_company"
-                android:drawablePadding="5dp"
-                android:gravity="center"
-                android:text="58"
-                android:textColor="@color/color666"
-                android:textSize="14sp" />
-
-
-            <TextView
-                android:id="@+id/tv_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/tv_company"
-                android:drawableLeft="@drawable/icon_location"
-                android:drawablePadding="5dp"
-                android:gravity="center"
-                android:text="China"
-                android:textColor="@color/color666"
-                android:textSize="14sp" />
-
-
-        </RelativeLayout>
-
-
-    </LinearLayout>
-
-
+    </RelativeLayout>
 </FrameLayout>

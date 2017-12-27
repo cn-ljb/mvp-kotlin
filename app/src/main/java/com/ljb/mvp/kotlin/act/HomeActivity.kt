@@ -3,6 +3,7 @@ package com.ljb.mvp.kotlin.act
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
+import android.widget.Toast
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.domain.TabBean
 import com.ljb.mvp.kotlin.fragment.home.FollowingFragment
@@ -68,4 +69,20 @@ class HomeActivity : FragmentActivity() {
         mCurIndex = position
     }
 
+    private var mFirstDown: Long = 0L
+    override fun onBackPressed() {
+        if (mFirstDown == 0L) {
+            mFirstDown = System.currentTimeMillis()
+            Toast.makeText(this, R.string.exit_go_out, Toast.LENGTH_SHORT).show()
+        } else {
+            val nextDown = System.currentTimeMillis()
+            val downTime = nextDown - mFirstDown
+            if (downTime < 2000L) {
+                super.onBackPressed()
+            } else {
+                mFirstDown = nextDown
+                Toast.makeText(this, R.string.exit_go_out, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 }

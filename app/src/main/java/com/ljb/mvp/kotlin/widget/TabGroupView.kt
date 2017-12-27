@@ -31,7 +31,7 @@ class TabGroupView : LinearLayout {
         if (adapter != null && adapter.getCount() > 0) {
             for (i in 0 until adapter.getCount()) {
                 val tabView = adapter.getTabView(i)
-                val params = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT)
+                val params = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT)
                 params.weight = 1f
                 params.gravity = Gravity.CENTER
                 addView(tabView, params)
@@ -42,14 +42,14 @@ class TabGroupView : LinearLayout {
 
     fun setSelectedPosition(position: Int) {
         initUnSelected()
-        getChildAt(position).findViewById(R.id.bottom_tab_icon).let { it.isSelected = true }
-        getChildAt(position).findViewById(R.id.bottom_tab_text).let { it.isSelected = true }
+        getChildAt(position).findViewById(R.id.bottom_tab_icon)?.let { it.isSelected = true }
+        getChildAt(position).findViewById(R.id.bottom_tab_text)?.let { it.isSelected = true }
     }
 
     private fun initUnSelected() {
-        (0..childCount - 1).mapNotNull {
-            getChildAt(it).findViewById(R.id.bottom_tab_icon).let { it.isSelected = false }
-            getChildAt(it).findViewById(R.id.bottom_tab_text).let { it.isSelected = false }
+        (0 until childCount).mapNotNull {
+            getChildAt(it).findViewById(R.id.bottom_tab_icon)?.let { it.isSelected = false }
+            getChildAt(it).findViewById(R.id.bottom_tab_text)?.let { it.isSelected = false }
         }
     }
 

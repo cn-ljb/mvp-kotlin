@@ -1,5 +1,6 @@
 package com.ljb.rxjava.kotlin.net
 
+import android.text.TextUtils
 import com.ljb.rxjava.kotlin.log.XgoLog
 import com.ljb.rxjava.kotlin.net.interceptor.XgoLogInterceptor
 import okhttp3.*
@@ -11,6 +12,9 @@ import java.util.concurrent.TimeUnit
  */
 
 object XgoHttpClient {
+
+    var GITHUB_CLIENT_ID = ""
+    var GITHUB_CLIENT_SECRET = ""
 
     private val DEFAULT_TIME_OUT = 5000L
 
@@ -70,6 +74,11 @@ object XgoHttpClient {
         params!!.map {
             bodyBuilder.addFormDataPart(it.key, it.value)
         }
+        //添加github授权
+        if (!TextUtils.isEmpty(GITHUB_CLIENT_ID) && !TextUtils.isEmpty(GITHUB_CLIENT_SECRET)) {
+            bodyBuilder.addFormDataPart("client_id", GITHUB_CLIENT_ID)
+            bodyBuilder.addFormDataPart("client_secret", GITHUB_CLIENT_SECRET)
+        }
         return bodyBuilder.build()
     }
 
@@ -78,6 +87,7 @@ object XgoHttpClient {
      * 创建Get链接
      * */
     private fun initGetRequest(url: String, params: Map<String, String>?): String {
+        var getUrl = url
         if (params != null && params.isNotEmpty()) {
             val sb = StringBuilder(url).append("?")
             var count = 0
@@ -89,9 +99,16 @@ object XgoHttpClient {
                     sb.append("&")
                 }
             }
-            return sb.toString()
+            getUrl = sb.toString()
         }
-        return url
+
+        //添加github授权
+        if (!TextUtils.isEmpty(GITHUB_CLIENT_ID) && !TextUtils.isEmpty(GITHUB_CLIENT_SECRET)) {
+            getUrl += if (getUrl.contains("?")) "&" else "?"
+            getUrl += "client_id=$GITHUB_CLIENT_ID&client_secret=$GITHUB_CLIENT_SECRET"
+        }
+
+        return getUrl
     }
 
 }

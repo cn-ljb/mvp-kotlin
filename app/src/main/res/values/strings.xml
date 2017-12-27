@@ -13,8 +13,9 @@
     <string name="followers">followers</string>
     <string name="load_error">Network error</string>
     <string name="reload">Reload</string>
-    <string name="loading">loading...</string>
+    <string name="loading">loading…</string>
     <string name="load_error_click">load failed, click retry</string>
     <string name="load_not_more">no more data</string>
     <string name="followers_count">count: %s people</string>
+    <string name="exit_go_out">double click to exit</string>
 </resources>

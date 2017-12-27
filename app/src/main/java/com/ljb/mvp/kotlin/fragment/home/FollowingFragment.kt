@@ -1,7 +1,7 @@
 package com.ljb.mvp.kotlin.fragment.home
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +44,7 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
     }
 
     private fun initView() {
-        val manager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        val manager = GridLayoutManager(context, 3)
         recyclerview.layoutManager = manager
     }
 
