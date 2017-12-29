@@ -10,9 +10,9 @@ import com.ljb.mvp.kotlin.adapter.FollowersAdapter
 import com.ljb.mvp.kotlin.contract.FollowersContract
 import com.ljb.mvp.kotlin.domain.Follower
 import com.ljb.mvp.kotlin.presenter.FollowersPresenter
+import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import com.wuba.weizhang.mvp.BaseMvpFragment
 import com.yimu.store.widget.PageStateLayout
-import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 
 /**
@@ -22,7 +22,7 @@ class FollowersFragment : BaseMvpFragment<FollowersPresenter>(), FollowersContra
 
 
     private lateinit var mPageLayout: PageStateLayout
-    private var mAdapter: FollowersAdapter? = null
+    private val mAdapter by lazy { FollowersAdapter(activity, mutableListOf()) }
 
 
     override fun createPresenter() = FollowersPresenter(this)
@@ -46,6 +46,8 @@ class FollowersFragment : BaseMvpFragment<FollowersPresenter>(), FollowersContra
     private fun initView() {
         val manager = GridLayoutManager(context, 3)
         recycler_view.layoutManager = manager
+        recycler_view.adapter = mAdapter
+        mAdapter.setOnLoadMoreListener(this)
     }
 
     private fun initData() {
@@ -67,24 +69,18 @@ class FollowersFragment : BaseMvpFragment<FollowersPresenter>(), FollowersContra
                 mPageLayout.setPage(PageStateLayout.STATE_EMPTY)
             } else {
                 mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
-                if (mAdapter == null) {
-                    mAdapter = FollowersAdapter(activity, data)
-                    recycler_view.adapter = mAdapter
-                    mAdapter!!.setOnLoadMoreListener(this)
-                } else {
-                    mAdapter!!.mData.clear()
-                    mAdapter!!.mData.addAll(data)
-                    mAdapter!!.initLoadStatusForSize(data)
-                    mAdapter!!.notifyDataSetChanged()
-                }
+                mAdapter.mData.clear()
+                mAdapter.mData.addAll(data)
+                mAdapter.initLoadStatusForSize(data)
+                mAdapter.notifyDataSetChanged()
             }
         } else {
             if (data.isEmpty()) {
-                mAdapter!!.onNotMore()
+                mAdapter.onNotMore()
             } else {
-                mAdapter!!.mData.addAll(data)
-                mAdapter!!.initLoadStatusForSize(data)
-                mAdapter!!.notifyDataSetChanged()
+                mAdapter.mData.addAll(data)
+                mAdapter.initLoadStatusForSize(data)
+                mAdapter.notifyDataSetChanged()
             }
         }
     }
@@ -93,7 +89,7 @@ class FollowersFragment : BaseMvpFragment<FollowersPresenter>(), FollowersContra
         if (page == 1) {
             mPageLayout.setPage(PageStateLayout.STATE_ERROR)
         } else {
-            mAdapter!!.onError()
+            mAdapter.onError()
         }
     }
 }

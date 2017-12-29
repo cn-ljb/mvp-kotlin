@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ljb.mvp.kotlin.R
+import com.ljb.rxjava.kotlin.log.XgoLog
 
 /**
  * Created by L on 2017/7/24.
@@ -53,6 +54,7 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
                 }
             }
         } else if (itemViewType == TYPE_LOAD_MORE) {
+            XgoLog.i("TYPE_LOAD_MORE")
             loadMore()
         }
     }
@@ -77,7 +79,7 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
 
     fun initLoadStatusForSize(data: List<T>) {
         if (data.size < PAGE_DATA_SIZE) {
-            setLoadMoreStatus(LoadMoreHolder.LoadMoreType.noMore)
+            setLoadMoreStatus(LoadMoreHolder.LoadMoreType.notMore)
         } else {
             setLoadMoreStatus(LoadMoreHolder.LoadMoreType.loading)
         }
@@ -89,7 +91,7 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
     }
 
     fun onNotMore() {
-        setLoadMoreStatus(LoadMoreHolder.LoadMoreType.noMore)
+        setLoadMoreStatus(LoadMoreHolder.LoadMoreType.notMore)
     }
 
 
@@ -98,7 +100,7 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
      *  2、点击重新加载时触发
      * */
     fun loadMore() {
-        if (!isLoading && mLoadMoreListener != null && mLoadMoreHolder?.getType() == LoadMoreHolder.LoadMoreType.loading) {
+        if (!isLoading && mLoadMoreListener != null && mLoadMoreHolder!!.getType() == LoadMoreHolder.LoadMoreType.loading) {
             isLoading = true
             mLoadMoreListener!!.onLoadMore()
         }

@@ -24,7 +24,7 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
         LoadMoreRecyclerAdapter.LoadMoreListener {
 
     private lateinit var mPageLayout: PageStateLayout
-    private var mAdapter: FollowingAdapter? = null
+    private val mAdapter by lazy { FollowingAdapter(activity, mutableListOf()) }
 
     override fun createPresenter() = FollowingPresenter(this)
 
@@ -49,6 +49,8 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
 
         val manager = GridLayoutManager(context, 3)
         recycler_view.layoutManager = manager
+        recycler_view.adapter = mAdapter
+        mAdapter.setOnLoadMoreListener(this)
     }
 
     private fun initData() {
@@ -71,24 +73,18 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
                 mPageLayout.setPage(PageStateLayout.STATE_EMPTY)
             } else {
                 mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
-                if (mAdapter == null) {
-                    mAdapter = FollowingAdapter(activity, data)
-                    recycler_view.adapter = mAdapter
-                    mAdapter!!.setOnLoadMoreListener(this)
-                } else {
-                    mAdapter!!.mData.clear()
-                    mAdapter!!.mData.addAll(data)
-                    mAdapter!!.initLoadStatusForSize(data)
-                    mAdapter!!.notifyDataSetChanged()
-                }
+                mAdapter.mData.clear()
+                mAdapter.mData.addAll(data)
+                mAdapter.initLoadStatusForSize(data)
+                mAdapter.notifyDataSetChanged()
             }
         } else {
             if (data.isEmpty()) {
-                mAdapter!!.onNotMore()
+                mAdapter.onNotMore()
             } else {
-                mAdapter!!.mData.addAll(data)
-                mAdapter!!.initLoadStatusForSize(data)
-                mAdapter!!.notifyDataSetChanged()
+                mAdapter.mData.addAll(data)
+                mAdapter.initLoadStatusForSize(data)
+                mAdapter.notifyDataSetChanged()
             }
         }
     }
@@ -97,7 +93,7 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
         if (page == 1) {
             mPageLayout.setPage(PageStateLayout.STATE_ERROR)
         } else {
-            mAdapter!!.onError()
+            mAdapter.onError()
         }
     }
 

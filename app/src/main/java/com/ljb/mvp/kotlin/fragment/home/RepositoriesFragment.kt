@@ -1,5 +1,6 @@
 package com.ljb.mvp.kotlin.fragment.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.yimu.store.widget.PageStateLayout
 import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
 
 /**
+ * Repos page
  * Created by L on 2017/7/18.
  */
 class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
@@ -24,10 +26,11 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
         LoadMoreRecyclerAdapter.LoadMoreListener {
 
     private lateinit var mPageLayout: PageStateLayout
-    private var mAdapter: RepositoriesAdapter? = null
+    private val mAdapter by lazy { RepositoriesAdapter(activity, mutableListOf()) }
 
     override fun createPresenter() = RepositoriesPresenter(this)
 
+    @SuppressLint("InflateParams")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_repos, null)
         mPageLayout = view.findViewById(R.id.page_layout) as PageStateLayout
@@ -49,6 +52,8 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
 
         val manager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler_view.layoutManager = manager
+        recycler_view.adapter = mAdapter
+        mAdapter.setOnLoadMoreListener(this)
     }
 
     private fun initData() {
@@ -71,24 +76,18 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
                 mPageLayout.setPage(PageStateLayout.STATE_EMPTY)
             } else {
                 mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
-                if (mAdapter == null) {
-                    mAdapter = RepositoriesAdapter(activity, data)
-                    recycler_view.adapter = mAdapter
-                    mAdapter!!.setOnLoadMoreListener(this)
-                } else {
-                    mAdapter!!.mData.clear()
-                    mAdapter!!.mData.addAll(data)
-                    mAdapter!!.initLoadStatusForSize(data)
-                    mAdapter!!.notifyDataSetChanged()
-                }
+                mAdapter.mData.clear()
+                mAdapter.mData.addAll(data)
+                mAdapter.initLoadStatusForSize(data)
+                mAdapter.notifyDataSetChanged()
             }
         } else {
             if (data.isEmpty()) {
-                mAdapter!!.onNotMore()
+                mAdapter.onNotMore()
             } else {
-                mAdapter!!.mData.addAll(data)
-                mAdapter!!.initLoadStatusForSize(data)
-                mAdapter!!.notifyDataSetChanged()
+                mAdapter.mData.addAll(data)
+                mAdapter.initLoadStatusForSize(data)
+                mAdapter.notifyDataSetChanged()
             }
         }
     }
@@ -97,7 +96,7 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
         if (page == 1) {
             mPageLayout.setPage(PageStateLayout.STATE_ERROR)
         } else {
-            mAdapter!!.onError()
+            mAdapter.onError()
         }
     }
 

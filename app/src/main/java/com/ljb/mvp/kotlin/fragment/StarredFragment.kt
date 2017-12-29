@@ -10,9 +10,9 @@ import com.ljb.mvp.kotlin.adapter.StarredAdapter
 import com.ljb.mvp.kotlin.contract.StarredContract
 import com.ljb.mvp.kotlin.domain.Starred
 import com.ljb.mvp.kotlin.presenter.StarredPresenter
+import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import com.wuba.weizhang.mvp.BaseMvpFragment
 import com.yimu.store.widget.PageStateLayout
-import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 
 /**
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
 class StarredFragment : BaseMvpFragment<StarredPresenter>(), StarredContract.IStarredView, PageStateLayout.PageStateCallBack, LoadMoreRecyclerAdapter.LoadMoreListener {
 
     private lateinit var mPageLayout: PageStateLayout
-    private var mAdapter: StarredAdapter? = null
+    private val mAdapter: StarredAdapter by lazy { StarredAdapter(activity, mutableListOf()) }
 
     override fun createPresenter() = StarredPresenter(this)
 
@@ -43,6 +43,8 @@ class StarredFragment : BaseMvpFragment<StarredPresenter>(), StarredContract.ISt
     private fun initView() {
         val manager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler_view.layoutManager = manager
+        recycler_view.adapter = mAdapter
+        mAdapter.setOnLoadMoreListener(this)
     }
 
     private fun initData() {
@@ -64,24 +66,18 @@ class StarredFragment : BaseMvpFragment<StarredPresenter>(), StarredContract.ISt
                 mPageLayout.setPage(PageStateLayout.STATE_EMPTY)
             } else {
                 mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
-                if (mAdapter == null) {
-                    mAdapter = StarredAdapter(activity, data)
-                    recycler_view.adapter = mAdapter
-                    mAdapter!!.setOnLoadMoreListener(this)
-                } else {
-                    mAdapter!!.mData.clear()
-                    mAdapter!!.mData.addAll(data)
-                    mAdapter!!.initLoadStatusForSize(data)
-                    mAdapter!!.notifyDataSetChanged()
-                }
+                mAdapter.mData.clear()
+                mAdapter.mData.addAll(data)
+                mAdapter.initLoadStatusForSize(data)
+                mAdapter.notifyDataSetChanged()
             }
         } else {
             if (data.isEmpty()) {
-                mAdapter!!.onNotMore()
+                mAdapter.onNotMore()
             } else {
-                mAdapter!!.mData.addAll(data)
-                mAdapter!!.initLoadStatusForSize(data)
-                mAdapter!!.notifyDataSetChanged()
+                mAdapter.mData.addAll(data)
+                mAdapter.initLoadStatusForSize(data)
+                mAdapter.notifyDataSetChanged()
             }
         }
     }
@@ -90,7 +86,7 @@ class StarredFragment : BaseMvpFragment<StarredPresenter>(), StarredContract.ISt
         if (page == 1) {
             mPageLayout.setPage(PageStateLayout.STATE_ERROR)
         } else {
-            mAdapter!!.onError()
+            mAdapter.onError()
         }
     }
 

@@ -10,9 +10,9 @@ import com.ljb.mvp.kotlin.adapter.EventAdapter
 import com.ljb.mvp.kotlin.contract.EventsContract
 import com.ljb.mvp.kotlin.domain.Event
 import com.ljb.mvp.kotlin.presenter.EventPresenter
+import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import com.wuba.weizhang.mvp.BaseMvpFragment
 import com.yimu.store.widget.PageStateLayout
-import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 
 /**
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
 class EventsFragment : BaseMvpFragment<EventPresenter>(), EventsContract.IEventsView, PageStateLayout.PageStateCallBack, LoadMoreRecyclerAdapter.LoadMoreListener {
 
     private lateinit var mPageLayout: PageStateLayout
-    private var mAdapter: EventAdapter? = null
+    private val mAdapter by lazy { EventAdapter(activity, mutableListOf()) }
 
     override fun createPresenter() = EventPresenter(this)
 
@@ -44,6 +44,8 @@ class EventsFragment : BaseMvpFragment<EventPresenter>(), EventsContract.IEvents
     private fun initView() {
         val manager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recycler_view.layoutManager = manager
+        recycler_view.adapter = mAdapter
+        mAdapter.setOnLoadMoreListener(this)
     }
 
     private fun initData() {
@@ -65,24 +67,18 @@ class EventsFragment : BaseMvpFragment<EventPresenter>(), EventsContract.IEvents
                 mPageLayout.setPage(PageStateLayout.STATE_EMPTY)
             } else {
                 mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
-                if (mAdapter == null) {
-                    mAdapter = EventAdapter(activity, data)
-                    recycler_view.adapter = mAdapter
-                    mAdapter!!.setOnLoadMoreListener(this)
-                } else {
-                    mAdapter!!.mData.clear()
-                    mAdapter!!.mData.addAll(data)
-                    mAdapter!!.initLoadStatusForSize(data)
-                    mAdapter!!.notifyDataSetChanged()
-                }
+                mAdapter.mData.clear()
+                mAdapter.mData.addAll(data)
+                mAdapter.initLoadStatusForSize(data)
+                mAdapter.notifyDataSetChanged()
             }
         } else {
             if (data.isEmpty()) {
-                mAdapter!!.onNotMore()
+                mAdapter.onNotMore()
             } else {
-                mAdapter!!.mData.addAll(data)
-                mAdapter!!.initLoadStatusForSize(data)
-                mAdapter!!.notifyDataSetChanged()
+                mAdapter.mData.addAll(data)
+                mAdapter.initLoadStatusForSize(data)
+                mAdapter.notifyDataSetChanged()
             }
         }
     }
@@ -91,7 +87,7 @@ class EventsFragment : BaseMvpFragment<EventPresenter>(), EventsContract.IEvents
         if (page == 1) {
             mPageLayout.setPage(PageStateLayout.STATE_ERROR)
         } else {
-            mAdapter!!.onError()
+            mAdapter.onError()
         }
     }
 
