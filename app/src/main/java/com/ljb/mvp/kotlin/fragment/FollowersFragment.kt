@@ -45,7 +45,7 @@ class FollowersFragment : BaseMvpFragment<FollowersPresenter>(), FollowersContra
 
     private fun initView() {
         val manager = GridLayoutManager(context, 3)
-        recyclerview.layoutManager = manager
+        recycler_view.layoutManager = manager
     }
 
     private fun initData() {
@@ -69,7 +69,7 @@ class FollowersFragment : BaseMvpFragment<FollowersPresenter>(), FollowersContra
                 mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
                 if (mAdapter == null) {
                     mAdapter = FollowersAdapter(activity, data)
-                    recyclerview.adapter = mAdapter
+                    recycler_view.adapter = mAdapter
                     mAdapter!!.setOnLoadMoreListener(this)
                 } else {
                     mAdapter!!.mData.clear()

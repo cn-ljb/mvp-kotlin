@@ -42,7 +42,7 @@ class StarredFragment : BaseMvpFragment<StarredPresenter>(), StarredContract.ISt
 
     private fun initView() {
         val manager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        recyclerview.layoutManager = manager
+        recycler_view.layoutManager = manager
     }
 
     private fun initData() {
@@ -66,7 +66,7 @@ class StarredFragment : BaseMvpFragment<StarredPresenter>(), StarredContract.ISt
                 mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
                 if (mAdapter == null) {
                     mAdapter = StarredAdapter(activity, data)
-                    recyclerview.adapter = mAdapter
+                    recycler_view.adapter = mAdapter
                     mAdapter!!.setOnLoadMoreListener(this)
                 } else {
                     mAdapter!!.mData.clear()

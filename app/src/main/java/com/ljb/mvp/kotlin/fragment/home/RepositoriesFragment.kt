@@ -10,10 +10,10 @@ import com.ljb.mvp.kotlin.adapter.RepositoriesAdapter
 import com.ljb.mvp.kotlin.contract.RepositoriesContract
 import com.ljb.mvp.kotlin.domain.Repository
 import com.ljb.mvp.kotlin.presenter.RepositoriesPresenter
+import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import com.wuba.weizhang.mvp.BaseMvpFragment
 import com.yimu.store.widget.PageStateLayout
-import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
-import kotlinx.android.synthetic.main.layout_recycler_view.*
+import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
 
 /**
  * Created by L on 2017/7/18.
@@ -31,7 +31,7 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_repos, null)
         mPageLayout = view.findViewById(R.id.page_layout) as PageStateLayout
-        mPageLayout.setContentView(View.inflate(activity, R.layout.layout_recycler_view, null))
+        mPageLayout.setContentView(View.inflate(activity, R.layout.layout_refresh_recycler_view, null))
         mPageLayout.addCallBack(this)
         return view
     }
@@ -44,8 +44,11 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
     }
 
     private fun initView() {
+        refresh_layout.setColorSchemeResources(R.color.colorBlue)
+        refresh_layout.setOnRefreshListener { mPresenter.onRefresh() }
+
         val manager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        recyclerview.layoutManager = manager
+        recycler_view.layoutManager = manager
     }
 
     private fun initData() {
@@ -63,13 +66,14 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
 
     override fun showPage(data: MutableList<Repository>, page: Int) {
         if (page == 1) {
+            refresh_layout.isRefreshing = false
             if (data.isEmpty()) {
                 mPageLayout.setPage(PageStateLayout.STATE_EMPTY)
             } else {
                 mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
                 if (mAdapter == null) {
                     mAdapter = RepositoriesAdapter(activity, data)
-                    recyclerview.adapter = mAdapter
+                    recycler_view.adapter = mAdapter
                     mAdapter!!.setOnLoadMoreListener(this)
                 } else {
                     mAdapter!!.mData.clear()

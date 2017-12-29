@@ -13,7 +13,7 @@ import com.ljb.mvp.kotlin.presenter.FollowingPresenter
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import com.wuba.weizhang.mvp.BaseMvpFragment
 import com.yimu.store.widget.PageStateLayout
-import kotlinx.android.synthetic.main.layout_recycler_view.*
+import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
 
 /**
  * Created by L on 2017/7/18.
@@ -31,7 +31,7 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_following, null)
         mPageLayout = view.findViewById(R.id.page_layout) as PageStateLayout
-        mPageLayout.setContentView(View.inflate(activity, R.layout.layout_recycler_view, null))
+        mPageLayout.setContentView(View.inflate(activity, R.layout.layout_refresh_recycler_view, null))
         mPageLayout.addCallBack(this)
         return view
     }
@@ -44,8 +44,11 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
     }
 
     private fun initView() {
+        refresh_layout.setColorSchemeResources(R.color.colorBlue)
+        refresh_layout.setOnRefreshListener { mPresenter.onRefresh() }
+
         val manager = GridLayoutManager(context, 3)
-        recyclerview.layoutManager = manager
+        recycler_view.layoutManager = manager
     }
 
     private fun initData() {
@@ -63,13 +66,14 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
 
     override fun showPage(data: MutableList<Following>, page: Int) {
         if (page == 1) {
+            refresh_layout.isRefreshing = false
             if (data.isEmpty()) {
                 mPageLayout.setPage(PageStateLayout.STATE_EMPTY)
             } else {
                 mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
                 if (mAdapter == null) {
                     mAdapter = FollowingAdapter(activity, data)
-                    recyclerview.adapter = mAdapter
+                    recycler_view.adapter = mAdapter
                     mAdapter!!.setOnLoadMoreListener(this)
                 } else {
                     mAdapter!!.mData.clear()
