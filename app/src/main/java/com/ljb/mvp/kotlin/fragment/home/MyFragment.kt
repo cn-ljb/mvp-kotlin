@@ -1,5 +1,6 @@
 package com.ljb.mvp.kotlin.fragment.home
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.ljb.mvp.kotlin.fragment.FollowersFragment
 import com.ljb.mvp.kotlin.fragment.StarredFragment
 import com.ljb.mvp.kotlin.img.GlideCircleTransform
 import com.ljb.mvp.kotlin.presenter.MyPresenter
+import com.ljb.mvp.kotlin.widget.dialog.NormalMsgDialog
 import com.wuba.weizhang.mvp.BaseMvpFragment
 import kotlinx.android.synthetic.main.fragment_my.*
 
@@ -27,8 +29,6 @@ import kotlinx.android.synthetic.main.fragment_my.*
  */
 class MyFragment : BaseMvpFragment<MyPresenter>(), MyContract.IMyView {
 
-    override fun createPresenter() = MyPresenter(this)
-
     private val mTabArr by lazy {
         arrayOf(
                 MyTabBean(getString(R.string.events), EventsFragment()),
@@ -36,6 +36,18 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyContract.IMyView {
                 MyTabBean(getString(R.string.followers), FollowersFragment())
         )
     }
+
+    private val mLogoutDialog by lazy {
+        NormalMsgDialog(activity)
+                .setMessage(R.string.logout_user)
+                .setLeftButtonInfo(R.string.cancel)
+                .setRightButtonInfo(R.string.enter, DialogInterface.OnClickListener { _, _ ->
+                    mPresenter.logout()
+                })
+    }
+
+    override fun createPresenter() = MyPresenter(this)
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_my, null)
@@ -50,7 +62,7 @@ class MyFragment : BaseMvpFragment<MyPresenter>(), MyContract.IMyView {
         viewpager.offscreenPageLimit = mTabArr.size
         viewpager.adapter = MyTabAdapter(childFragmentManager, mTabArr)
         tablayout.setupWithViewPager(viewpager)
-        btn_logout.setOnClickListener { mPresenter.logout() }
+        btn_logout.setOnClickListener { mLogoutDialog.show() }
     }
 
     private fun initData() {

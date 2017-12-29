@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">MVP-Kotlin</string>
     <string name="github_user">github username</string>
     <string name="login">Login</string>
@@ -18,4 +18,8 @@
     <string name="load_not_more">no more data</string>
     <string name="followers_count">count: %s people</string>
     <string name="exit_go_out">double click to exit</string>
+    <string name="action">action:\t%s</string>
+    <string name="cancel" tools:ignore="ButtonCase">cancel</string>
+    <string name="enter">enter</string>
+    <string name="logout_user">Exit the current user?</string>
 </resources>

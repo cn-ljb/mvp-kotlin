@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_alignParentBottom="true"
-            android:background="@color/colord2d2d2" />
+            android:background="@color/colorD2D2D2" />
 
     </RelativeLayout>
 

@@ -35,14 +35,14 @@ object XgoHttpClient {
     /**
      * 同步
      * */
-    fun execute(request: Request): Response = mHttpClient.newCall(request).execute()
+    fun execute(request: Request): Response
+            = mHttpClient.newCall(request).execute()
 
     /**
      * 异步
      * */
-    fun enqueue(request: Request, responseCallback: Callback) {
-        mHttpClient.newCall(request).enqueue(responseCallback)
-    }
+    fun enqueue(request: Request, responseCallback: Callback)
+            = mHttpClient.newCall(request).enqueue(responseCallback)
 
     /**
      * 创建个Request

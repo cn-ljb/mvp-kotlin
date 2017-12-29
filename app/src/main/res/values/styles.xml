@@ -13,4 +13,18 @@
         <item name="android:textSize">13sp</item>
     </style>
 
+    <style name="mask_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="bottom_out_style" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/share_dialog_enter</item>
+        <item name="@android:windowExitAnimation">@anim/share_dialog_out</item>
+    </style>
+
 </resources>

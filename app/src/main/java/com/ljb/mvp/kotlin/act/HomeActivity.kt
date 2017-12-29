@@ -17,12 +17,13 @@ import kotlinx.android.synthetic.main.activity_home.*
  */
 class HomeActivity : FragmentActivity() {
 
+    private var mFirstDownBack: Long = 0L
+    private var mCurIndex: Int = 0
+    
     private val mFragments = listOf<Fragment>(
             RepositoriesFragment(),
             FollowingFragment(),
             MyFragment())
-
-    private var mCurIndex: Int = 0
 
     private val mTabList = listOf(
             TabBean(R.drawable.bottom_tab_repos, R.string.repos),
@@ -32,7 +33,7 @@ class HomeActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        savedInstanceState.let { supportFragmentManager.popBackStackImmediate(null, 1) }
+        savedInstanceState?.let { supportFragmentManager.popBackStackImmediate(null, 1) }
         setContentView(R.layout.activity_home)
         initView(savedInstanceState)
     }
@@ -69,18 +70,18 @@ class HomeActivity : FragmentActivity() {
         mCurIndex = position
     }
 
-    private var mFirstDown: Long = 0L
+
     override fun onBackPressed() {
-        if (mFirstDown == 0L) {
-            mFirstDown = System.currentTimeMillis()
+        if (mFirstDownBack == 0L) {
+            mFirstDownBack = System.currentTimeMillis()
             Toast.makeText(this, R.string.exit_go_out, Toast.LENGTH_SHORT).show()
         } else {
-            val nextDown = System.currentTimeMillis()
-            val downTime = nextDown - mFirstDown
+            val nextDownBack = System.currentTimeMillis()
+            val downTime = nextDownBack - mFirstDownBack
             if (downTime < 2000L) {
                 super.onBackPressed()
             } else {
-                mFirstDown = nextDown
+                mFirstDownBack = nextDownBack
                 Toast.makeText(this, R.string.exit_go_out, Toast.LENGTH_SHORT).show()
             }
         }

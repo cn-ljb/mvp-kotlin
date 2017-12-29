@@ -27,7 +27,7 @@ class EventAdapter(mContext: Context, mData: MutableList<Event>) : LoadMoreRecyc
             if (mData[position].payload.commits == null) {
                 holder.tv_commit.visibility = View.VISIBLE
                 if (mData[position].payload.action != null) {
-                    holder.tv_commit.text = "action:\t${mData[position].payload.action}"
+                    holder.tv_commit.text = mContext.getString(R.string.action, mData[position].payload.action)
                 } else {
                     holder.tv_commit.visibility = View.GONE
                 }
