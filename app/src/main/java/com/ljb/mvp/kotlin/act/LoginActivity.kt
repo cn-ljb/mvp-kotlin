@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.ILoginView, View.OnClickListener {
 
+
     override fun createPresenter() = LoginPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
