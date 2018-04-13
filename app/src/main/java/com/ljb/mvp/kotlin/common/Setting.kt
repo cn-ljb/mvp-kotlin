@@ -1,14 +1,20 @@
 package com.wuba.weizhang.common
 
 import com.ljb.mvp.kotlin.common.Constant
-import com.wuba.weizhang.utils.SPUtils
-
-/**
- * 项目相关配置
- * Created by L on 2017/7/12.
- */
+import com.ljb.rxjava.kotlin.log.XgoLog.Companion.LEVEL_ALL
+import com.ljb.mvp.kotlin.utils.SPUtils
 
 
+/** 服务器Host */
+const val HTTP_API_DOMAIN = "https://api.github.com"
+
+/** Log级别 */
+const val LV_LOG = LEVEL_ALL
+
+var GITHUB_CLIENT_ID = ""
+var GITHUB_CLIENT_SECRET = ""
+
+/** 用户登录信息 */
 class LoginUser {
     companion object {
         var name: String
@@ -16,15 +22,4 @@ class LoginUser {
             set(value) = SPUtils.putString(Constant.SPConstant.CUR_USER_NAME, value)
     }
 }
-
-/**
- * 服务器Host
- * */
-val HTTP_API_DOMAIN = "https://api.github.com"
-
-/** 是否允许输出log
- * -1：  不允许
- * 其他：根据等级允许（10 全部允许）
- */
-val LV_LOG = 10
 

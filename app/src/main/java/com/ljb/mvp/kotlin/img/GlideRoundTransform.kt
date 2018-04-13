@@ -9,7 +9,8 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 /**
  * Created by L on 2016/8/22.
  */
-class GlideRoundTransform @JvmOverloads constructor(context: Context, private val radius: Float = 10f) : BitmapTransformation(context) {
+class GlideRoundTransform @JvmOverloads constructor(context: Context, private val radius: Float = 10f)
+    : BitmapTransformation(context) {
 
     override fun transform(pool: BitmapPool, toTransform: Bitmap, outWidth: Int, outHeight: Int): Bitmap? =
             cornersCrop(pool, toTransform)
@@ -28,7 +29,7 @@ class GlideRoundTransform @JvmOverloads constructor(context: Context, private va
             result = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
         }
 
-        val canvas = Canvas(result!!)
+        val canvas = Canvas(result)
         val paint = Paint()
         paint.shader = BitmapShader(squared, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
         paint.isAntiAlias = true

@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="@android:style/Theme.Holo.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -23,8 +23,8 @@
     </style>
 
     <style name="bottom_out_style" parent="android:Animation">
-        <item name="@android:windowEnterAnimation">@anim/share_dialog_enter</item>
-        <item name="@android:windowExitAnimation">@anim/share_dialog_out</item>
+        <item name="android:windowEnterAnimation">@anim/share_dialog_enter</item>
+        <item name="android:windowExitAnimation">@anim/share_dialog_out</item>
     </style>
 
 </resources>

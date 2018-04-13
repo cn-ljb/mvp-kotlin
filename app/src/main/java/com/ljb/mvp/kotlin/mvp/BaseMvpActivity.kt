@@ -1,4 +1,4 @@
-package com.wuba.weizhang.mvp
+package com.ljb.mvp.kotlin.mvp
 
 import android.app.Activity
 

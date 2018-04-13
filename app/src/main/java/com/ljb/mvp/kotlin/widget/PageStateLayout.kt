@@ -1,7 +1,8 @@
-package com.yimu.store.widget
+package com.ljb.mvp.kotlin.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import com.ljb.mvp.kotlin.R
@@ -13,12 +14,11 @@ import com.ljb.mvp.kotlin.R
  */
 class PageStateLayout : FrameLayout {
 
-
     interface PageStateCallBack {
         fun onErrorClick()
     }
 
-    private var currentPageState = STATE_UNKNOW
+    private var currentPageState = STATE_LOADING
 
     private var mContext: Context? = null
 
@@ -57,7 +57,6 @@ class PageStateLayout : FrameLayout {
         if (mErrorView != null) {
             addView(mErrorView, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT))
         }
-
         updatePage()
     }
 
@@ -103,14 +102,17 @@ class PageStateLayout : FrameLayout {
             mEmptyView!!.visibility = if (currentPageState == STATE_EMPTY) View.VISIBLE else View.GONE
         }
         if (null != mLoadingView) {
-            mLoadingView!!.visibility = if (currentPageState == STATE_UNKNOW || currentPageState == STATE_LOADING) View.VISIBLE else View.GONE
+            mLoadingView!!.visibility = if (currentPageState == STATE_LOADING) View.VISIBLE else View.GONE
         }
-
     }
 
     fun setPage(pageState: Int) {
         this.currentPageState = pageState
         updatePage()
+    }
+
+    fun setContentView(resId: Int) {
+        setContentView(LayoutInflater.from(context).inflate(resId, this, false))
     }
 
     fun setContentView(view: View) {
@@ -122,6 +124,9 @@ class PageStateLayout : FrameLayout {
         addView(mSucceedView, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT))
     }
 
+    fun setErrorView(resId: Int) {
+        setErrorView(LayoutInflater.from(context).inflate(resId, this, false))
+    }
 
     fun setErrorView(view: View) {
         if (mErrorView != null) {
@@ -130,6 +135,10 @@ class PageStateLayout : FrameLayout {
         mErrorView = view
         mErrorView!!.visibility = View.GONE
         addView(mErrorView, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT))
+    }
+
+    fun setLoadView(resId: Int) {
+        setLoadView(LayoutInflater.from(context).inflate(resId, this, false))
     }
 
     fun setLoadView(view: View) {
@@ -141,6 +150,9 @@ class PageStateLayout : FrameLayout {
         addView(mLoadingView, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT))
     }
 
+    fun setEmptyView(resId: Int) {
+        setEmptyView(LayoutInflater.from(context).inflate(resId, this, false))
+    }
 
     fun setEmptyView(view: View) {
         if (mEmptyView != null) {
@@ -157,24 +169,20 @@ class PageStateLayout : FrameLayout {
 
     companion object {
         /**
-         * 未知状态
-         */
-        val STATE_UNKNOW = 0
-        /**
          * 正在加载状态
          */
-        val STATE_LOADING = 1
+        const val STATE_LOADING = 1
         /**
          * 错误状态
          */
-        val STATE_ERROR = 2
+        const val STATE_ERROR = 2
         /**
          * 空数据状态
          */
-        val STATE_EMPTY = 3
+        const val STATE_EMPTY = 3
         /**
          * 成功状态
          */
-        val STATE_SUCCEED = 4
+        const val STATE_SUCCEED = 4
     }
 }

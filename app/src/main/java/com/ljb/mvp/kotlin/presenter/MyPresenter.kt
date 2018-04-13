@@ -1,6 +1,7 @@
 package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.contract.MyContract
+import com.ljb.mvp.kotlin.mvp.getContext
 import com.ljb.mvp.kotlin.protocol.dao.UserDaoProtocol
 import com.ljb.mvp.kotlin.utils.RxUtils
 import com.wuba.weizhang.common.LoginUser
@@ -21,7 +22,7 @@ class MyPresenter(private val mView: MyContract.IMyView) : MyContract.IMyPresent
 
     override fun startTask() {
         mUserInfoDisposable = Observable.concat(
-                UserDaoProtocol.createObservable { UserDaoProtocol.findUserByName(LoginUser.name) },
+                UserDaoProtocol.createObservable { UserDaoProtocol.findUserByName(getContext(),LoginUser.name) },
                 UserProtocol.getUserInfoByName(LoginUser.name))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

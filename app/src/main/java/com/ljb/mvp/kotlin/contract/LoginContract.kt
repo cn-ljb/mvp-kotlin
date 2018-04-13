@@ -1,7 +1,7 @@
 package com.ljb.mvp.kotlin.contract
 
-import com.wuba.weizhang.mvp.IBasePresenter
-import com.wuba.weizhang.mvp.IBaseView
+import com.ljb.mvp.kotlin.mvp.IBasePresenter
+import com.ljb.mvp.kotlin.mvp.IBaseView
 
 /**
  * Created by L on 2017/7/13.

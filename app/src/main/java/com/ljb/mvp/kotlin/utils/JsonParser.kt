@@ -7,8 +7,8 @@ import com.google.gson.Gson
  */
 object JsonParser {
 
-    val mGson by lazy { Gson() }
-    val googleJsonParser by lazy { com.google.gson.JsonParser() }
+    private val mGson by lazy { Gson() }
+    private val googleJsonParser by lazy { com.google.gson.JsonParser() }
 
 
     fun <T> fromJsonObj(json: String, clazz: Class<T>): T = mGson.fromJson(json, clazz)

@@ -14,5 +14,4 @@ class MyTabAdapter(fm: FragmentManager?, private val mData: Array<MyTabBean>) : 
     override fun getCount() = mData.size
 
     override fun getPageTitle(position: Int) = mData[position].title
-
 }

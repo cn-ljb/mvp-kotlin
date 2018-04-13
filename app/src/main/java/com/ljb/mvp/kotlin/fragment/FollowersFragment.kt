@@ -11,43 +11,48 @@ import com.ljb.mvp.kotlin.contract.FollowersContract
 import com.ljb.mvp.kotlin.domain.Follower
 import com.ljb.mvp.kotlin.presenter.FollowersPresenter
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
-import com.wuba.weizhang.mvp.BaseMvpFragment
-import com.yimu.store.widget.PageStateLayout
+import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
+import com.ljb.mvp.kotlin.widget.PageStateLayout
+import kotlinx.android.synthetic.main.fragment_followers.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 
 /**
  * Created by L on 2017/7/19.
  */
-class FollowersFragment : BaseMvpFragment<FollowersPresenter>(), FollowersContract.IFollowersView, PageStateLayout.PageStateCallBack, LoadMoreRecyclerAdapter.LoadMoreListener {
+class FollowersFragment : BaseMvpFragment<FollowersPresenter>(),
+        FollowersContract.IFollowersView,
+        PageStateLayout.PageStateCallBack,
+        LoadMoreRecyclerAdapter.LoadMoreListener {
 
-
-    private lateinit var mPageLayout: PageStateLayout
     private val mAdapter by lazy { FollowersAdapter(activity, mutableListOf()) }
-
 
     override fun createPresenter() = FollowersPresenter(this)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_followers, null)
-        mPageLayout = view.findViewById(R.id.page_layout) as PageStateLayout
-        mPageLayout.setContentView(View.inflate(activity, R.layout.layout_recycler_view, null))
-        mPageLayout.addCallBack(this)
-        return view
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+            inflater.inflate(R.layout.fragment_followers, container, false)
 
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initView()
         initData()
     }
 
 
     private fun initView() {
-        val manager = GridLayoutManager(context, 3)
-        recycler_view.layoutManager = manager
-        recycler_view.adapter = mAdapter
-        mAdapter.setOnLoadMoreListener(this)
+        page_layout.apply {
+            setContentView(View.inflate(activity, R.layout.layout_recycler_view, null))
+            addCallBack(this@FollowersFragment)
+        }
+        recycler_view.apply {
+            layoutManager = GridLayoutManager(context, 3)
+            adapter = mAdapter
+            mAdapter.setOnLoadMoreListener(this@FollowersFragment)
+        }
     }
 
     private fun initData() {
@@ -59,16 +64,16 @@ class FollowersFragment : BaseMvpFragment<FollowersPresenter>(), FollowersContra
     }
 
     override fun onErrorClick() {
-        mPageLayout.setPage(PageStateLayout.STATE_LOADING)
+        page_layout.setPage(PageStateLayout.STATE_LOADING)
         mPresenter.onRefresh()
     }
 
     override fun showPage(data: MutableList<Follower>, page: Int) {
         if (page == 1) {
             if (data.isEmpty()) {
-                mPageLayout.setPage(PageStateLayout.STATE_EMPTY)
+                page_layout.setPage(PageStateLayout.STATE_EMPTY)
             } else {
-                mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
+                page_layout.setPage(PageStateLayout.STATE_SUCCEED)
                 mAdapter.mData.clear()
                 mAdapter.mData.addAll(data)
                 mAdapter.initLoadStatusForSize(data)
@@ -87,7 +92,7 @@ class FollowersFragment : BaseMvpFragment<FollowersPresenter>(), FollowersContra
 
     override fun errorPage(t: Throwable, page: Int) {
         if (page == 1) {
-            mPageLayout.setPage(PageStateLayout.STATE_ERROR)
+            page_layout.setPage(PageStateLayout.STATE_ERROR)
         } else {
             mAdapter.onError()
         }

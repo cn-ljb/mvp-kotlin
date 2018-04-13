@@ -1,6 +1,7 @@
 package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.contract.LoginContract
+import com.ljb.mvp.kotlin.mvp.getContext
 import com.ljb.mvp.kotlin.protocol.dao.UserDaoProtocol
 import com.ljb.mvp.kotlin.utils.RxUtils
 import com.wuba.weizhang.common.LoginUser
@@ -34,10 +35,10 @@ class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContrac
         mLoginDisposable = UserProtocol.getUserInfoByName(userName)
                 .map {
                     if (it.message.isNullOrBlank()) {
-                        if (UserDaoProtocol.findUserByUserId(it.id) == null) {
-                            UserDaoProtocol.saveUser(it)
+                        if (UserDaoProtocol.findUserByUserId(getContext(), it.id) == null) {
+                            UserDaoProtocol.saveUser(getContext(), it)
                         } else {
-                            UserDaoProtocol.updateUser(it)
+                            UserDaoProtocol.updateUser(getContext(), it)
                         }
                     }
                     it

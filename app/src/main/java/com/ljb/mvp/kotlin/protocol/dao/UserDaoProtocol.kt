@@ -2,21 +2,23 @@ package com.ljb.mvp.kotlin.protocol.dao
 
 import android.content.ContentUris
 import android.content.ContentValues
+import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import com.ljb.mvp.kotlin.KotlinApplication
 import com.ljb.mvp.kotlin.common.Constant.DBProvider.TABLE_USERS
 import com.ljb.mvp.kotlin.db.DatabaseProvider
 import com.ljb.mvp.kotlin.domain.User
 import com.ljb.rxjava.kotlin.log.XgoLog
 import com.wuba.weizhang.protocol.base.BaseDAOProtocol
+import java.security.AccessController.getContext
 
 /**
  * Created by L on 2017/7/17.
  */
-object UserDaoProtocol : BaseDAOProtocol(KotlinApplication.mContext) {
+object UserDaoProtocol : BaseDAOProtocol() {
 
-    fun saveUser(user: User): Boolean {
+
+    fun saveUser(context: Context, user: User): Boolean {
         XgoLog.d("saveUser")
         var result: Boolean = false
         val values = ContentValues()
@@ -51,7 +53,7 @@ object UserDaoProtocol : BaseDAOProtocol(KotlinApplication.mContext) {
         values.put(TABLE_USERS.COLUMN_CREATED_AT, user.created_at)
         values.put(TABLE_USERS.COLUMN_UPDATED_AT, user.updated_at)
         try {
-            val uri = mContext.contentResolver.insert(Uri.parse(DatabaseProvider.USER_CONTENT_URI), values)
+            val uri = context.contentResolver.insert(Uri.parse(DatabaseProvider.USER_CONTENT_URI), values)
             if (uri != null && ContentUris.parseId(uri) > 0) {
                 result = true
             }
@@ -62,7 +64,7 @@ object UserDaoProtocol : BaseDAOProtocol(KotlinApplication.mContext) {
     }
 
 
-    fun updateUser(user: User): Int {
+    fun updateUser(context: Context, user: User): Int {
         XgoLog.d("updateUser")
         var count = 0
         val values = ContentValues()
@@ -96,9 +98,8 @@ object UserDaoProtocol : BaseDAOProtocol(KotlinApplication.mContext) {
         values.put(TABLE_USERS.COLUMN_FOLLOWING, user.following)
         values.put(TABLE_USERS.COLUMN_CREATED_AT, user.created_at)
         values.put(TABLE_USERS.COLUMN_UPDATED_AT, user.updated_at)
-
         try {
-            count = mContext.contentResolver.update(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
+            count = context.contentResolver.update(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
                     values,
                     "${TABLE_USERS.COLUMN_USER_ID}=?",
                     arrayOf("${user.id}"))
@@ -108,17 +109,17 @@ object UserDaoProtocol : BaseDAOProtocol(KotlinApplication.mContext) {
         return count
     }
 
-    fun findUserByUserId(userId: Long): User? {
+    fun findUserByUserId(context: Context, userId: Long): User? {
         XgoLog.d("findUserByUserId:$userId")
-        var user: User? = null
+        val user: User? = null
         var c: Cursor? = null
         try {
-            c = mContext.contentResolver.query(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
+            c = context.contentResolver.query(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
                     null,
                     "${TABLE_USERS.COLUMN_USER_ID}=?",
                     arrayOf("$userId"),
                     null)
-            if (c.moveToNext()) {
+            if (c != null && c.moveToNext()) {
                 val login = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_LOGIN))
                 val userID = c.getLong(c.getColumnIndex(TABLE_USERS.COLUMN_USER_ID))
                 val avatar_url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_AVATAR_URL))
@@ -159,17 +160,17 @@ object UserDaoProtocol : BaseDAOProtocol(KotlinApplication.mContext) {
         return user
     }
 
-    fun findUserByName(userName: String): User? {
+    fun findUserByName(context: Context, userName: String): User? {
         XgoLog.d("findUserByUserId:$userName")
         var user: User? = null
         var c: Cursor? = null
         try {
-            c = mContext.contentResolver.query(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
+            c = context.contentResolver.query(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
                     null,
                     "${TABLE_USERS.COLUMN_LOGIN}=?",
                     arrayOf(userName),
                     null)
-            if (c.moveToNext()) {
+            if (c != null && c.moveToNext()) {
                 val login = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_LOGIN))
                 val userID = c.getLong(c.getColumnIndex(TABLE_USERS.COLUMN_USER_ID))
                 val avatar_url = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_AVATAR_URL))
@@ -209,6 +210,5 @@ object UserDaoProtocol : BaseDAOProtocol(KotlinApplication.mContext) {
         }
         return user
     }
-
 
 }

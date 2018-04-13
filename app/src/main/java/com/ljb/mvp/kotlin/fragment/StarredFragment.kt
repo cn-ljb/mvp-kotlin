@@ -11,28 +11,25 @@ import com.ljb.mvp.kotlin.contract.StarredContract
 import com.ljb.mvp.kotlin.domain.Starred
 import com.ljb.mvp.kotlin.presenter.StarredPresenter
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
-import com.wuba.weizhang.mvp.BaseMvpFragment
-import com.yimu.store.widget.PageStateLayout
+import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
+import com.ljb.mvp.kotlin.widget.PageStateLayout
+import kotlinx.android.synthetic.main.fragment_starred.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 
 /**
  * Created by L on 2017/7/19.
  */
-class StarredFragment : BaseMvpFragment<StarredPresenter>(), StarredContract.IStarredView, PageStateLayout.PageStateCallBack, LoadMoreRecyclerAdapter.LoadMoreListener {
+class StarredFragment : BaseMvpFragment<StarredPresenter>(),
+        StarredContract.IStarredView,
+        PageStateLayout.PageStateCallBack,
+        LoadMoreRecyclerAdapter.LoadMoreListener {
 
-    private lateinit var mPageLayout: PageStateLayout
     private val mAdapter: StarredAdapter by lazy { StarredAdapter(activity, mutableListOf()) }
 
     override fun createPresenter() = StarredPresenter(this)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view = inflater.inflate(R.layout.fragment_starred, null)
-        mPageLayout = view.findViewById(R.id.page_layout) as PageStateLayout
-        mPageLayout.setContentView(View.inflate(activity, R.layout.layout_recycler_view, null))
-        mPageLayout.addCallBack(this)
-        return view
-    }
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+            inflater.inflate(R.layout.fragment_starred, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -41,10 +38,15 @@ class StarredFragment : BaseMvpFragment<StarredPresenter>(), StarredContract.ISt
     }
 
     private fun initView() {
-        val manager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        recycler_view.layoutManager = manager
-        recycler_view.adapter = mAdapter
-        mAdapter.setOnLoadMoreListener(this)
+        page_layout.apply {
+            setContentView(View.inflate(activity, R.layout.layout_recycler_view, null))
+            addCallBack(this@StarredFragment)
+        }
+        recycler_view.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = mAdapter
+            mAdapter.setOnLoadMoreListener(this@StarredFragment)
+        }
     }
 
     private fun initData() {
@@ -56,16 +58,16 @@ class StarredFragment : BaseMvpFragment<StarredPresenter>(), StarredContract.ISt
     }
 
     override fun onErrorClick() {
-        mPageLayout.setPage(PageStateLayout.STATE_LOADING)
+        page_layout.setPage(PageStateLayout.STATE_LOADING)
         mPresenter.onRefresh()
     }
 
     override fun showPage(data: MutableList<Starred>, page: Int) {
         if (page == 1) {
             if (data.isEmpty()) {
-                mPageLayout.setPage(PageStateLayout.STATE_EMPTY)
+                page_layout.setPage(PageStateLayout.STATE_EMPTY)
             } else {
-                mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
+                page_layout.setPage(PageStateLayout.STATE_SUCCEED)
                 mAdapter.mData.clear()
                 mAdapter.mData.addAll(data)
                 mAdapter.initLoadStatusForSize(data)
@@ -84,11 +86,9 @@ class StarredFragment : BaseMvpFragment<StarredPresenter>(), StarredContract.ISt
 
     override fun errorPage(t: Throwable, page: Int) {
         if (page == 1) {
-            mPageLayout.setPage(PageStateLayout.STATE_ERROR)
+            page_layout.setPage(PageStateLayout.STATE_ERROR)
         } else {
             mAdapter.onError()
         }
     }
-
-
 }

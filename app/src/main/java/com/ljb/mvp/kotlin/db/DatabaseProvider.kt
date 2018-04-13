@@ -15,15 +15,15 @@ import java.util.*
  */
 class DatabaseProvider : ContentProvider() {
 
-    /**
-     * 对外的Uri访问标识
-     * */
     companion object {
-        val USER_CONTENT_URI = "content://" + Constant.DBProvider.AUTHORITY + "/" + TABLE_USERS.TABLE_NAME
+        //对外的Uri访问标识
+       const val USER_CONTENT_URI = "content://" + Constant.DBProvider.AUTHORITY + "/" + TABLE_USERS.TABLE_NAME
+
+        // URI匹配码
+        private const val CODE_USER = 1
     }
 
-    // URI匹配码
-    private val CODE_USER = 1
+
 
     private val mDatabaseOpenHelper by lazy { DatabaseOpenHelper.getInstance(context) }
     private val mUriMatcher by lazy { UriMatcher(UriMatcher.NO_MATCH) }
@@ -78,15 +78,15 @@ class DatabaseProvider : ContentProvider() {
 
     override fun query(uri: Uri, projection: Array<out String>?, selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): Cursor? {
         val table = matcherTable(uri)
-        try {
+        return try {
             val qb = SQLiteQueryBuilder()
             qb.tables = table
             val db = mDatabaseOpenHelper.writableDatabase
             val cursor = qb.query(db, projection, selection, selectionArgs, null, null, sortOrder)
             cursor.setNotificationUri(context!!.contentResolver, uri)
-            return cursor
+            cursor
         } catch (e: SQLiteException) {
-            return null
+            null
         }
     }
 
@@ -173,8 +173,5 @@ class DatabaseProvider : ContentProvider() {
             throw OperationApplicationException()
         }
     }
-
-
     override fun getType(p0: Uri?): String? = null
-
 }

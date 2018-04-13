@@ -18,7 +18,8 @@ import java.util.concurrent.TimeUnit
 class XgoLogInterceptor @JvmOverloads constructor(lv: XgoLogInterceptor.Level = XgoLogInterceptor.Level.BODY,
                                                   private val logger: (String) -> Unit = ::println) : Interceptor {
 
-    @Volatile private var level = Level.NONE
+    @Volatile
+    private var level = Level.NONE
 
     enum class Level {
         /**

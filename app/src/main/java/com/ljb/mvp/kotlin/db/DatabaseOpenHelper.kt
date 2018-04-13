@@ -48,6 +48,7 @@ class DatabaseOpenHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
 
     private fun createTable(db: SQLiteDatabase, tableName: String) {
         val columns = mDatabaseColumnsHelper.getCreateTableSql(tableName)
+        XgoLog.i("create table if not exists $tableName$columns")
         db.execSQL("create table if not exists $tableName$columns")
     }
 

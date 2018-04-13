@@ -38,9 +38,7 @@ class FollowingPresenter(private val mView: FollowingContract.IFollowingView) : 
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        {
-                            getMvpView().showPage(it, page)
-                        },
+                        { getMvpView().showPage(it, page) },
                         { getMvpView().errorPage(it, page) }
                 )
     }

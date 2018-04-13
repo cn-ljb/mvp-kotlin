@@ -22,4 +22,9 @@
     <string name="cancel" tools:ignore="ButtonCase">cancel</string>
     <string name="enter">enter</string>
     <string name="logout_user">Exit the current user?</string>
+    <string name="format_star">start: %s</string>
+    <string name="format_fork">fork: %s</string>
+    <string name="format_issues">issues: %s</string>
+    <string name="format_update">update: %s</string>
+    <string name="format_create">create: %s</string>
 </resources>

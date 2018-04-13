@@ -19,7 +19,7 @@ class HomeActivity : FragmentActivity() {
 
     private var mFirstDownBack: Long = 0L
     private var mCurIndex: Int = 0
-    
+
     private val mFragments = listOf<Fragment>(
             RepositoriesFragment(),
             FollowingFragment(),
@@ -41,14 +41,7 @@ class HomeActivity : FragmentActivity() {
     private fun initView(savedInstanceState: Bundle?) {
         tgv_group.setOnItemClickListener { openTabFragment(it) }
         tgv_group.setAdapter(MainTabAdapter(this, mTabList))
-
-        if (savedInstanceState == null) {
-            //默认首页
-            openTabFragment(0)
-        } else {
-            val index = savedInstanceState.getInt("index")
-            openTabFragment(index)
-        }
+        openTabFragment(savedInstanceState?.getInt("index") ?: 0)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -58,18 +51,17 @@ class HomeActivity : FragmentActivity() {
     private fun openTabFragment(position: Int) {
         tgv_group.setSelectedPosition(position)
         val ft = supportFragmentManager.beginTransaction()
-        mFragments.filterIndexed { index, _ -> index != position }
-                .forEach { ft.hide(it) }
+        ft.hide(mFragments[mCurIndex])
         var f = supportFragmentManager.findFragmentByTag(mFragments[position].javaClass.simpleName)
         if (f == null) {
             f = mFragments[position]
-            ft.add(R.id.fl_content, f, f.javaClass.simpleName).show(f).commit()
+            ft.add(R.id.fl_content, f, f.javaClass.simpleName).show(f)
         } else {
-            ft.show(f).commit()
+            ft.show(f)
         }
+        ft.commit()
         mCurIndex = position
     }
-
 
     override fun onBackPressed() {
         if (mFirstDownBack == 0L) {
@@ -77,8 +69,7 @@ class HomeActivity : FragmentActivity() {
             Toast.makeText(this, R.string.exit_go_out, Toast.LENGTH_SHORT).show()
         } else {
             val nextDownBack = System.currentTimeMillis()
-            val downTime = nextDownBack - mFirstDownBack
-            if (downTime < 2000L) {
+            if (nextDownBack - mFirstDownBack < 2000L) {
                 super.onBackPressed()
             } else {
                 mFirstDownBack = nextDownBack

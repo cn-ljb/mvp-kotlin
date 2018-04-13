@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.ljb.mvp.kotlin.R
+import com.ljb.mvp.kotlin.common.findViewByIdEx
 import com.ljb.mvp.kotlin.domain.Follower
-import com.ljb.mvp.kotlin.img.GlideRoundTransform
+import com.ljb.mvp.kotlin.img.ImageLoader
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 
 /**
@@ -24,22 +23,20 @@ class FollowersAdapter(mContext: Context, mData: MutableList<Follower>) : LoadMo
     override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is FollowersViewHolder) {
             val item = mData[position]
-            Glide.with(mContext).load(item.avatar_url)
-                    .crossFade()
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.default_header)
-                    .error(R.drawable.default_header)
-                    .transform(GlideRoundTransform(mContext))
-                    .into(holder.iv_avatar)
+            ImageLoader.load(context = mContext,
+                    url = item.avatar_url,
+                    img = holder.iv_avatar,
+                    loadingImgResId = R.drawable.default_header,
+                    loadErrorImgResId = R.drawable.default_header,
+                    form = ImageLoader.ImageForm.ROUND)
             holder.tv_follower_name.text = item.login
         }
     }
 
 
     class FollowersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val iv_avatar by lazy { itemView.findViewById(R.id.iv_avatar) as ImageView }
-        val tv_follower_name by lazy { itemView.findViewById(R.id.tv_follower_name) as TextView }
+        val iv_avatar by lazy { itemView.findViewByIdEx<ImageView>(R.id.iv_avatar) }
+        val tv_follower_name by lazy { itemView.findViewByIdEx<TextView>(R.id.tv_follower_name) }
     }
 
 }

@@ -1,6 +1,5 @@
 package com.ljb.mvp.kotlin.fragment.home
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -12,8 +11,9 @@ import com.ljb.mvp.kotlin.contract.RepositoriesContract
 import com.ljb.mvp.kotlin.domain.Repository
 import com.ljb.mvp.kotlin.presenter.RepositoriesPresenter
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
-import com.wuba.weizhang.mvp.BaseMvpFragment
-import com.yimu.store.widget.PageStateLayout
+import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
+import com.ljb.mvp.kotlin.widget.PageStateLayout
+import kotlinx.android.synthetic.main.fragment_repos.*
 import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
 
 /**
@@ -25,35 +25,38 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 
-    private lateinit var mPageLayout: PageStateLayout
     private val mAdapter by lazy { RepositoriesAdapter(activity, mutableListOf()) }
 
     override fun createPresenter() = RepositoriesPresenter(this)
 
-    @SuppressLint("InflateParams")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view = inflater.inflate(R.layout.fragment_repos, null)
-        mPageLayout = view.findViewById(R.id.page_layout) as PageStateLayout
-        mPageLayout.setContentView(View.inflate(activity, R.layout.layout_refresh_recycler_view, null))
-        mPageLayout.addCallBack(this)
-        return view
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+            inflater.inflate(R.layout.fragment_repos, container, false)
 
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initView()
         initData()
     }
 
     private fun initView() {
-        refresh_layout.setColorSchemeResources(R.color.colorBlue)
-        refresh_layout.setOnRefreshListener { mPresenter.onRefresh() }
-
-        val manager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        recycler_view.layoutManager = manager
-        recycler_view.adapter = mAdapter
-        mAdapter.setOnLoadMoreListener(this)
+        page_layout.apply {
+            setContentView(View.inflate(activity, R.layout.layout_refresh_recycler_view, null))
+            addCallBack(this@RepositoriesFragment)
+        }
+        refresh_layout.apply {
+            setColorSchemeResources(R.color.colorBlue)
+            setOnRefreshListener { mPresenter.onRefresh() }
+        }
+        recycler_view.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = mAdapter
+            mAdapter.setOnLoadMoreListener(this@RepositoriesFragment)
+        }
     }
 
     private fun initData() {
@@ -65,7 +68,7 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
     }
 
     override fun onErrorClick() {
-        mPageLayout.setPage(PageStateLayout.STATE_LOADING)
+        page_layout.setPage(PageStateLayout.STATE_LOADING)
         mPresenter.onRefresh()
     }
 
@@ -73,9 +76,9 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
         if (page == 1) {
             refresh_layout.isRefreshing = false
             if (data.isEmpty()) {
-                mPageLayout.setPage(PageStateLayout.STATE_EMPTY)
+                page_layout.setPage(PageStateLayout.STATE_EMPTY)
             } else {
-                mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
+                page_layout.setPage(PageStateLayout.STATE_SUCCEED)
                 mAdapter.mData.clear()
                 mAdapter.mData.addAll(data)
                 mAdapter.initLoadStatusForSize(data)
@@ -94,7 +97,7 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
 
     override fun errorPage(t: Throwable, page: Int) {
         if (page == 1) {
-            mPageLayout.setPage(PageStateLayout.STATE_ERROR)
+            page_layout.setPage(PageStateLayout.STATE_ERROR)
         } else {
             mAdapter.onError()
         }

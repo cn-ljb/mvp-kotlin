@@ -11,8 +11,9 @@ import com.ljb.mvp.kotlin.contract.FollowingContract
 import com.ljb.mvp.kotlin.domain.Following
 import com.ljb.mvp.kotlin.presenter.FollowingPresenter
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
-import com.wuba.weizhang.mvp.BaseMvpFragment
-import com.yimu.store.widget.PageStateLayout
+import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
+import com.ljb.mvp.kotlin.widget.PageStateLayout
+import kotlinx.android.synthetic.main.fragment_following.*
 import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
 
 /**
@@ -23,34 +24,37 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 
-    private lateinit var mPageLayout: PageStateLayout
     private val mAdapter by lazy { FollowingAdapter(activity, mutableListOf()) }
 
     override fun createPresenter() = FollowingPresenter(this)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        val view = inflater.inflate(R.layout.fragment_following, null)
-        mPageLayout = view.findViewById(R.id.page_layout) as PageStateLayout
-        mPageLayout.setContentView(View.inflate(activity, R.layout.layout_refresh_recycler_view, null))
-        mPageLayout.addCallBack(this)
-        return view
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+            inflater.inflate(R.layout.fragment_following, container, false)
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        initView()
         initData()
     }
 
     private fun initView() {
-        refresh_layout.setColorSchemeResources(R.color.colorBlue)
-        refresh_layout.setOnRefreshListener { mPresenter.onRefresh() }
-
-        val manager = GridLayoutManager(context, 3)
-        recycler_view.layoutManager = manager
-        recycler_view.adapter = mAdapter
-        mAdapter.setOnLoadMoreListener(this)
+        page_layout.apply {
+            setContentView(View.inflate(activity, R.layout.layout_refresh_recycler_view, null))
+            addCallBack(this@FollowingFragment)
+        }
+        refresh_layout.apply {
+            setColorSchemeResources(R.color.colorBlue)
+            setOnRefreshListener { mPresenter.onRefresh() }
+        }
+        recycler_view.apply {
+            layoutManager = GridLayoutManager(context, 3)
+            adapter = mAdapter
+            mAdapter.setOnLoadMoreListener(this@FollowingFragment)
+        }
     }
 
     private fun initData() {
@@ -62,7 +66,7 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
     }
 
     override fun onErrorClick() {
-        mPageLayout.setPage(PageStateLayout.STATE_LOADING)
+        page_layout.setPage(PageStateLayout.STATE_LOADING)
         mPresenter.onRefresh()
     }
 
@@ -70,9 +74,9 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
         if (page == 1) {
             refresh_layout.isRefreshing = false
             if (data.isEmpty()) {
-                mPageLayout.setPage(PageStateLayout.STATE_EMPTY)
+                page_layout.setPage(PageStateLayout.STATE_EMPTY)
             } else {
-                mPageLayout.setPage(PageStateLayout.STATE_SUCCEED)
+                page_layout.setPage(PageStateLayout.STATE_SUCCEED)
                 mAdapter.mData.clear()
                 mAdapter.mData.addAll(data)
                 mAdapter.initLoadStatusForSize(data)
@@ -91,7 +95,7 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
 
     override fun errorPage(t: Throwable, page: Int) {
         if (page == 1) {
-            mPageLayout.setPage(PageStateLayout.STATE_ERROR)
+            page_layout.setPage(PageStateLayout.STATE_ERROR)
         } else {
             mAdapter.onError()
         }

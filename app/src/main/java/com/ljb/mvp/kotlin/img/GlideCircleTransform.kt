@@ -15,7 +15,6 @@ class GlideCircleTransform : BitmapTransformation {
     private var mBorderPaint: Paint? = null
     private var mBorderWidth: Float = 0f
 
-
     constructor(context: Context) : super(context)
 
     constructor(context: Context, borderWidth: Int, borderColor: Int) : super(context) {

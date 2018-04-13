@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
 
-    <com.yimu.store.widget.PageStateLayout
+    <com.ljb.mvp.kotlin.widget.PageStateLayout
         android:id="@+id/page_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.ljb.mvp.kotlin.R
+import com.ljb.mvp.kotlin.common.findViewByIdEx
 import com.ljb.mvp.kotlin.domain.Event
 import com.ljb.mvp.kotlin.domain.EventCommit
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
+import java.lang.StringBuilder
 
 /**
  * Created by L on 2017/7/19.
@@ -42,31 +44,31 @@ class EventAdapter(mContext: Context, mData: MutableList<Event>) : LoadMoreRecyc
     }
 
     private fun getCommitStr(commits: List<EventCommit>): String {
-        var commentStr = "commits:\n"
-        for ((index, comment) in commits.withIndex()) {
-            if (index <= 3) {
-                if (index != 0) {
-                    commentStr = "$commentStr--- --- ---\n"
+        return StringBuilder("commits:\n").apply {
+            for ((index, comment) in commits.withIndex()) {
+                if (index <= 3) {
+                    if (index != 0) {
+                        append("--- --- ---\n")
+                    }
+                    append("${comment.message}\n")
+                } else {
+                    append("...")
+                    break
                 }
-                commentStr = "$commentStr${comment.message}\n"
-            } else {
-                commentStr = "$commentStr..."
-                break
             }
-        }
-        return commentStr
+        }.toString()
     }
 
 
     override fun getItemCount(): Int = mData.size
 
     class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tv_type by lazy { itemView.findViewById(R.id.tv_type) as TextView }
-        val tv_project_name by lazy { itemView.findViewById(R.id.tv_project_name) as TextView }
-        val tv_url by lazy { itemView.findViewById(R.id.tv_url) as TextView }
-        val tv_commit by lazy { itemView.findViewById(R.id.tv_commit) as TextView }
-        val tv_submitter by lazy { itemView.findViewById(R.id.tv_submitter) as TextView }
-        val tv_time by lazy { itemView.findViewById(R.id.tv_time) as TextView }
+        val tv_type by lazy { itemView.findViewByIdEx<TextView>(R.id.tv_type) }
+        val tv_project_name by lazy { itemView.findViewByIdEx<TextView>(R.id.tv_project_name) }
+        val tv_url by lazy { itemView.findViewByIdEx<TextView>(R.id.tv_url) }
+        val tv_commit by lazy { itemView.findViewByIdEx<TextView>(R.id.tv_commit) }
+        val tv_submitter by lazy { itemView.findViewByIdEx<TextView>(R.id.tv_submitter) }
+        val tv_time by lazy { itemView.findViewByIdEx<TextView>(R.id.tv_time) }
     }
 
 }

@@ -3,6 +3,8 @@ package com.ljb.rxjava.kotlin.net
 import android.text.TextUtils
 import com.ljb.rxjava.kotlin.log.XgoLog
 import com.ljb.rxjava.kotlin.net.interceptor.XgoLogInterceptor
+import com.wuba.weizhang.common.GITHUB_CLIENT_ID
+import com.wuba.weizhang.common.GITHUB_CLIENT_SECRET
 import okhttp3.*
 import java.util.concurrent.TimeUnit
 
@@ -10,18 +12,14 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by L on 2017/6/8.
  */
-
 object XgoHttpClient {
 
-    var GITHUB_CLIENT_ID = ""
-    var GITHUB_CLIENT_SECRET = ""
+    private const val DEFAULT_TIME_OUT = 5000L
 
-    private val DEFAULT_TIME_OUT = 5000L
-
-    val METHOD_GET: String = "GET"
-    val METHOD_POST: String = "POST"
-    val METHOD_PUT: String = "PUT"
-    val METHOD_DELETE: String = "DELETE"
+    const val METHOD_GET: String = "GET"
+    const val METHOD_POST: String = "POST"
+    const val METHOD_PUT: String = "PUT"
+    const val METHOD_DELETE: String = "DELETE"
 
 
     private val mHttpClient by lazy {
@@ -35,14 +33,12 @@ object XgoHttpClient {
     /**
      * 同步
      * */
-    fun execute(request: Request): Response
-            = mHttpClient.newCall(request).execute()
+    fun execute(request: Request): Response = mHttpClient.newCall(request).execute()
 
     /**
      * 异步
      * */
-    fun enqueue(request: Request, responseCallback: Callback)
-            = mHttpClient.newCall(request).enqueue(responseCallback)
+    fun enqueue(request: Request, responseCallback: Callback) = mHttpClient.newCall(request).enqueue(responseCallback)
 
     /**
      * 创建个Request
@@ -87,27 +83,21 @@ object XgoHttpClient {
      * 创建Get链接
      * */
     private fun initGetRequest(url: String, params: Map<String, String>?): String {
-        var getUrl = url
-        if (params != null && params.isNotEmpty()) {
-            val sb = StringBuilder(url).append("?")
-            var count = 0
-            params.map {
-                println("map")
-                count++
-                sb.append(it.key).append("=").append(it.value)
-                if (count != params.size) {
-                    sb.append("&")
+        var getUrl = StringBuilder(url).apply {
+            if (params != null && params.isNotEmpty()) {
+                append("?")
+                params.map {
+                    append(it.key).append("=").append(it.value).append("&")
                 }
+                delete(this.length - "&".length, this.length)
             }
-            getUrl = sb.toString()
-        }
+        }.toString()
 
         //添加github授权
         if (!TextUtils.isEmpty(GITHUB_CLIENT_ID) && !TextUtils.isEmpty(GITHUB_CLIENT_SECRET)) {
             getUrl += if (getUrl.contains("?")) "&" else "?"
             getUrl += "client_id=$GITHUB_CLIENT_ID&client_secret=$GITHUB_CLIENT_SECRET"
         }
-
         return getUrl
     }
 

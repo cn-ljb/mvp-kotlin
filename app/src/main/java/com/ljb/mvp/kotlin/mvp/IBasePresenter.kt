@@ -1,13 +1,13 @@
-package com.wuba.weizhang.mvp
+package com.ljb.mvp.kotlin.mvp
 
 import android.content.Context
 import android.support.v4.app.Fragment
-import com.ljb.mvp.kotlin.KotlinApplication
+import com.ljb.mvp.kotlin.KotlinMVPApplication
 
 /**
  * Created by L on 2017/7/10.
  */
-interface IBasePresenter< out V : IBaseView> {
+interface IBasePresenter<out V : IBaseView> {
 
     fun getMvpView(): V
 
@@ -20,7 +20,7 @@ interface IBasePresenter< out V : IBaseView> {
 fun IBasePresenter<IBaseView>.getContext(): Context = when {
     getMvpView() is Context -> getMvpView() as Context
     getMvpView() is Fragment -> (getMvpView() as Fragment).context
-    else -> KotlinApplication.mContext
+    else -> throw IllegalStateException("The presenter not found Context")
 }
 
 
