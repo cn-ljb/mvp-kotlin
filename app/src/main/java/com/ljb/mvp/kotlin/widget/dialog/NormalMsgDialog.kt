@@ -15,8 +15,7 @@ import com.ljb.mvp.kotlin.R
 /**
  * Created by L on 2017/12/29.
  */
-class NormalMsgDialog(val mActivity: Activity) : View.OnClickListener {
-
+class NormalMsgDialog(private val mActivity: Activity) : View.OnClickListener {
 
     private val mDialog: Dialog = Dialog(mActivity, R.style.mask_dialog)
     private val mView: View = View.inflate(mActivity, R.layout.dialog_msg_normal, null)
@@ -26,7 +25,6 @@ class NormalMsgDialog(val mActivity: Activity) : View.OnClickListener {
 
     private var mRightButtonClickListener: DialogInterface.OnClickListener? = null
     private var mLeftButtonClickListener: DialogInterface.OnClickListener? = null
-
 
     init {
         mDialog.setContentView(mView, ViewGroup.LayoutParams(dip2px(270f), ViewGroup.LayoutParams.MATCH_PARENT))

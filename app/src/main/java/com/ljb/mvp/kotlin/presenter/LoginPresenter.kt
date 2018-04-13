@@ -32,6 +32,7 @@ class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContrac
     }
 
     override fun login(userName: String) {
+        RxUtils.dispose(mLoginDisposable)
         mLoginDisposable = UserProtocol.getUserInfoByName(userName)
                 .map {
                     if (it.message.isNullOrBlank()) {

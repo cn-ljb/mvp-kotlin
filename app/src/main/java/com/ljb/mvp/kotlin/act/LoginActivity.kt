@@ -10,10 +10,13 @@ import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.contract.LoginContract
 import com.ljb.mvp.kotlin.presenter.LoginPresenter
 import com.ljb.mvp.kotlin.mvp.BaseMvpActivity
+import com.ljb.mvp.kotlin.widget.dialog.LoadingDialog
 import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.ILoginView {
+
+    private val mLoadingDialog by lazy { LoadingDialog(this) }
 
     override fun createPresenter() = LoginPresenter(this)
 
@@ -30,9 +33,13 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.ILoginVie
 
     private fun initData() = mPresenter.startTask()
 
-    override fun loginSuccess() = goHome()
+    override fun loginSuccess() {
+        mLoadingDialog.dismiss()
+        goHome()
+    }
 
     override fun loginError(errorMsg: String?) {
+        mLoadingDialog.dismiss()
         tv_tip.visibility = View.VISIBLE
         if (errorMsg.isNullOrEmpty()) {
             tv_tip.setText(R.string.net_error)
@@ -62,6 +69,7 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.ILoginVie
             tv_tip.setText(R.string.input_user)
             return
         }
+        mLoadingDialog.show()
         mPresenter.login(et_github.text.trim().toString())
     }
 
