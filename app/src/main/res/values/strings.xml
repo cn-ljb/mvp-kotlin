@@ -11,7 +11,7 @@
     <string name="events">events</string>
     <string name="starred">starred</string>
     <string name="followers">followers</string>
-    <string name="load_error">Network error</string>
+    <string name="load_error">Network Error</string>
     <string name="reload">Reload</string>
     <string name="loading">loading…</string>
     <string name="load_error_click">load failed, click retry</string>
