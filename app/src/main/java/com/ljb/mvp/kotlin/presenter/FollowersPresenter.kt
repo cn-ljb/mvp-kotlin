@@ -11,17 +11,11 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/9/22.
  */
-class FollowersPresenter(private val mView: FollowersContract.IFollowersView) : FollowersContract.IFollowersPresenter {
+class FollowersPresenter(private val mView: FollowersContract.IFollowersView) : FollowersContract.IFollowersPresenter() {
 
     override fun getMvpView() = mView
 
     private var mPage = 1
-
-    private var mFollowerDisposable: Disposable? = null
-
-    override fun startTask() {
-        onRefresh()
-    }
 
     override fun onLoadMore() {
         mPage++
@@ -34,18 +28,12 @@ class FollowersPresenter(private val mView: FollowersContract.IFollowersView) : 
     }
 
     private fun getDataFromNet(page: Int) {
-        mFollowerDisposable = UserProtocol.getFollowersByName(LoginUser.name, page)
+        UserProtocol.getFollowersByName(LoginUser.name, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { getMvpView().showPage(it, page) },
                         { getMvpView().errorPage(it, page) }
-                )
+                ).bindRxLife(RxLife.ON_DESTROY)
     }
-
-    override fun onDestroy() {
-        RxUtils.dispose(mFollowerDisposable)
-    }
-
-
 }

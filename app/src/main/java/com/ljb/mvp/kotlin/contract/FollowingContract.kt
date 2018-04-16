@@ -3,6 +3,7 @@ package com.ljb.mvp.kotlin.contract
 import com.ljb.mvp.kotlin.domain.Following
 import com.ljb.mvp.kotlin.mvp.IBasePresenter
 import com.ljb.mvp.kotlin.mvp.IBaseView
+import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
 
 /**
  * Created by L on 2017/10/9.
@@ -14,10 +15,10 @@ interface FollowingContract {
         fun errorPage(t: Throwable, page: Int)
     }
 
-    interface IFollowingPresenter : IBasePresenter<IFollowingView> {
+    abstract class IFollowingPresenter : BaseRxLifePresenter<IFollowingView>() {
 
-        fun onRefresh()
+        abstract fun onRefresh()
 
-        fun onLoadMore()
+        abstract fun onLoadMore()
     }
 }

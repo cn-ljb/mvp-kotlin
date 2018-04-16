@@ -3,6 +3,7 @@ package com.ljb.mvp.kotlin.contract
 import com.ljb.mvp.kotlin.domain.User
 import com.ljb.mvp.kotlin.mvp.IBasePresenter
 import com.ljb.mvp.kotlin.mvp.IBaseView
+import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
 
 /**
  * Created by L on 2017/7/18.
@@ -14,7 +15,8 @@ interface MyContract {
         fun showUserInfo(user: User)
     }
 
-    interface IMyPresenter : IBasePresenter<IMyView> {
-        fun logout()
+    abstract class IMyPresenter : BaseRxLifePresenter<IMyView>() {
+        abstract fun logout()
+        abstract fun getUserInfo()
     }
 }

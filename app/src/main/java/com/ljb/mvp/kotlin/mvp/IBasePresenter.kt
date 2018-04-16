@@ -11,9 +11,18 @@ interface IBasePresenter<out V : IBaseView> {
 
     fun getMvpView(): V
 
-    fun startTask()
+    fun onCreate()
+
+    fun onStart()
+
+    fun onResume()
+
+    fun onPause()
+
+    fun onStop()
 
     fun onDestroy()
+
 
 }
 

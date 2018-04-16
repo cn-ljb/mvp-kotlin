@@ -11,17 +11,13 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/9/27.
  */
-class RepositoriesPresenter(private val mView: RepositoriesContract.IRepositoriesView) : RepositoriesContract.IRepositoriesPresenter {
+class RepositoriesPresenter(private val mView: RepositoriesContract.IRepositoriesView) : RepositoriesContract.IRepositoriesPresenter() {
 
     override fun getMvpView() = mView
 
     private var mPage = 1
 
-    private var mRepositoryDisposable: Disposable? = null
 
-    override fun startTask() {
-        onRefresh()
-    }
 
     override fun onLoadMore() {
         mPage++
@@ -34,17 +30,14 @@ class RepositoriesPresenter(private val mView: RepositoriesContract.IRepositorie
     }
 
     private fun getDataFromNet(page: Int) {
-        mRepositoryDisposable = UserProtocol.getRepositoriesByName(LoginUser.name, page)
+        UserProtocol.getRepositoriesByName(LoginUser.name, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { getMvpView().showPage(it, page) },
                         { getMvpView().errorPage(it, page) }
-                )
+                ).bindRxLife(RxLife.ON_DESTROY)
     }
 
-    override fun onDestroy() {
-        RxUtils.dispose(mRepositoryDisposable)
-    }
 
 }

@@ -15,20 +15,16 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by L on 2017/7/13.
  */
-class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContract.ILoginPresenter {
+class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContract.ILoginPresenter() {
 
     override fun getMvpView() = mView
 
-    private val mTimerObservable: Observable<Long> by lazy { Observable.timer(1500, TimeUnit.MILLISECONDS) }
-    private var mTimerDisposable: Disposable? = null
     private var mLoginDisposable: Disposable? = null
 
-    override fun startTask() {
-        if (LoginUser.name.isBlank()) {
-            mView.showLogin()
-        } else {
-            mTimerDisposable = mTimerObservable.subscribe { mView.goHome() }
-        }
+    override fun delayGoHomeTask() {
+        Observable.timer(1500, TimeUnit.MILLISECONDS)
+                .subscribe { mView.goHome() }
+                .bindRxLife(RxLife.ON_DESTROY)
     }
 
     override fun login(userName: String) {
@@ -54,12 +50,6 @@ class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContrac
                     }
                 }, {
                     getMvpView().loginError(null)
-                })
+                }).bindRxLife(RxLife.ON_DESTROY)
     }
-
-    override fun onDestroy() {
-        RxUtils.dispose(mTimerDisposable)
-        RxUtils.dispose(mLoginDisposable)
-    }
-
 }

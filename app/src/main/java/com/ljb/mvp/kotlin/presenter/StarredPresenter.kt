@@ -11,17 +11,12 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/9/21.
  */
-class StarredPresenter(private val mView: StarredContract.IStarredView) : StarredContract.IStarredPresenter {
+class StarredPresenter(private val mView: StarredContract.IStarredView) : StarredContract.IStarredPresenter() {
 
     override fun getMvpView() = mView
 
     private var mPage = 1
 
-    private var mStarredDisposable: Disposable? = null
-
-    override fun startTask() {
-        onRefresh()
-    }
 
     override fun onLoadMore() {
         mPage++
@@ -34,17 +29,12 @@ class StarredPresenter(private val mView: StarredContract.IStarredView) : Starre
     }
 
     private fun getDataFromNet(page: Int) {
-        mStarredDisposable = UserProtocol.getStarredByName(LoginUser.name, page)
+        UserProtocol.getStarredByName(LoginUser.name, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { getMvpView().showPage(it, page) },
                         { getMvpView().errorPage(it, page) }
-                )
+                ).bindRxLife(RxLife.ON_DESTROY)
     }
-
-    override fun onDestroy() {
-        RxUtils.dispose(mStarredDisposable)
-    }
-
 }

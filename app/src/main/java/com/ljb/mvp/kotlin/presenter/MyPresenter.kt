@@ -14,32 +14,27 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/7/18.
  */
-class MyPresenter(private val mView: MyContract.IMyView) : MyContract.IMyPresenter {
+class MyPresenter(private val mView: MyContract.IMyView) : MyContract.IMyPresenter() {
 
     override fun getMvpView() = mView
 
-    private var mUserInfoDisposable: Disposable? = null
 
-    override fun startTask() {
-        mUserInfoDisposable = Observable.concat(
-                UserDaoProtocol.createObservable { UserDaoProtocol.findUserByName(getContext(),LoginUser.name) },
+    override fun getUserInfo() {
+        Observable.concat(
+                UserDaoProtocol.createObservable { UserDaoProtocol.findUserByName(getContext(), LoginUser.name) },
                 UserProtocol.getUserInfoByName(LoginUser.name))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { getMvpView().showUserInfo(it) },
                         { it.printStackTrace() }
-                )
+                ).bindRxLife(RxLife.ON_DESTROY)
     }
 
 
     override fun logout() {
         LoginUser.name = ""
         getMvpView().logoutSuccess()
-    }
-
-    override fun onDestroy() {
-        RxUtils.dispose(mUserInfoDisposable)
     }
 
 }

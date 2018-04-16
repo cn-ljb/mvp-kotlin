@@ -71,7 +71,7 @@ class MyFragment : BaseMvpFragment<MyPresenter>(),
     }
 
     private fun initData() {
-        mPresenter.startTask()
+        mPresenter.getUserInfo()
     }
 
     override fun logoutSuccess() {

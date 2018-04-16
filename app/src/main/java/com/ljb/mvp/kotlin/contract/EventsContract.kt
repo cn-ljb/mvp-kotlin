@@ -3,6 +3,7 @@ package com.ljb.mvp.kotlin.contract
 import com.ljb.mvp.kotlin.domain.Event
 import com.ljb.mvp.kotlin.mvp.IBasePresenter
 import com.ljb.mvp.kotlin.mvp.IBaseView
+import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
 
 /**
  * Created by L on 2017/9/14.
@@ -14,10 +15,10 @@ interface EventsContract {
         fun errorPage(t: Throwable, page: Int)
     }
 
-    interface IEventsPresenter : IBasePresenter<IEventsView> {
+    abstract class IEventsPresenter : BaseRxLifePresenter<IEventsView>() {
 
-        fun onRefresh()
+        abstract  fun onRefresh()
 
-        fun onLoadMore()
+        abstract  fun onLoadMore()
     }
 }

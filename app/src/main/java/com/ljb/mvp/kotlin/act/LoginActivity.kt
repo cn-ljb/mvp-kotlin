@@ -11,6 +11,7 @@ import com.ljb.mvp.kotlin.contract.LoginContract
 import com.ljb.mvp.kotlin.presenter.LoginPresenter
 import com.ljb.mvp.kotlin.mvp.BaseMvpActivity
 import com.ljb.mvp.kotlin.widget.dialog.LoadingDialog
+import com.wuba.weizhang.common.LoginUser
 import kotlinx.android.synthetic.main.activity_login.*
 
 
@@ -27,11 +28,18 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.ILoginVie
         initData()
     }
 
+
     private fun initView() {
         btn_login.setOnClickListener { login() }
     }
 
-    private fun initData() = mPresenter.startTask()
+    private fun initData() {
+        if (LoginUser.name.isBlank()) {
+            showLogin()
+        } else {
+            mPresenter.delayGoHomeTask()
+        }
+    }
 
     override fun loginSuccess() {
         mLoadingDialog.dismiss()
@@ -54,11 +62,13 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.ILoginVie
         finish()
     }
 
-    override fun showLogin() {
+    private fun showLogin() {
         val alpha = PropertyValuesHolder.ofFloat("alpha", 0f, 1f)
         val scaleX = PropertyValuesHolder.ofFloat("scaleX", 0.5f, 1f)
         val scaleY = PropertyValuesHolder.ofFloat("scaleY", 0.5f, 1f)
-        ObjectAnimator.ofPropertyValuesHolder(ll_login, alpha, scaleX, scaleY).setDuration(1000).start()
+        ObjectAnimator.ofPropertyValuesHolder(ll_login, alpha, scaleX, scaleY)
+                .setDuration(1000)
+                .start()
         ll_login.visibility = View.VISIBLE
     }
 

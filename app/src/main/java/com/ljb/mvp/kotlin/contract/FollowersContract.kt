@@ -3,6 +3,7 @@ package com.ljb.mvp.kotlin.contract
 import com.ljb.mvp.kotlin.domain.Follower
 import com.ljb.mvp.kotlin.mvp.IBasePresenter
 import com.ljb.mvp.kotlin.mvp.IBaseView
+import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
 
 /**
  * Created by L on 2017/9/22.
@@ -15,8 +16,8 @@ interface FollowersContract {
     }
 
 
-    interface IFollowersPresenter : IBasePresenter<IFollowersView> {
-        fun onRefresh()
-        fun onLoadMore()
+    abstract class IFollowersPresenter : BaseRxLifePresenter<IFollowersView>() {
+        abstract fun onRefresh()
+        abstract fun onLoadMore()
     }
 }
