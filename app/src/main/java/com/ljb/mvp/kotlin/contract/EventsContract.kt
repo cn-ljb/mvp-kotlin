@@ -17,8 +17,8 @@ interface EventsContract {
 
     abstract class IEventsPresenter : BaseRxLifePresenter<IEventsView>() {
 
-        abstract  fun onRefresh()
+        abstract fun onRefresh()
 
-        abstract  fun onLoadMore()
+        abstract fun onLoadMore()
     }
 }

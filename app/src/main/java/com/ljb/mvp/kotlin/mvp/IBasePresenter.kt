@@ -22,8 +22,6 @@ interface IBasePresenter<out V : IBaseView> {
     fun onStop()
 
     fun onDestroy()
-
-
 }
 
 fun IBasePresenter<IBaseView>.getContext(): Context = when {
