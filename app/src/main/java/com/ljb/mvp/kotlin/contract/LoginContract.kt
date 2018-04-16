@@ -1,6 +1,5 @@
 package com.ljb.mvp.kotlin.contract
 
-import com.ljb.mvp.kotlin.mvp.IBasePresenter
 import com.ljb.mvp.kotlin.mvp.IBaseView
 import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
 

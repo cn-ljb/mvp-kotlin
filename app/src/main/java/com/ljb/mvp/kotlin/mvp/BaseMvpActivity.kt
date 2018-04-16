@@ -3,6 +3,7 @@ package com.ljb.mvp.kotlin.mvp
 import android.app.Activity
 import android.os.Bundle
 
+
 abstract class BaseMvpActivity<out T : IBasePresenter<*>> : Activity() {
 
     protected val mPresenter: T by lazy { createPresenter() }
