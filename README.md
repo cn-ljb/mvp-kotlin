@@ -98,4 +98,6 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 * 5、一个View对应一个Presenter，一个Presenter可具备多个Protocol.
 
 
+## 截图：
 
+![](/gif/anim.gif)
