@@ -11,12 +11,9 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/9/21.
  */
-class StarredPresenter(private val mView: StarredContract.IStarredView) : StarredContract.IStarredPresenter() {
-
-    override fun getMvpView() = mView
+class StarredPresenter(mvpView: StarredContract.IStarredView) : StarredContract.IStarredPresenter(mvpView) {
 
     private var mPage = 1
-
 
     override fun onLoadMore() {
         mPage++

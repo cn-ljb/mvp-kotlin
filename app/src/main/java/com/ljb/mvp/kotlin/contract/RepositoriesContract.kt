@@ -15,7 +15,7 @@ interface RepositoriesContract {
         fun errorPage(t: Throwable, page: Int)
     }
 
-    abstract class IRepositoriesPresenter : BaseRxLifePresenter<IRepositoriesView>() {
+    abstract class IRepositoriesPresenter(mvpView: IRepositoriesView) : BaseRxLifePresenter<IRepositoriesView>(mvpView) {
 
         abstract fun onRefresh()
 

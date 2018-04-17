@@ -15,7 +15,7 @@ interface EventsContract {
         fun errorPage(t: Throwable, page: Int)
     }
 
-    abstract class IEventsPresenter : BaseRxLifePresenter<IEventsView>() {
+    abstract class IEventsPresenter(mvpView: IEventsView) : BaseRxLifePresenter<IEventsView>(mvpView) {
 
         abstract fun onRefresh()
 

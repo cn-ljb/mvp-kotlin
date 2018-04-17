@@ -9,11 +9,9 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/9/14.
  */
-class EventPresenter(private val mView: EventsContract.IEventsView) : EventsContract.IEventsPresenter() {
+class EventPresenter(mvpView: EventsContract.IEventsView) : EventsContract.IEventsPresenter(mvpView) {
 
     private var mPage = 1
-
-    override fun getMvpView(): EventsContract.IEventsView = mView
 
     override fun onLoadMore() {
         mPage++

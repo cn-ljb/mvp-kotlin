@@ -17,7 +17,7 @@ interface LoginContract {
         fun goHome()
     }
 
-    abstract class ILoginPresenter : BaseRxLifePresenter<ILoginView>() {
+    abstract class ILoginPresenter(mvpView: ILoginView) : BaseRxLifePresenter<ILoginView>(mvpView) {
         abstract fun login(userName: String)
         abstract fun delayGoHomeTask()
     }

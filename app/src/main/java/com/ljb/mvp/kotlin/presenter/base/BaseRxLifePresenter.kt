@@ -6,9 +6,11 @@ import com.ljb.mvp.kotlin.utils.RxUtils
 import com.ljb.rxjava.kotlin.log.XgoLog
 import io.reactivex.disposables.Disposable
 
-abstract class BaseRxLifePresenter<out V : IBaseView> : IBasePresenter<V> {
+abstract class BaseRxLifePresenter<out V : IBaseView>(private val mMVPView: V) : IBasePresenter<V> {
 
     private val mRxLifeMap = HashMap<RxLife, ArrayList<Disposable>>()
+
+    override fun getMvpView() = mMVPView
 
     override fun onCreate() {
         destroyRxLife(RxLife.ON_CREATE)

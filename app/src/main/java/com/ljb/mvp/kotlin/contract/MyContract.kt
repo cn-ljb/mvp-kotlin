@@ -15,7 +15,7 @@ interface MyContract {
         fun showUserInfo(user: User)
     }
 
-    abstract class IMyPresenter : BaseRxLifePresenter<IMyView>() {
+    abstract class IMyPresenter(mvpView: IMyView) : BaseRxLifePresenter<IMyView>(mvpView) {
         abstract fun logout()
         abstract fun getUserInfo()
     }

@@ -16,7 +16,7 @@ interface FollowersContract {
     }
 
 
-    abstract class IFollowersPresenter : BaseRxLifePresenter<IFollowersView>() {
+    abstract class IFollowersPresenter(mvpView: IFollowersView) : BaseRxLifePresenter<IFollowersView>(mvpView) {
         abstract fun onRefresh()
         abstract fun onLoadMore()
     }

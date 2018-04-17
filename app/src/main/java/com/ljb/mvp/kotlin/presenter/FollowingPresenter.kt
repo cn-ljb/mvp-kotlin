@@ -11,9 +11,8 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/10/9.
  */
-class FollowingPresenter(private val mView: FollowingContract.IFollowingView) : FollowingContract.IFollowingPresenter() {
+class FollowingPresenter(mvpView: FollowingContract.IFollowingView) : FollowingContract.IFollowingPresenter(mvpView) {
 
-    override fun getMvpView() = mView
 
     private var mPage = 1
 

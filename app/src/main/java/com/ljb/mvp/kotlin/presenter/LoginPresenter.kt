@@ -15,15 +15,14 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by L on 2017/7/13.
  */
-class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContract.ILoginPresenter() {
+class LoginPresenter(mvpView: LoginContract.ILoginView) : LoginContract.ILoginPresenter(mvpView) {
 
-    override fun getMvpView() = mView
 
     private var mLoginDisposable: Disposable? = null
 
     override fun delayGoHomeTask() {
         Observable.timer(1500, TimeUnit.MILLISECONDS)
-                .subscribe { mView.goHome() }
+                .subscribe { getMvpView().goHome() }
                 .bindRxLife(RxLife.ON_DESTROY)
     }
 
@@ -52,4 +51,5 @@ class LoginPresenter(private val mView: LoginContract.ILoginView) : LoginContrac
                     getMvpView().loginError(null)
                 }).bindRxLife(RxLife.ON_DESTROY)
     }
+
 }

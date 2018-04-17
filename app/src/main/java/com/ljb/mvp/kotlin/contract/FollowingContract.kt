@@ -15,7 +15,7 @@ interface FollowingContract {
         fun errorPage(t: Throwable, page: Int)
     }
 
-    abstract class IFollowingPresenter : BaseRxLifePresenter<IFollowingView>() {
+    abstract class IFollowingPresenter(mvpView: IFollowingView) : BaseRxLifePresenter<IFollowingView>(mvpView) {
 
         abstract fun onRefresh()
 

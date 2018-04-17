@@ -11,13 +11,9 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/9/27.
  */
-class RepositoriesPresenter(private val mView: RepositoriesContract.IRepositoriesView) : RepositoriesContract.IRepositoriesPresenter() {
-
-    override fun getMvpView() = mView
+class RepositoriesPresenter(mvpView: RepositoriesContract.IRepositoriesView) : RepositoriesContract.IRepositoriesPresenter(mvpView) {
 
     private var mPage = 1
-
-
 
     override fun onLoadMore() {
         mPage++

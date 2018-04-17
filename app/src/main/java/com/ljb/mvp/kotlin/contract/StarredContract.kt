@@ -15,7 +15,7 @@ interface StarredContract {
         fun errorPage(t: Throwable, page: Int)
     }
 
-    abstract class IStarredPresenter : BaseRxLifePresenter<IStarredView>() {
+    abstract class IStarredPresenter(mvpView: IStarredView) : BaseRxLifePresenter<IStarredView>(mvpView) {
         abstract fun onRefresh()
         abstract fun onLoadMore()
     }
