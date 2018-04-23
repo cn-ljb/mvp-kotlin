@@ -27,4 +27,5 @@
     <string name="format_issues">issues: %s</string>
     <string name="format_update">update: %s</string>
     <string name="format_create">create: %s</string>
+    <string name="net_time_out">net time out</string>
 </resources>

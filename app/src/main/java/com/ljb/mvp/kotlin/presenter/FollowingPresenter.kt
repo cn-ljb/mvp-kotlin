@@ -28,10 +28,10 @@ class FollowingPresenter(mvpView: FollowingContract.IFollowingView) : FollowingC
         UserProtocol.getFollowingByName(LoginUser.name, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
+                .subscribeEx(
                         { getMvpView().showPage(it, page) },
                         { getMvpView().errorPage(it, page) }
-                ).bindRxLife(RxLife.ON_DESTROY)
+                ).bindRxLifeEx(RxLife.ON_DESTROY)
     }
 
 }

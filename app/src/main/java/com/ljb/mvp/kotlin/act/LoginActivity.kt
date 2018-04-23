@@ -51,7 +51,6 @@ class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.ILoginVie
         tv_tip.visibility = View.VISIBLE
         if (errorMsg.isNullOrEmpty()) {
             tv_tip.setText(R.string.net_error)
-            Toast.makeText(this, R.string.net_error, Toast.LENGTH_SHORT).show()
         } else {
             tv_tip.text = errorMsg
         }

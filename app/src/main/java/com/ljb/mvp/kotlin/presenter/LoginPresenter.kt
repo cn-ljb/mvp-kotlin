@@ -23,7 +23,7 @@ class LoginPresenter(mvpView: LoginContract.ILoginView) : LoginContract.ILoginPr
     override fun delayGoHomeTask() {
         Observable.timer(1500, TimeUnit.MILLISECONDS)
                 .subscribe { getMvpView().goHome() }
-                .bindRxLife(RxLife.ON_DESTROY)
+                .bindRxLifeEx(RxLife.ON_DESTROY)
     }
 
     override fun login(userName: String) {
@@ -40,7 +40,7 @@ class LoginPresenter(mvpView: LoginContract.ILoginView) : LoginContract.ILoginPr
                     it
                 }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
+                .subscribeEx({
                     if (it.message.isNullOrBlank()) {
                         LoginUser.name = it.login
                         getMvpView().loginSuccess()
@@ -49,7 +49,7 @@ class LoginPresenter(mvpView: LoginContract.ILoginView) : LoginContract.ILoginPr
                     }
                 }, {
                     getMvpView().loginError(null)
-                }).bindRxLife(RxLife.ON_DESTROY)
+                }).bindRxLifeEx(RxLife.ON_DESTROY)
     }
 
 }

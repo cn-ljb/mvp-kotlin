@@ -20,10 +20,8 @@ class MyPresenter(mvpView: MyContract.IMyView) : MyContract.IMyPresenter(mvpView
                 UserProtocol.getUserInfoByName(LoginUser.name))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { getMvpView().showUserInfo(it) },
-                        { it.printStackTrace() }
-                ).bindRxLife(RxLife.ON_DESTROY)
+                .subscribeEx({ getMvpView().showUserInfo(it!!) })
+                .bindRxLifeEx(RxLife.ON_DESTROY)
     }
 
 

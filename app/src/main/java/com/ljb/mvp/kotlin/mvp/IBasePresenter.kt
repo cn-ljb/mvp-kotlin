@@ -1,5 +1,6 @@
 package com.ljb.mvp.kotlin.mvp
 
+import android.app.Activity
 import android.content.Context
 import android.support.v4.app.Fragment
 
@@ -24,8 +25,8 @@ interface IBasePresenter<out V : IBaseView> {
 }
 
 fun IBasePresenter<IBaseView>.getContext(): Context = when {
-    getMvpView() is Context -> getMvpView() as Context
-    getMvpView() is Fragment -> (getMvpView() as Fragment).context
+    getMvpView() is Activity -> getMvpView() as Activity
+    getMvpView() is Fragment -> (getMvpView() as Fragment).activity
     else -> throw IllegalStateException("the presenter not found context")
 }
 

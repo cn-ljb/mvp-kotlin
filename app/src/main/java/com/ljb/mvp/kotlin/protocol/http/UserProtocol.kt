@@ -13,21 +13,21 @@ import io.reactivex.Observable
 object UserProtocol : BaseHttpProtocol() {
 
     fun getUserInfoByName(userName: String): Observable<User> {
-        val url = "${HTTP_API_DOMAIN}/users/${nvl(userName)}"
+        val url = "$HTTP_API_DOMAIN/users/${nvl(userName)}"
         return createObservable(url, XgoHttpClient.METHOD_GET) {
             JsonParser.fromJsonObj(it, User::class.java)
         }
     }
 
     fun getEventsByName(userName: String, page: Int): Observable<MutableList<Event>> {
-        val url = "${HTTP_API_DOMAIN}/users/${nvl(userName)}/events"
+        val url = "$HTTP_API_DOMAIN/users/${nvl(userName)}/events"
         return createObservable(url, XgoHttpClient.METHOD_GET, mapOf("page" to "$page")) {
             JsonParser.fromJsonArr(it, Event::class.java)
         }
     }
 
     fun getStarredByName(userName: String, page: Int): Observable<MutableList<Starred>> {
-        val url = "${HTTP_API_DOMAIN}/users/${nvl(userName)}/starred"
+        val url = "$HTTP_API_DOMAIN/users/${nvl(userName)}/starred"
         return createObservable(url, XgoHttpClient.METHOD_GET, mapOf("page" to "$page")) {
             JsonParser.fromJsonArr(it, Starred::class.java)
         }

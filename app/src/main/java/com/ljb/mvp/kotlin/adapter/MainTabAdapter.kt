@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.ljb.mvp.kotlin.R
-import com.ljb.mvp.kotlin.common.findViewByIdEx
+import com.ljb.mvp.kotlin.widget.findViewByIdEx
 import com.ljb.mvp.kotlin.domain.TabBean
 import com.ljb.mvp.kotlin.widget.TabGroupView
 
