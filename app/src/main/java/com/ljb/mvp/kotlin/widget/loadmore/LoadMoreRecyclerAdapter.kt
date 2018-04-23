@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ljb.mvp.kotlin.R
-import com.ljb.rxjava.kotlin.log.XgoLog
+import com.ljb.mvp.kotlin.net.log.XgoLog
 
 /**
  * Created by L on 2017/7/24.

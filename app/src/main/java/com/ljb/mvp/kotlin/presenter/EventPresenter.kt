@@ -1,7 +1,7 @@
 package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.contract.EventsContract
-import com.wuba.weizhang.common.LoginUser
+import com.ljb.mvp.kotlin.common.LoginUser
 import com.wuba.weizhang.protocol.http.UserProtocol
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

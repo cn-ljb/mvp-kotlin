@@ -15,6 +15,7 @@ import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
 import com.ljb.mvp.kotlin.widget.PageStateLayout
 import kotlinx.android.synthetic.main.fragment_repos.*
 import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
+import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
 
 /**
  * Repos page
@@ -68,7 +69,7 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
     }
 
     override fun onErrorClick() {
-        page_layout.setPage(PageStateLayout.STATE_LOADING)
+        page_layout.setPage(PageState.STATE_LOADING)
         mPresenter.onRefresh()
     }
 
@@ -76,9 +77,9 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
         if (page == 1) {
             refresh_layout.isRefreshing = false
             if (data.isEmpty()) {
-                page_layout.setPage(PageStateLayout.STATE_EMPTY)
+                page_layout.setPage(PageState.STATE_EMPTY)
             } else {
-                page_layout.setPage(PageStateLayout.STATE_SUCCEED)
+                page_layout.setPage(PageState.STATE_SUCCEED)
                 mAdapter.mData.clear()
                 mAdapter.mData.addAll(data)
                 mAdapter.initLoadStatusForSize(data)
@@ -97,7 +98,7 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
 
     override fun errorPage(t: Throwable, page: Int) {
         if (page == 1) {
-            page_layout.setPage(PageStateLayout.STATE_ERROR)
+            page_layout.setPage(PageState.STATE_ERROR)
         } else {
             mAdapter.onError()
         }

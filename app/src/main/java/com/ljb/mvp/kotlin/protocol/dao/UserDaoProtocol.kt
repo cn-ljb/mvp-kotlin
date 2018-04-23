@@ -8,9 +8,8 @@ import android.net.Uri
 import com.ljb.mvp.kotlin.common.Constant.DBProvider.TABLE_USERS
 import com.ljb.mvp.kotlin.db.DatabaseProvider
 import com.ljb.mvp.kotlin.domain.User
-import com.ljb.rxjava.kotlin.log.XgoLog
+import com.ljb.mvp.kotlin.net.log.XgoLog
 import com.wuba.weizhang.protocol.base.BaseDAOProtocol
-import java.security.AccessController.getContext
 
 /**
  * Created by L on 2017/7/17.

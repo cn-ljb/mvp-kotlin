@@ -11,7 +11,7 @@ import com.ljb.mvp.kotlin.contract.LoginContract
 import com.ljb.mvp.kotlin.presenter.LoginPresenter
 import com.ljb.mvp.kotlin.mvp.BaseMvpActivity
 import com.ljb.mvp.kotlin.widget.dialog.LoadingDialog
-import com.wuba.weizhang.common.LoginUser
+import com.ljb.mvp.kotlin.common.LoginUser
 import kotlinx.android.synthetic.main.activity_login.*
 
 

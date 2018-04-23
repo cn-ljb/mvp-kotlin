@@ -2,9 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ljb.mvp.kotlin">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".KotlinMVPApplication"
@@ -29,7 +28,6 @@
             android:authorities="com.ljb.mvp.kotlin.provider"
             android:exported="false" />
 
-        <activity android:name=".act.MainActivity"></activity>
     </application>
 
 </manifest>

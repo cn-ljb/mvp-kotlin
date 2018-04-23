@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.ljb.mvp.kotlin.common.Constant.DBProvider.Companion.DATABASE_NAME
 import com.ljb.mvp.kotlin.common.Constant.DBProvider.Companion.DATABASE_VERSION
-import com.ljb.rxjava.kotlin.log.XgoLog
+import com.ljb.mvp.kotlin.net.log.XgoLog
 
 /**
  * 数据库

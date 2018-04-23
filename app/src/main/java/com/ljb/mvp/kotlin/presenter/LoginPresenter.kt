@@ -4,7 +4,7 @@ import com.ljb.mvp.kotlin.contract.LoginContract
 import com.ljb.mvp.kotlin.mvp.getContext
 import com.ljb.mvp.kotlin.protocol.dao.UserDaoProtocol
 import com.ljb.mvp.kotlin.utils.RxUtils
-import com.wuba.weizhang.common.LoginUser
+import com.ljb.mvp.kotlin.common.LoginUser
 import com.wuba.weizhang.protocol.http.UserProtocol
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers

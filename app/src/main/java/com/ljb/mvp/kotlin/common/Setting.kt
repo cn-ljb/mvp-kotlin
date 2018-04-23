@@ -1,7 +1,6 @@
-package com.wuba.weizhang.common
+package com.ljb.mvp.kotlin.common
 
-import com.ljb.mvp.kotlin.common.Constant
-import com.ljb.rxjava.kotlin.log.XgoLog.Companion.LEVEL_ALL
+import com.ljb.mvp.kotlin.net.log.XgoLog.Companion.LEVEL_ALL
 import com.ljb.mvp.kotlin.utils.SPUtils
 
 
@@ -11,6 +10,7 @@ const val HTTP_API_DOMAIN = "https://api.github.com"
 /** Log级别 */
 const val LV_LOG = LEVEL_ALL
 
+/** GitHub接口身份验证 */
 var GITHUB_CLIENT_ID = ""
 var GITHUB_CLIENT_SECRET = ""
 

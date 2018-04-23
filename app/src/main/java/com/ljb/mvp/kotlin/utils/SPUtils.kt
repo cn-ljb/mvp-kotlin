@@ -13,6 +13,7 @@ object SPUtils {
 
     /** 请在Application中初始化 */
     fun initInstance(context: Context) {
+        if (instance != null) return
         instance = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
     }
 

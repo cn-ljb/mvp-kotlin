@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import com.ljb.mvp.kotlin.R
+import com.ljb.mvp.kotlin.R.layout.loading_page_empty
+import com.ljb.mvp.kotlin.R.layout.loading_page_error
 
 
 /**
@@ -14,16 +16,28 @@ import com.ljb.mvp.kotlin.R
  */
 class PageStateLayout : FrameLayout {
 
-    interface PageStateCallBack {
-        fun onErrorClick()
+    enum class PageState {
+        /**
+         * 正在加载状态
+         */
+        STATE_LOADING,
+        /**
+         * 错误状态
+         */
+        STATE_ERROR,
+        /**
+         * 空数据状态
+         */
+        STATE_EMPTY,
+        /**
+         * 成功状态
+         */
+        STATE_SUCCEED
     }
 
-    private var currentPageState = STATE_LOADING
 
-    private var mContext: Context? = null
-
+    private var currentPageState = PageState.STATE_LOADING
     private var mCallBack: PageStateCallBack? = null
-
     private var mLoadingView: View? = null
     private var mErrorView: View? = null
     private var mEmptyView: View? = null
@@ -42,11 +56,9 @@ class PageStateLayout : FrameLayout {
     }
 
     private fun init(context: Context) {
-        this.mContext = context
-
-        mLoadingView = initLoadingView()
-        mEmptyView = initEmptyView()
-        mErrorView = initErrorView()
+        mLoadingView = initLoadingView(context)
+        mEmptyView = initEmptyView(context)
+        mErrorView = initErrorView(context)
 
         if (mLoadingView != null) {
             addView(mLoadingView, FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT))
@@ -64,12 +76,10 @@ class PageStateLayout : FrameLayout {
     /**
      * 初始化错误界面
      */
-    private fun initErrorView(): View {
-        val errorView = View.inflate(mContext, R.layout.loading_page_error, null)
+    private fun initErrorView(context: Context): View {
+        val errorView = LayoutInflater.from(context).inflate(loading_page_error, this, false)
         errorView.findViewById(R.id.tv_reload).setOnClickListener {
-            if (mCallBack != null) {
-                mCallBack!!.onErrorClick()
-            }
+            mCallBack?.onErrorClick()
         }
         return errorView
     }
@@ -77,15 +87,15 @@ class PageStateLayout : FrameLayout {
     /**
      * 初始化空界面
      */
-    private fun initEmptyView(): View {
-        return View.inflate(mContext, R.layout.loading_page_empty, null)
+    private fun initEmptyView(context: Context): View {
+        return LayoutInflater.from(context).inflate(loading_page_empty, this, false)
     }
 
     /**
      * 初始化加载中界面
      */
-    private fun initLoadingView(): View {
-        return View.inflate(mContext, R.layout.loading_page_load, null)
+    private fun initLoadingView(context: Context): View {
+        return LayoutInflater.from(context).inflate(R.layout.loading_page_load, this, false)
     }
 
     /**
@@ -93,20 +103,20 @@ class PageStateLayout : FrameLayout {
      */
     private fun updatePage() {
         if (null != mSucceedView) {
-            mSucceedView!!.visibility = if (currentPageState == STATE_SUCCEED) View.VISIBLE else View.GONE
+            mSucceedView!!.visibility = if (currentPageState == PageState.STATE_SUCCEED) View.VISIBLE else View.GONE
         }
         if (null != mErrorView) {
-            mErrorView!!.visibility = if (currentPageState == STATE_ERROR) View.VISIBLE else View.GONE
+            mErrorView!!.visibility = if (currentPageState == PageState.STATE_ERROR) View.VISIBLE else View.GONE
         }
         if (null != mEmptyView) {
-            mEmptyView!!.visibility = if (currentPageState == STATE_EMPTY) View.VISIBLE else View.GONE
+            mEmptyView!!.visibility = if (currentPageState == PageState.STATE_EMPTY) View.VISIBLE else View.GONE
         }
         if (null != mLoadingView) {
-            mLoadingView!!.visibility = if (currentPageState == STATE_LOADING) View.VISIBLE else View.GONE
+            mLoadingView!!.visibility = if (currentPageState == PageState.STATE_LOADING) View.VISIBLE else View.GONE
         }
     }
 
-    fun setPage(pageState: Int) {
+    fun setPage(pageState: PageState) {
         this.currentPageState = pageState
         updatePage()
     }
@@ -167,22 +177,7 @@ class PageStateLayout : FrameLayout {
         this.mCallBack = callBack
     }
 
-    companion object {
-        /**
-         * 正在加载状态
-         */
-        const val STATE_LOADING = 1
-        /**
-         * 错误状态
-         */
-        const val STATE_ERROR = 2
-        /**
-         * 空数据状态
-         */
-        const val STATE_EMPTY = 3
-        /**
-         * 成功状态
-         */
-        const val STATE_SUCCEED = 4
+    interface PageStateCallBack {
+        fun onErrorClick()
     }
 }

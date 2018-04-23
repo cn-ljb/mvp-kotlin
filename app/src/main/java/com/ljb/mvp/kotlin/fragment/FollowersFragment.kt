@@ -13,6 +13,7 @@ import com.ljb.mvp.kotlin.presenter.FollowersPresenter
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
 import com.ljb.mvp.kotlin.widget.PageStateLayout
+import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
 import kotlinx.android.synthetic.main.fragment_followers.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 
@@ -64,16 +65,16 @@ class FollowersFragment : BaseMvpFragment<FollowersPresenter>(),
     }
 
     override fun onErrorClick() {
-        page_layout.setPage(PageStateLayout.STATE_LOADING)
+        page_layout.setPage(PageState.STATE_LOADING)
         mPresenter.onRefresh()
     }
 
     override fun showPage(data: MutableList<Follower>, page: Int) {
         if (page == 1) {
             if (data.isEmpty()) {
-                page_layout.setPage(PageStateLayout.STATE_EMPTY)
+                page_layout.setPage(PageState.STATE_EMPTY)
             } else {
-                page_layout.setPage(PageStateLayout.STATE_SUCCEED)
+                page_layout.setPage(PageState.STATE_SUCCEED)
                 mAdapter.mData.clear()
                 mAdapter.mData.addAll(data)
                 mAdapter.initLoadStatusForSize(data)
@@ -92,7 +93,7 @@ class FollowersFragment : BaseMvpFragment<FollowersPresenter>(),
 
     override fun errorPage(t: Throwable, page: Int) {
         if (page == 1) {
-            page_layout.setPage(PageStateLayout.STATE_ERROR)
+            page_layout.setPage(PageState.STATE_ERROR)
         } else {
             mAdapter.onError()
         }

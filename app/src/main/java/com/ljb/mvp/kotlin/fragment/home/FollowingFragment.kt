@@ -15,6 +15,7 @@ import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
 import com.ljb.mvp.kotlin.widget.PageStateLayout
 import kotlinx.android.synthetic.main.fragment_following.*
 import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
+import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
 
 /**
  * Created by L on 2017/7/18.
@@ -66,7 +67,7 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
     }
 
     override fun onErrorClick() {
-        page_layout.setPage(PageStateLayout.STATE_LOADING)
+        page_layout.setPage(PageState.STATE_LOADING)
         mPresenter.onRefresh()
     }
 
@@ -74,9 +75,9 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
         if (page == 1) {
             refresh_layout.isRefreshing = false
             if (data.isEmpty()) {
-                page_layout.setPage(PageStateLayout.STATE_EMPTY)
+                page_layout.setPage(PageState.STATE_EMPTY)
             } else {
-                page_layout.setPage(PageStateLayout.STATE_SUCCEED)
+                page_layout.setPage(PageState.STATE_SUCCEED)
                 mAdapter.mData.clear()
                 mAdapter.mData.addAll(data)
                 mAdapter.initLoadStatusForSize(data)
@@ -95,7 +96,7 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
 
     override fun errorPage(t: Throwable, page: Int) {
         if (page == 1) {
-            page_layout.setPage(PageStateLayout.STATE_ERROR)
+            page_layout.setPage(PageState.STATE_ERROR)
         } else {
             mAdapter.onError()
         }

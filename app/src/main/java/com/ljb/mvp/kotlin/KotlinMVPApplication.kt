@@ -6,8 +6,9 @@ import com.ljb.mvp.kotlin.utils.SPUtils
 /**
  * Created by L on 2017/7/14.
  */
-class KotlinMVPApplication : Application(){
+class KotlinMVPApplication : Application() {
 
+    //因避免创建全局的Application引用
     override fun onCreate() {
         super.onCreate()
         SPUtils.initInstance(this)

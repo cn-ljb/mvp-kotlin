@@ -1,4 +1,4 @@
-package com.ljb.rxjava.kotlin.net.interceptor
+package com.ljb.mvp.kotlin.net.interceptor
 
 
 import okhttp3.Headers
@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
  * The Http Log filter
  * Created by Ljb on 2015/12/11.
  */
-class XgoLogInterceptor @JvmOverloads constructor(lv: XgoLogInterceptor.Level = XgoLogInterceptor.Level.BODY,
+class XgoLogInterceptor @JvmOverloads constructor(lv: Level = Level.BODY,
                                                   private val logger: (String) -> Unit = ::println) : Interceptor {
 
     @Volatile

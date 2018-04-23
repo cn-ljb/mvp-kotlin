@@ -1,7 +1,7 @@
-package com.ljb.rxjava.kotlin.log
+package com.ljb.mvp.kotlin.net.log
 
 import android.util.Log
-import com.wuba.weizhang.common.LV_LOG
+import com.ljb.mvp.kotlin.common.LV_LOG
 
 class XgoLog @Throws(InstantiationException::class)
 

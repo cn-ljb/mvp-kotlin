@@ -1,7 +1,7 @@
 package com.ljb.rxjava.kotlin.protocol
 
 import android.text.TextUtils
-import com.ljb.rxjava.kotlin.net.XgoHttpClient
+import com.ljb.mvp.kotlin.net.XgoHttpClient
 import io.reactivex.Observable
 
 /**

@@ -3,7 +3,8 @@ package com.ljb.mvp.kotlin.presenter.base
 import com.ljb.mvp.kotlin.mvp.IBasePresenter
 import com.ljb.mvp.kotlin.mvp.IBaseView
 import com.ljb.mvp.kotlin.utils.RxUtils
-import com.ljb.rxjava.kotlin.log.XgoLog
+import com.ljb.mvp.kotlin.net.log.XgoLog
+import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 
 abstract class BaseRxLifePresenter<out V : IBaseView>(private val mMVPView: V) : IBasePresenter<V> {
@@ -48,6 +49,9 @@ abstract class BaseRxLifePresenter<out V : IBaseView>(private val mMVPView: V) :
         mRxLifeMap[rxLife]?.clear()
     }
 
+    /**
+     * 扩展方法：用于管理RxJava生命周期
+     * */
     fun Disposable.bindRxLife(lifeLv: RxLife): Disposable {
         XgoLog.i("=== BaseRxLifePresenter add $lifeLv : ${this.hashCode()} ===")
         if (mRxLifeMap[lifeLv] != null) {
@@ -59,5 +63,4 @@ abstract class BaseRxLifePresenter<out V : IBaseView>(private val mMVPView: V) :
         }
         return this
     }
-
 }

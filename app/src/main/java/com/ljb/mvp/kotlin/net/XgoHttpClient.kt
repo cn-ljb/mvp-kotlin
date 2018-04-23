@@ -1,12 +1,16 @@
-package com.ljb.rxjava.kotlin.net
+package com.ljb.mvp.kotlin.net
 
+import android.annotation.SuppressLint
 import android.text.TextUtils
-import com.ljb.rxjava.kotlin.log.XgoLog
-import com.ljb.rxjava.kotlin.net.interceptor.XgoLogInterceptor
-import com.wuba.weizhang.common.GITHUB_CLIENT_ID
-import com.wuba.weizhang.common.GITHUB_CLIENT_SECRET
+import com.ljb.mvp.kotlin.net.log.XgoLog
+import com.ljb.mvp.kotlin.net.interceptor.XgoLogInterceptor
+import com.ljb.mvp.kotlin.common.GITHUB_CLIENT_ID
+import com.ljb.mvp.kotlin.common.GITHUB_CLIENT_SECRET
 import okhttp3.*
+import java.security.cert.CertificateException
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.*
 
 
 /**
@@ -24,9 +28,38 @@ object XgoHttpClient {
 
     private val mHttpClient by lazy {
         OkHttpClient.Builder()
+                .sslSocketFactory(createSSLSocketFactory())
+                .hostnameVerifier { _, _ -> true }
                 .addInterceptor(XgoLogInterceptor(XgoLogInterceptor.Level.BODY) { XgoLog.d(it) })
                 .connectTimeout(DEFAULT_TIME_OUT, TimeUnit.MILLISECONDS)
                 .build()
+    }
+
+    private fun createSSLSocketFactory(): SSLSocketFactory? {
+        var ssfFactory: SSLSocketFactory? = null
+        try {
+            val sc = SSLContext.getInstance("SSL")
+            sc.init(null, arrayOf(TrustAllCerts()), java.security.SecureRandom())
+            ssfFactory = sc.socketFactory
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return ssfFactory
+    }
+
+    private class TrustAllCerts : X509TrustManager {
+
+        @Throws(CertificateException::class)
+        override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
+        }
+
+        @Throws(CertificateException::class)
+        override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
+        }
+
+        override fun getAcceptedIssuers(): Array<X509Certificate?> {
+            return arrayOfNulls(0)
+        }
     }
 
 
@@ -41,7 +74,7 @@ object XgoHttpClient {
     fun enqueue(request: Request, responseCallback: Callback) = mHttpClient.newCall(request).enqueue(responseCallback)
 
     /**
-     * 创建个Request
+     * 创建Request
      * */
     fun getRequest(url: String, method: String, params: Map<String, String>?): Request {
         val builder = Request.Builder()
