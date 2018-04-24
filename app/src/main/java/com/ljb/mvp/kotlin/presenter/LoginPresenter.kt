@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit
  */
 class LoginPresenter(mvpView: LoginContract.ILoginView) : LoginContract.ILoginPresenter(mvpView) {
 
-
     private var mLoginDisposable: Disposable? = null
 
     override fun delayGoHomeTask() {

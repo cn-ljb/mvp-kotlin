@@ -37,30 +37,29 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 
 		class LoginPresenter(mvpView: LoginContract.ILoginView) : LoginContract.ILoginPresenter(mvpView) {
 			
-				//rxjava生命周期管理举例
-			   	override fun delayGoHomeTask() {
-			        Observable.timer(1500, TimeUnit.MILLISECONDS)
-			                .subscribe { getMvpView().goHome() }
-			                .bindRxLife(RxLife.ON_DESTROY)
-			    }
+			//rxjava生命周期管理举例
+		    override fun delayGoHomeTask() {
+		        Observable.timer(1500, TimeUnit.MILLISECONDS)
+		                .subscribe { getMvpView().goHome() }
+		                .bindRxLifeEx(RxLife.ON_DESTROY)
+		    }
 				
-				//登录功能
-				override fun login(userName: String) {
-			        RxUtils.dispose(mLoginDisposable)
-			        mLoginDisposable = UserProtocol.getUserInfoByName(userName)
-			               .subscribeOn(Schedulers.io())
-			                .observeOn(AndroidSchedulers.mainThread())
-			                .subscribe({
-			                    if (it.message.isNullOrBlank()) {
-			                        LoginUser.name = it.login
-			                        getMvpView().loginSuccess()
-			                    } else {
-			                        getMvpView().loginError(it.message)
-			                    }
-			                }, {
-			                    getMvpView().loginError(null)
-			                }).bindRxLife(RxLife.ON_DESTROY)
-			    }
+			//登录功能
+		    override fun login(userName: String) {
+		        RxUtils.dispose(mLoginDisposable)
+		        mLoginDisposable = UserProtocol.getUserInfoByName(userName)
+		                .subscribeOn(Schedulers.io())
+		                .observeOn(AndroidSchedulers.mainThread())
+		                .subscribeEx({
+		                    if (it.message.isNullOrBlank()) {
+		                        getMvpView().loginSuccess()
+		                    } else {
+		                        getMvpView().loginError(it.message)
+		                    }
+		                }, {
+		                    getMvpView().loginError(null)
+		                }).bindRxLifeEx(RxLife.ON_DESTROY)
+		    }
 		｝
 
 * 3、View层与Presenter层的交互通过接口的形式规范化行为进行解耦。例如上方的LoginActivity与LoginPresenter的交互范围都在LoginContract中进行限制；
