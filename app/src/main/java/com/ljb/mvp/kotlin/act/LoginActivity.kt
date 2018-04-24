@@ -5,13 +5,12 @@ import android.animation.PropertyValuesHolder
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import com.ljb.mvp.kotlin.R
-import com.ljb.mvp.kotlin.contract.LoginContract
-import com.ljb.mvp.kotlin.presenter.LoginPresenter
-import com.ljb.mvp.kotlin.mvp.BaseMvpActivity
-import com.ljb.mvp.kotlin.widget.dialog.LoadingDialog
 import com.ljb.mvp.kotlin.common.LoginUser
+import com.ljb.mvp.kotlin.contract.LoginContract
+import com.ljb.mvp.kotlin.mvp.BaseMvpActivity
+import com.ljb.mvp.kotlin.presenter.LoginPresenter
+import com.ljb.mvp.kotlin.widget.dialog.LoadingDialog
 import kotlinx.android.synthetic.main.activity_login.*
 
 

@@ -1,5 +1,3 @@
-@file:Suppress("UNUSED_EXPRESSION")
-
 package com.ljb.mvp.kotlin.widget
 
 import android.view.View

@@ -17,12 +17,11 @@ class DatabaseProvider : ContentProvider() {
 
     companion object {
         //对外的Uri访问标识
-       const val USER_CONTENT_URI = "content://" + Constant.DBProvider.AUTHORITY + "/" + TABLE_USERS.TABLE_NAME
+        const val USER_CONTENT_URI = "content://" + Constant.DBProvider.AUTHORITY + "/" + TABLE_USERS.TABLE_NAME
 
         // URI匹配码
         private const val CODE_USER = 1
     }
-
 
 
     private val mDatabaseOpenHelper by lazy { DatabaseOpenHelper.getInstance(context) }
@@ -173,5 +172,6 @@ class DatabaseProvider : ContentProvider() {
             throw OperationApplicationException()
         }
     }
+
     override fun getType(p0: Uri?): String? = null
 }

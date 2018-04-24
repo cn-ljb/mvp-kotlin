@@ -1,4 +1,4 @@
-package com.wuba.weizhang.protocol.base
+package com.ljb.mvp.kotlin.protocol.base
 
 import io.reactivex.Observable
 
@@ -10,12 +10,8 @@ abstract class BaseDAOProtocol {
     fun <T> createObservable(f: () -> T): Observable<T> {
         return Observable.create {
             val result: T = f()
-            if (result != null) {
-                it.onNext(result)
-                it.onComplete()
-            } else {
-                it.onError(Throwable("dao not data"))
-            }
+            it.onNext(result)
+            it.onComplete()
         }
     }
 

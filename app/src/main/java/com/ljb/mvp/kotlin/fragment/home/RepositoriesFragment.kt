@@ -9,13 +9,13 @@ import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.adapter.RepositoriesAdapter
 import com.ljb.mvp.kotlin.contract.RepositoriesContract
 import com.ljb.mvp.kotlin.domain.Repository
-import com.ljb.mvp.kotlin.presenter.RepositoriesPresenter
-import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
+import com.ljb.mvp.kotlin.presenter.RepositoriesPresenter
 import com.ljb.mvp.kotlin.widget.PageStateLayout
+import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
+import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_repos.*
 import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
-import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
 
 /**
  * Repos page

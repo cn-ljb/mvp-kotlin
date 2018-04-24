@@ -33,5 +33,7 @@ data class User(
         val followers: Int,
         val following: Int,
         val created_at: String,
-        val updated_at: String?
-) : BaseResponseBean()
+        val updated_at: String?,
+        var message: String? = null,
+        var documentation_url: String? = null
+)

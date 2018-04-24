@@ -1,16 +1,17 @@
 package com.ljb.mvp.kotlin.net
 
-import android.annotation.SuppressLint
 import android.text.TextUtils
-import com.ljb.mvp.kotlin.net.log.XgoLog
-import com.ljb.mvp.kotlin.net.interceptor.XgoLogInterceptor
 import com.ljb.mvp.kotlin.common.GITHUB_CLIENT_ID
 import com.ljb.mvp.kotlin.common.GITHUB_CLIENT_SECRET
+import com.ljb.mvp.kotlin.net.interceptor.XgoLogInterceptor
+import com.ljb.mvp.kotlin.net.log.XgoLog
 import okhttp3.*
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.*
+import javax.net.ssl.SSLContext
+import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.X509TrustManager
 
 
 /**

@@ -9,13 +9,13 @@ import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.adapter.FollowingAdapter
 import com.ljb.mvp.kotlin.contract.FollowingContract
 import com.ljb.mvp.kotlin.domain.Following
-import com.ljb.mvp.kotlin.presenter.FollowingPresenter
-import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
+import com.ljb.mvp.kotlin.presenter.FollowingPresenter
 import com.ljb.mvp.kotlin.widget.PageStateLayout
+import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
+import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_following.*
 import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
-import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
 
 /**
  * Created by L on 2017/7/18.

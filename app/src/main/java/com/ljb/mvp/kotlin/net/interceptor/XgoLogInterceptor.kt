@@ -15,8 +15,7 @@ import java.util.concurrent.TimeUnit
  * The Http Log filter
  * Created by Ljb on 2015/12/11.
  */
-class XgoLogInterceptor @JvmOverloads constructor(lv: Level = Level.BODY,
-                                                  private val logger: (String) -> Unit = ::println) : Interceptor {
+class XgoLogInterceptor @JvmOverloads constructor(lv: Level = Level.BODY, private val logger: (String) -> Unit = ::println) : Interceptor {
 
     @Volatile
     private var level = Level.NONE

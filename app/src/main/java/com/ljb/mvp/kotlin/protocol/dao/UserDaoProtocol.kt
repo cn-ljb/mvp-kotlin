@@ -9,7 +9,7 @@ import com.ljb.mvp.kotlin.common.Constant.DBProvider.TABLE_USERS
 import com.ljb.mvp.kotlin.db.DatabaseProvider
 import com.ljb.mvp.kotlin.domain.User
 import com.ljb.mvp.kotlin.net.log.XgoLog
-import com.wuba.weizhang.protocol.base.BaseDAOProtocol
+import com.ljb.mvp.kotlin.protocol.base.BaseDAOProtocol
 
 /**
  * Created by L on 2017/7/17.
@@ -18,8 +18,7 @@ object UserDaoProtocol : BaseDAOProtocol() {
 
 
     fun saveUser(context: Context, user: User): Boolean {
-        XgoLog.d("saveUser")
-        var result: Boolean = false
+        var result = false
         val values = ContentValues()
         values.put(TABLE_USERS.COLUMN_LOGIN, user.login)
         values.put(TABLE_USERS.COLUMN_USER_ID, user.id)
@@ -57,14 +56,13 @@ object UserDaoProtocol : BaseDAOProtocol() {
                 result = true
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            XgoLog.e(e)
         }
         return result
     }
 
 
     fun updateUser(context: Context, user: User): Int {
-        XgoLog.d("updateUser")
         var count = 0
         val values = ContentValues()
         values.put(TABLE_USERS.COLUMN_LOGIN, user.login)
@@ -103,13 +101,12 @@ object UserDaoProtocol : BaseDAOProtocol() {
                     "${TABLE_USERS.COLUMN_USER_ID}=?",
                     arrayOf("${user.id}"))
         } catch (e: Exception) {
-            e.printStackTrace()
+            XgoLog.e(e)
         }
         return count
     }
 
     fun findUserByUserId(context: Context, userId: Long): User? {
-        XgoLog.d("findUserByUserId:$userId")
         val user: User? = null
         var c: Cursor? = null
         try {
@@ -152,7 +149,7 @@ object UserDaoProtocol : BaseDAOProtocol() {
                 return User(login, userID, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin == 1, name, company, blog, location, email, hireable, bio, public_repos, public_gists, followers, following, created_at, updated_at)
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            XgoLog.e(e)
         } finally {
             c?.close()
         }
@@ -160,8 +157,6 @@ object UserDaoProtocol : BaseDAOProtocol() {
     }
 
     fun findUserByName(context: Context, userName: String): User? {
-        XgoLog.d("findUserByUserId:$userName")
-        var user: User? = null
         var c: Cursor? = null
         try {
             c = context.contentResolver.query(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
@@ -203,11 +198,11 @@ object UserDaoProtocol : BaseDAOProtocol() {
                 return User(login, userID, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin == 1, name, company, blog, location, email, hireable, bio, public_repos, public_gists, followers, following, created_at, updated_at)
             }
         } catch (e: Exception) {
-            e.printStackTrace()
+            XgoLog.e(e)
         } finally {
             c?.close()
         }
-        return user
+        return null
     }
 
 }

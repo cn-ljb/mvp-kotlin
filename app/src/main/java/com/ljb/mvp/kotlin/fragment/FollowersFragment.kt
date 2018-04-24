@@ -9,11 +9,11 @@ import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.adapter.FollowersAdapter
 import com.ljb.mvp.kotlin.contract.FollowersContract
 import com.ljb.mvp.kotlin.domain.Follower
-import com.ljb.mvp.kotlin.presenter.FollowersPresenter
-import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
+import com.ljb.mvp.kotlin.presenter.FollowersPresenter
 import com.ljb.mvp.kotlin.widget.PageStateLayout
 import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
+import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_followers.*
 import kotlinx.android.synthetic.main.layout_recycler_view.*
 

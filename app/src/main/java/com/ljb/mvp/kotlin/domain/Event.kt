@@ -11,7 +11,7 @@ data class Event(
         val payload: EventPayLoad,
         val public: Boolean,
         val created_at: String
-) : BaseResponseBean()
+)
 
 
 data class EventRepo(val id: String, val name: String, val url: String)

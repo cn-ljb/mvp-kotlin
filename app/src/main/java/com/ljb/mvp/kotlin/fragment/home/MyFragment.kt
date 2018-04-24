@@ -10,15 +10,15 @@ import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.act.LoginActivity
 import com.ljb.mvp.kotlin.adapter.MyTabAdapter
 import com.ljb.mvp.kotlin.contract.MyContract
-import com.ljb.mvp.kotlin.domain.MyTabBean
+import com.ljb.mvp.kotlin.domain.MyTabFragmentBean
 import com.ljb.mvp.kotlin.domain.User
 import com.ljb.mvp.kotlin.fragment.EventsFragment
 import com.ljb.mvp.kotlin.fragment.FollowersFragment
 import com.ljb.mvp.kotlin.fragment.StarredFragment
-import com.ljb.mvp.kotlin.presenter.MyPresenter
 import com.ljb.mvp.kotlin.img.ImageLoader
-import com.ljb.mvp.kotlin.widget.dialog.NormalMsgDialog
 import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
+import com.ljb.mvp.kotlin.presenter.MyPresenter
+import com.ljb.mvp.kotlin.widget.dialog.NormalMsgDialog
 import kotlinx.android.synthetic.main.fragment_my.*
 
 
@@ -30,9 +30,9 @@ class MyFragment : BaseMvpFragment<MyPresenter>(),
 
     private val mTabArr by lazy {
         arrayOf(
-                MyTabBean(getString(R.string.events), EventsFragment()),
-                MyTabBean(getString(R.string.starred), StarredFragment()),
-                MyTabBean(getString(R.string.followers), FollowersFragment())
+                MyTabFragmentBean(getString(R.string.events), EventsFragment()),
+                MyTabFragmentBean(getString(R.string.starred), StarredFragment()),
+                MyTabFragmentBean(getString(R.string.followers), FollowersFragment())
         )
     }
 

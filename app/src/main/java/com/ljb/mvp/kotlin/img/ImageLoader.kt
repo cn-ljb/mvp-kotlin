@@ -25,8 +25,7 @@ object ImageLoader {
         when (form) {
             ImageForm.CIRCLE -> imageBuilder.transform(GlideCircleTransform(context))
             ImageForm.ROUND -> imageBuilder.transform(GlideRoundTransform(context))
-            ImageForm.STANDARD -> {
-            }
+            ImageForm.STANDARD -> Unit
         }
         imageBuilder.into(img)
     }

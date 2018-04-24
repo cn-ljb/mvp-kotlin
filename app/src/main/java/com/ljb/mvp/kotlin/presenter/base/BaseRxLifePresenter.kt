@@ -5,9 +5,9 @@ import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.mvp.IBasePresenter
 import com.ljb.mvp.kotlin.mvp.IBaseView
 import com.ljb.mvp.kotlin.mvp.getContext
-import com.ljb.mvp.kotlin.utils.RxUtils
 import com.ljb.mvp.kotlin.net.log.XgoLog
 import com.ljb.mvp.kotlin.utils.NetUtils
+import com.ljb.mvp.kotlin.utils.RxUtils
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import java.net.SocketTimeoutException

@@ -8,7 +8,7 @@ import com.ljb.mvp.kotlin.utils.SPUtils
  */
 class KotlinMVPApplication : Application() {
 
-    //因避免创建全局的Application引用
+    //应避免创建全局的Application引用
     override fun onCreate() {
         super.onCreate()
         SPUtils.initInstance(this)

@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.ljb.mvp.kotlin.R
-import com.ljb.mvp.kotlin.widget.findViewByIdEx
 import com.ljb.mvp.kotlin.domain.Repository
+import com.ljb.mvp.kotlin.widget.findViewByIdEx
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 
 /**
