@@ -1,10 +1,13 @@
-package com.ljb.mvp.kotlin.mvp
+package com.ljb.mvp.kotlin.mvp.view
 
-import android.app.Activity
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import com.ljb.mvp.kotlin.mvp.contract.IBasePresenterContract
 
-
-abstract class BaseMvpActivity<out T : IBasePresenter<*>> : Activity() {
+/**
+ * Created by L on 2017/7/10.
+ */
+abstract class BaseMvpFragment<out T : IBasePresenterContract> : Fragment() {
 
     protected val mPresenter: T by lazy { createPresenter() }
 

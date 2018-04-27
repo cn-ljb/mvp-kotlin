@@ -9,7 +9,7 @@ import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.adapter.RepositoriesAdapter
 import com.ljb.mvp.kotlin.contract.RepositoriesContract
 import com.ljb.mvp.kotlin.domain.Repository
-import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
+import com.ljb.mvp.kotlin.mvp.view.BaseMvpFragment
 import com.ljb.mvp.kotlin.presenter.RepositoriesPresenter
 import com.ljb.mvp.kotlin.widget.PageStateLayout
 import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
  * Created by L on 2017/7/18.
  */
 class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
-        RepositoriesContract.IRepositoriesView,
+        RepositoriesContract.IView,
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 

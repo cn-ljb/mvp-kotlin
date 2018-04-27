@@ -1,21 +1,21 @@
 package com.ljb.mvp.kotlin.contract
 
 import com.ljb.mvp.kotlin.domain.User
-import com.ljb.mvp.kotlin.mvp.IBaseView
-import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
+import com.ljb.mvp.kotlin.mvp.contract.IBasePresenterContract
+import com.ljb.mvp.kotlin.mvp.contract.IBaseViewContract
 
 /**
  * Created by L on 2017/7/18.
  */
 interface MyContract {
 
-    interface IMyView : IBaseView {
+    interface IMyView : IBaseViewContract {
         fun logoutSuccess()
         fun showUserInfo(user: User)
     }
 
-    abstract class IMyPresenter(mvpView: IMyView) : BaseRxLifePresenter<IMyView>(mvpView) {
-        abstract fun logout()
-        abstract fun getUserInfo()
+    interface IMyPresenter : IBasePresenterContract {
+        fun logout()
+        fun getUserInfo()
     }
 }

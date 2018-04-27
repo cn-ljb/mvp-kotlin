@@ -2,6 +2,7 @@ package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.contract.StarredContract
+import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
 import com.ljb.mvp.kotlin.protocol.http.UserProtocol
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -9,7 +10,8 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/9/21.
  */
-class StarredPresenter(mvpView: StarredContract.IStarredView) : StarredContract.IStarredPresenter(mvpView) {
+class StarredPresenter(mvpView: StarredContract.IView) : BaseRxLifePresenter<StarredContract.IView>(mvpView)
+        , StarredContract.IPresenter {
 
     private var mPage = 1
 

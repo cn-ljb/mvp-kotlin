@@ -22,11 +22,16 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 
 在此基础上，该项目中的MVP架构对每个模块进行细化，大致架构图如下：
 
-![](https://i.imgur.com/iUFAzk3.png)
+![](https://i.imgur.com/e8FuiMD.png)
 
-* 1、View层根据自己的需要继承对应的BaseMVPActivity\BaseMVPFragment\BaseMVPFragmentActivity，并实现createPresenter()函数，它们提供基础的View层模版；
-
-		class LoginActivity : BaseMvpActivity<LoginPresenter>(), LoginContract.ILoginView {
+* 1、View层根据自己的需要继承对应的BaseMvpActivity\BaseMvpFragment\BaseMvpFragmentActivity，并实现createPresenter()函数，它们提供基础的View层模版；
+		
+		/**
+		 *  1、继承BaseMvpActivity
+		 *  2、通过泛型告诉View层，当前Presenter的契约接口LoginContract.IPresenter
+		 *  3、实现自己的契约接口LoginContract.IView
+		 */
+		class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract.IView {
 		
 		    override fun createPresenter() = LoginPresenter(this)
 			...
@@ -34,8 +39,13 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 
 
 * 2、Presenter层提供了基础的IBasePresent接口模板，考虑到整个项目使用rxjava2作为异步库，为了方便管理rx生命周期，额外提供了一个BaseRxLifePresenter抽象类；
-
-		class LoginPresenter(mvpView: LoginContract.ILoginView) : LoginContract.ILoginPresenter(mvpView) {
+		
+		/**
+		 * 1、继承BaseRxLifePresenter
+		 * 2、通过泛型告诉Presenter层，当前View的契约接口LoginContract.IView
+		 * 3、实现自身的契约接口LoginContract.IPresenter
+		 */
+		class LoginPresenter(mvpView: LoginContract.IView) : BaseRxLifePresenter<LoginContract.IView>(mvpView), LoginContract.IPresenter {
 			
 			//rxjava生命周期管理举例
 		    override fun delayGoHomeTask() {
@@ -63,22 +73,24 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 		｝
 
 * 3、View层与Presenter层的交互通过接口的形式规范化行为进行解耦。例如上方的LoginActivity与LoginPresenter的交互范围都在LoginContract中进行限制；
-		
+
+		/**
+		 * 登录页View层\Presenter层通讯契约接口
+		 */
 		interface LoginContract {
 		
-		    interface ILoginView : IBaseView {
+		    interface IView : IBaseViewContract {
 		        fun loginSuccess()
 		        fun loginError(errorMsg: String?)
 		        fun goHome()
 		    }
-
-		    abstract class ILoginPresenter(mvpView: ILoginView) : BaseRxLifePresenter<ILoginView>(mvpView) {
-		        abstract fun login(userName: String)
-		        abstract fun delayGoHomeTask()
+		
+		    interface IPresenter : IBasePresenterContract {
+		        fun login(userName: String)
+		        fun delayGoHomeTask()
 		    }
 		}
 
-（注：由于使用了BaseRxLifePresenter是个抽象类，所以Presenter的限制行为通过abstract抽象类实现，如果不使用BaseRxLifePresenter，单独管理rx生命周期，建议统一定义为interface）
 
 * 4、Modle层抽取出Protocol层，用于包装数据源并提供转换为Observable的函数，从而方便与Rxjava2集合使用（项目中提供两个基础的BaseDAOProtocol、BaseHttpProtocol，也可自行定义适合自己的数据源封装类）；
 
@@ -94,7 +106,7 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 			...
 		｝
 
-* 5、一个View对应一个Presenter，一个Presenter可具备多个Protocol.
+* 5、一个View对应一个Presenter，View与Presenter交互通过Contract接口进行限制，一个Presenter可具备多个Protocol，每个Protocol都是单例.
 
 
 ## 截图：

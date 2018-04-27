@@ -11,6 +11,6 @@ class KotlinMVPApplication : Application() {
     //应避免创建全局的Application引用
     override fun onCreate() {
         super.onCreate()
-        SPUtils.initInstance(this)
+        SPUtils.init(this)
     }
 }

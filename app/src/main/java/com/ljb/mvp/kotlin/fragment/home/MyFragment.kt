@@ -16,7 +16,7 @@ import com.ljb.mvp.kotlin.fragment.EventsFragment
 import com.ljb.mvp.kotlin.fragment.FollowersFragment
 import com.ljb.mvp.kotlin.fragment.StarredFragment
 import com.ljb.mvp.kotlin.img.ImageLoader
-import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
+import com.ljb.mvp.kotlin.mvp.view.BaseMvpFragment
 import com.ljb.mvp.kotlin.presenter.MyPresenter
 import com.ljb.mvp.kotlin.widget.dialog.NormalMsgDialog
 import kotlinx.android.synthetic.main.fragment_my.*

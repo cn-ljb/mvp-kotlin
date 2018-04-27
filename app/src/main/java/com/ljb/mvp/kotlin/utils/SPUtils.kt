@@ -11,8 +11,8 @@ object SPUtils {
 
     private var instance: SharedPreferences? = null
 
-    /** 请在Application中初始化 */
-    fun initInstance(context: Context) {
+    /** 使用前请先初始化 */
+    fun init(context: Context) {
         if (instance != null) return
         instance = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
     }

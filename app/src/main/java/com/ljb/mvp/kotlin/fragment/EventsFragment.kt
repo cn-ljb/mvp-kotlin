@@ -9,7 +9,7 @@ import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.adapter.EventAdapter
 import com.ljb.mvp.kotlin.contract.EventsContract
 import com.ljb.mvp.kotlin.domain.Event
-import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
+import com.ljb.mvp.kotlin.mvp.view.BaseMvpFragment
 import com.ljb.mvp.kotlin.presenter.EventPresenter
 import com.ljb.mvp.kotlin.widget.PageStateLayout
 import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
 /**
  * Created by L on 2017/7/19.
  */
-class EventsFragment : BaseMvpFragment<EventPresenter>(),
-        EventsContract.IEventsView,
+class EventsFragment : BaseMvpFragment<EventsContract.IPresenter>(),
+        EventsContract.IView,
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 

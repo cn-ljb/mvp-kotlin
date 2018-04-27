@@ -2,6 +2,7 @@ package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.contract.RepositoriesContract
+import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
 import com.ljb.mvp.kotlin.protocol.http.UserProtocol
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -9,7 +10,8 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/9/27.
  */
-class RepositoriesPresenter(mvpView: RepositoriesContract.IRepositoriesView) : RepositoriesContract.IRepositoriesPresenter(mvpView) {
+class RepositoriesPresenter(mvpView: RepositoriesContract.IView) : BaseRxLifePresenter<RepositoriesContract.IView>(mvpView),
+        RepositoriesContract.IPresenter {
 
     private var mPage = 1
 

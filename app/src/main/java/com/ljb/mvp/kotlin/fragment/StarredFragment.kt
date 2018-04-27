@@ -9,7 +9,7 @@ import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.adapter.StarredAdapter
 import com.ljb.mvp.kotlin.contract.StarredContract
 import com.ljb.mvp.kotlin.domain.Starred
-import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
+import com.ljb.mvp.kotlin.mvp.view.BaseMvpFragment
 import com.ljb.mvp.kotlin.presenter.StarredPresenter
 import com.ljb.mvp.kotlin.widget.PageStateLayout
 import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
 /**
  * Created by L on 2017/7/19.
  */
-class StarredFragment : BaseMvpFragment<StarredPresenter>(),
-        StarredContract.IStarredView,
+class StarredFragment : BaseMvpFragment<StarredContract.IPresenter>(),
+        StarredContract.IView,
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 

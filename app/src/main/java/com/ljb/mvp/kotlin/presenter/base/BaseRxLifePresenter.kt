@@ -2,9 +2,10 @@ package com.ljb.mvp.kotlin.presenter.base
 
 import android.widget.Toast
 import com.ljb.mvp.kotlin.R
-import com.ljb.mvp.kotlin.mvp.IBasePresenter
-import com.ljb.mvp.kotlin.mvp.IBaseView
-import com.ljb.mvp.kotlin.mvp.getContext
+import com.ljb.mvp.kotlin.mvp.contract.IBasePresenterContract
+import com.ljb.mvp.kotlin.mvp.presenter.IBasePresenter
+import com.ljb.mvp.kotlin.mvp.contract.IBaseViewContract
+import com.ljb.mvp.kotlin.mvp.presenter.getContext
 import com.ljb.mvp.kotlin.net.log.XgoLog
 import com.ljb.mvp.kotlin.utils.NetUtils
 import com.ljb.mvp.kotlin.utils.RxUtils
@@ -12,7 +13,11 @@ import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import java.net.SocketTimeoutException
 
-abstract class BaseRxLifePresenter<out V : IBaseView>(private val mMVPView: V) : IBasePresenter<V> {
+abstract class BaseRxLifePresenter<out V : IBaseViewContract>(private val mMVPView: V) : IBasePresenter<V>, IBasePresenterContract {
+
+    enum class RxLife {
+        ON_CREATE, ON_START, ON_RESUME, ON_PAUSE, ON_STOP, ON_DESTROY
+    }
 
     private val mRxLifeMap = HashMap<RxLife, ArrayList<Disposable>>()
 
@@ -40,10 +45,6 @@ abstract class BaseRxLifePresenter<out V : IBaseView>(private val mMVPView: V) :
 
     override fun onDestroy() {
         destroyRxLife(RxLife.ON_DESTROY)
-    }
-
-    enum class RxLife {
-        ON_CREATE, ON_START, ON_RESUME, ON_PAUSE, ON_STOP, ON_DESTROY
     }
 
     private fun destroyRxLife(rxLife: RxLife) {

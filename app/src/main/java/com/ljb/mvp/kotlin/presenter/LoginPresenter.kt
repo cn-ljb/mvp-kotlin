@@ -2,7 +2,8 @@ package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.contract.LoginContract
-import com.ljb.mvp.kotlin.mvp.getContext
+import com.ljb.mvp.kotlin.mvp.presenter.getContext
+import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
 import com.ljb.mvp.kotlin.protocol.dao.UserDaoProtocol
 import com.ljb.mvp.kotlin.utils.RxUtils
 import com.ljb.mvp.kotlin.protocol.http.UserProtocol
@@ -13,9 +14,11 @@ import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
 /**
- * Created by L on 2017/7/13.
+ * 1、继承BaseRxLifePresenter
+ * 2、通过泛型告诉Presenter层，当前View使用的通讯契约
+ * 3、实现自身的通讯契约
  */
-class LoginPresenter(mvpView: LoginContract.ILoginView) : LoginContract.ILoginPresenter(mvpView) {
+class LoginPresenter(mvpView: LoginContract.IView) : BaseRxLifePresenter<LoginContract.IView>(mvpView), LoginContract.IPresenter {
 
     private var mLoginDisposable: Disposable? = null
 

@@ -28,6 +28,7 @@
             android:authorities="com.ljb.mvp.kotlin.provider"
             android:exported="false" />
 
+
     </application>
 
 </manifest>

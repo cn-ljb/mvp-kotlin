@@ -28,8 +28,7 @@ class HomeActivity : FragmentActivity() {
     private val mTabList = listOf(
             TabBean(R.drawable.bottom_tab_repos, R.string.repos),
             TabBean(R.drawable.bottom_tab_following, R.string.following),
-            TabBean(R.drawable.bottom_tab_my, R.string.my)
-    )
+            TabBean(R.drawable.bottom_tab_my, R.string.my))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,11 +54,9 @@ class HomeActivity : FragmentActivity() {
         var f = supportFragmentManager.findFragmentByTag(mFragments[position].javaClass.simpleName)
         if (f == null) {
             f = mFragments[position]
-            ft.add(R.id.fl_content, f, f.javaClass.simpleName).show(f)
-        } else {
-            ft.show(f)
+            ft.add(R.id.fl_content, f, f.javaClass.simpleName)
         }
-        ft.commit()
+        ft.show(f).commit()
         mCurIndex = position
     }
 

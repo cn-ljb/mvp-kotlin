@@ -9,7 +9,7 @@ import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.adapter.FollowingAdapter
 import com.ljb.mvp.kotlin.contract.FollowingContract
 import com.ljb.mvp.kotlin.domain.Following
-import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
+import com.ljb.mvp.kotlin.mvp.view.BaseMvpFragment
 import com.ljb.mvp.kotlin.presenter.FollowingPresenter
 import com.ljb.mvp.kotlin.widget.PageStateLayout
 import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
  * Created by L on 2017/7/18.
  */
 class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
-        FollowingContract.IFollowingView,
+        FollowingContract.IView,
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 

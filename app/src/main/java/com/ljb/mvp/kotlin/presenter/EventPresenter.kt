@@ -2,6 +2,7 @@ package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.contract.EventsContract
+import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
 import com.ljb.mvp.kotlin.protocol.http.UserProtocol
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -9,7 +10,8 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/9/14.
  */
-class EventPresenter(mvpView: EventsContract.IEventsView) : EventsContract.IEventsPresenter(mvpView) {
+class EventPresenter(mvpView: EventsContract.IView) : BaseRxLifePresenter<EventsContract.IView>(mvpView),
+        EventsContract.IPresenter {
 
     private var mPage = 1
 

@@ -1,25 +1,22 @@
 package com.ljb.mvp.kotlin.contract
 
-import com.ljb.mvp.kotlin.mvp.IBaseView
-import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
+import com.ljb.mvp.kotlin.mvp.contract.IBasePresenterContract
+import com.ljb.mvp.kotlin.mvp.contract.IBaseViewContract
 
 /**
+ * 登录页View层\Presenter层通讯契约接口
  * Created by L on 2017/7/13.
  */
 interface LoginContract {
 
-    interface ILoginView : IBaseView {
-
+    interface IView : IBaseViewContract {
         fun loginSuccess()
-
         fun loginError(errorMsg: String?)
-
         fun goHome()
     }
 
-    abstract class ILoginPresenter(mvpView: ILoginView) : BaseRxLifePresenter<ILoginView>(mvpView) {
-        abstract fun login(userName: String)
-        abstract fun delayGoHomeTask()
+    interface IPresenter : IBasePresenterContract {
+        fun login(userName: String)
+        fun delayGoHomeTask()
     }
-
 }

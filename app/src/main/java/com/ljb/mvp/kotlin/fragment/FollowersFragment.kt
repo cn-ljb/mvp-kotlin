@@ -9,7 +9,7 @@ import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.adapter.FollowersAdapter
 import com.ljb.mvp.kotlin.contract.FollowersContract
 import com.ljb.mvp.kotlin.domain.Follower
-import com.ljb.mvp.kotlin.mvp.BaseMvpFragment
+import com.ljb.mvp.kotlin.mvp.view.BaseMvpFragment
 import com.ljb.mvp.kotlin.presenter.FollowersPresenter
 import com.ljb.mvp.kotlin.widget.PageStateLayout
 import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
@@ -20,8 +20,7 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
 /**
  * Created by L on 2017/7/19.
  */
-class FollowersFragment : BaseMvpFragment<FollowersPresenter>(),
-        FollowersContract.IFollowersView,
+class FollowersFragment : BaseMvpFragment<FollowersContract.IPresenter>(), FollowersContract.IView,
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 

@@ -1,23 +1,14 @@
 package com.ljb.mvp.kotlin.contract
 
+import com.ljb.mvp.kotlin.contract.base.ListContract
 import com.ljb.mvp.kotlin.domain.Event
-import com.ljb.mvp.kotlin.mvp.IBaseView
-import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
 
 /**
  * Created by L on 2017/9/14.
  */
 interface EventsContract {
 
-    interface IEventsView : IBaseView {
-        fun showPage(data: MutableList<Event>, page: Int)
-        fun errorPage(t: Throwable, page: Int)
-    }
+    interface IView : ListContract.IView<Event>
 
-    abstract class IEventsPresenter(mvpView: IEventsView) : BaseRxLifePresenter<IEventsView>(mvpView) {
-
-        abstract fun onRefresh()
-
-        abstract fun onLoadMore()
-    }
+    interface IPresenter : ListContract.IPresenter
 }
