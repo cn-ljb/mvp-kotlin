@@ -92,7 +92,7 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 		}
 
 
-* 4、Modle层抽取出Protocol层，用于包装数据源并提供转换为Observable的函数，从而方便与Rxjava2集合使用（项目中提供两个基础的BaseDAOProtocol、BaseHttpProtocol，也可自行定义适合自己的数据源封装类）；
+* 4、Modle层抽取出Protocol层，用于包装数据源并提供转换为Observable的函数，从而方便与Rxjava2结合使用（项目中提供两个基础的BaseDAOProtocol、BaseHttpProtocol，也可自行定义适合自己的数据源封装类）；
 
 		object UserProtocol : BaseHttpProtocol() {
 		
