@@ -79,7 +79,7 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 		    }
 		｝
 
-* 3、View层与Presenter层的交互通过接口的形式规范化行为进行解耦。例如上方的LoginActivity与LoginPresenter的交互范围都在LoginContract中进行限制；
+* 3、View层与Presenter层的交互通过接口的形式规范行为进行解耦。例如上方的LoginActivity与LoginPresenter的交互范围都在LoginContract中进行限制；
 
 		/**
 		 * 登录页View层\Presenter层通讯契约接口
