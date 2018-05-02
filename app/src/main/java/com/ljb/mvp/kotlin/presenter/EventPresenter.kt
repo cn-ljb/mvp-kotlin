@@ -3,7 +3,8 @@ package com.ljb.mvp.kotlin.presenter
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.contract.EventsContract
 import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
-import com.ljb.mvp.kotlin.protocol.http.UserProtocol
+import com.ljb.mvp.kotlin.protocol.http.base.HttpFactory
+import com.ljb.mvp.kotlin.protocol.http.IUserHttp
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -26,7 +27,8 @@ class EventPresenter(mvpView: EventsContract.IView) : BaseRxLifePresenter<Events
     }
 
     private fun getDataFromNet(page: Int) {
-        UserProtocol.getEventsByName(LoginUser.name, page)
+        HttpFactory.getProtocol(IUserHttp::class.java)
+                .getEventsByName(LoginUser.name, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeEx(

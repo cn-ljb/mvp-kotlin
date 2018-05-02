@@ -1,4 +1,4 @@
-package com.ljb.mvp.kotlin.protocol.base
+package com.ljb.mvp.kotlin.protocol.http.base
 
 import android.text.TextUtils
 import com.ljb.mvp.kotlin.net.XgoHttpClient

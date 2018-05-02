@@ -3,7 +3,8 @@ package com.ljb.mvp.kotlin.presenter
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.contract.StarredContract
 import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
-import com.ljb.mvp.kotlin.protocol.http.UserProtocol
+import com.ljb.mvp.kotlin.protocol.http.base.HttpFactory
+import com.ljb.mvp.kotlin.protocol.http.IUserHttp
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -26,7 +27,8 @@ class StarredPresenter(mvpView: StarredContract.IView) : BaseRxLifePresenter<Sta
     }
 
     private fun getDataFromNet(page: Int) {
-        UserProtocol.getStarredByName(LoginUser.name, page)
+        HttpFactory.getProtocol(IUserHttp::class.java)
+                .getStarredByName(LoginUser.name, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeEx(

@@ -1,63 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="40dp">
 
-    <FrameLayout
+    <RelativeLayout
+        android:id="@+id/rl_more_loading"
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/rl_more_loading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/loading_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/loading"
+            android:textColor="#ff717171"
+            android:textSize="12sp" />
 
-            <TextView
-                android:id="@+id/loading_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/loading"
-                android:textColor="#ff717171"
-                android:textSize="12sp" />
+    </RelativeLayout>
 
-        </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_more_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-        <RelativeLayout
-            android:id="@+id/rl_more_error"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+        <TextView
+            android:id="@+id/loading_error_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="@string/load_error_click"
+            android:textColor="#ff717171"
+            android:textSize="13sp" />
 
-            <TextView
-                android:id="@+id/loading_error_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:text="@string/load_error_click"
-                android:textColor="#ff717171"
-                android:textSize="13sp" />
+    </RelativeLayout>
 
-        </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/rl_more_not"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
-        <RelativeLayout
-            android:visibility="gone"
-            android:id="@+id/rl_more_not"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:text="@string/load_not_more"
-                android:textColor="#ff717171"
-                android:textSize="13sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="@string/load_not_more"
+            android:textColor="#ff717171"
+            android:textSize="13sp" />
 
 
-        </RelativeLayout>
+    </RelativeLayout>
 
-    </FrameLayout>
 </FrameLayout>

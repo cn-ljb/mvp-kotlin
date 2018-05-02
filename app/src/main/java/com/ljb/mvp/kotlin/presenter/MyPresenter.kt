@@ -4,8 +4,11 @@ import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.contract.MyContract
 import com.ljb.mvp.kotlin.mvp.presenter.getContext
 import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
-import com.ljb.mvp.kotlin.protocol.dao.UserDaoProtocol
-import com.ljb.mvp.kotlin.protocol.http.UserProtocol
+import com.ljb.mvp.kotlin.protocol.dao.IUserDao
+import com.ljb.mvp.kotlin.protocol.dao.base.DaoFactory
+import com.ljb.mvp.kotlin.protocol.http.base.HttpFactory
+import com.ljb.mvp.kotlin.protocol.dao.impl.UserDaoProtocol
+import com.ljb.mvp.kotlin.protocol.http.IUserHttp
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -18,8 +21,10 @@ class MyPresenter(mvpView: MyContract.IMyView) : BaseRxLifePresenter<MyContract.
 
     override fun getUserInfo() {
         Observable.concat(
-                UserDaoProtocol.createObservable { UserDaoProtocol.findUserByName(getContext(), LoginUser.name) },
-                UserProtocol.getUserInfoByName(LoginUser.name)
+                UserDaoProtocol.createObservable {
+                    DaoFactory.getProtocol(IUserDao::class.java).findUserByName(getContext(), LoginUser.name)
+                },
+                HttpFactory.getProtocol(IUserHttp::class.java).getUserInfoByName(LoginUser.name)
         ).filter { it != null }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

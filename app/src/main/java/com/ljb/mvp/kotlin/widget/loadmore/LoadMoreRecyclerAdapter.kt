@@ -32,7 +32,8 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
         if (viewType == TYPE_LOAD_MORE) {  //加载更多
             if (mLoadMoreHolder == null) {
-                mLoadMoreHolder = LoadMoreHolder(LayoutInflater.from(mContext).inflate(R.layout.layout_load_more, parent, false), this)
+                val loadView = LayoutInflater.from(mContext).inflate(R.layout.layout_load_more, parent, false)
+                mLoadMoreHolder = LoadMoreHolder(loadView, this)
             }
             initLoadStatusForSize(mData)
             return mLoadMoreHolder

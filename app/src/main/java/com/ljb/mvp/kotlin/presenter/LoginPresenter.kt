@@ -4,9 +4,13 @@ import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.contract.LoginContract
 import com.ljb.mvp.kotlin.mvp.presenter.getContext
 import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
-import com.ljb.mvp.kotlin.protocol.dao.UserDaoProtocol
+import com.ljb.mvp.kotlin.protocol.dao.IUserDao
+import com.ljb.mvp.kotlin.protocol.dao.base.DaoFactory
+import com.ljb.mvp.kotlin.protocol.http.base.HttpFactory
+import com.ljb.mvp.kotlin.protocol.dao.impl.UserDaoProtocol
+import com.ljb.mvp.kotlin.protocol.dao.impl.UserDaoProtocol.findUserByUserId
+import com.ljb.mvp.kotlin.protocol.http.IUserHttp
 import com.ljb.mvp.kotlin.utils.RxUtils
-import com.ljb.mvp.kotlin.protocol.http.UserProtocol
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -30,13 +34,14 @@ class LoginPresenter(mvpView: LoginContract.IView) : BaseRxLifePresenter<LoginCo
 
     override fun login(userName: String) {
         RxUtils.dispose(mLoginDisposable)
-        mLoginDisposable = UserProtocol.getUserInfoByName(userName)
+        mLoginDisposable = HttpFactory.getProtocol(IUserHttp::class.java)
+                .getUserInfoByName(userName)
                 .map {
                     if (it.message.isNullOrBlank()) {
-                        if (UserDaoProtocol.findUserByUserId(getContext(), it.id) == null) {
-                            UserDaoProtocol.saveUser(getContext(), it)
+                        if (DaoFactory.getProtocol(IUserDao::class.java).findUserByUserId(getContext(), it.id) == null) {
+                            DaoFactory.getProtocol(IUserDao::class.java).saveUser(getContext(), it)
                         } else {
-                            UserDaoProtocol.updateUser(getContext(), it)
+                            DaoFactory.getProtocol(IUserDao::class.java).updateUser(getContext(), it)
                         }
                     }
                     it

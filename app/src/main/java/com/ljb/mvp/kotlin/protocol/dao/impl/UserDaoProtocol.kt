@@ -1,4 +1,4 @@
-package com.ljb.mvp.kotlin.protocol.dao
+package com.ljb.mvp.kotlin.protocol.dao.impl
 
 import android.content.ContentUris
 import android.content.ContentValues
@@ -9,15 +9,16 @@ import com.ljb.mvp.kotlin.common.Constant.DBProvider.TABLE_USERS
 import com.ljb.mvp.kotlin.db.DatabaseProvider
 import com.ljb.mvp.kotlin.domain.User
 import com.ljb.mvp.kotlin.net.log.XgoLog
-import com.ljb.mvp.kotlin.protocol.base.BaseDAOProtocol
+import com.ljb.mvp.kotlin.protocol.dao.IUserDao
+import com.ljb.mvp.kotlin.protocol.dao.base.BaseDaoProtocol
 
 /**
  * Created by L on 2017/7/17.
  */
-object UserDaoProtocol : BaseDAOProtocol() {
+object UserDaoProtocol : BaseDaoProtocol(), IUserDao {
 
 
-    fun saveUser(context: Context, user: User): Boolean {
+    override fun saveUser(context: Context, user: User): Boolean {
         var result = false
         val values = ContentValues()
         values.put(TABLE_USERS.COLUMN_LOGIN, user.login)
@@ -62,7 +63,7 @@ object UserDaoProtocol : BaseDAOProtocol() {
     }
 
 
-    fun updateUser(context: Context, user: User): Int {
+    override fun updateUser(context: Context, user: User): Int {
         var count = 0
         val values = ContentValues()
         values.put(TABLE_USERS.COLUMN_LOGIN, user.login)
@@ -106,7 +107,7 @@ object UserDaoProtocol : BaseDAOProtocol() {
         return count
     }
 
-    fun findUserByUserId(context: Context, userId: Long): User? {
+    override fun findUserByUserId(context: Context, userId: Long): User? {
         val user: User? = null
         var c: Cursor? = null
         try {
@@ -156,7 +157,7 @@ object UserDaoProtocol : BaseDAOProtocol() {
         return user
     }
 
-    fun findUserByName(context: Context, userName: String): User? {
+    override fun findUserByName(context: Context, userName: String): User? {
         var c: Cursor? = null
         try {
             c = context.contentResolver.query(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
