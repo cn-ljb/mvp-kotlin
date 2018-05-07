@@ -4,7 +4,11 @@
 
 ## 更新日志
 
+* [20180507更新日志](./updatelog/20180507UpdateLog.md "20180507更新日志")
+
 * [20180427更新日志](./updatelog/20180427UpdateLog.md "20180427更新日志")
+
+
 
 
 ## 概述
@@ -29,7 +33,7 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 
 在此基础上，该项目中的MVP架构对每个模块进行细化，大致架构图如下：
 
-![](https://i.imgur.com/e8FuiMD.png)
+![](https://i.imgur.com/3s4t67g.png)
 
 * 1、View层根据自己的需要继承对应的BaseMvpActivity\BaseMvpFragment\BaseMvpFragmentActivity，并实现createPresenter()函数，它们提供基础的View层模版；
 		
@@ -64,7 +68,8 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 			//登录功能
 		    override fun login(userName: String) {
 		        RxUtils.dispose(mLoginDisposable)
-		        mLoginDisposable = UserProtocol.getUserInfoByName(userName)
+		        mLoginDisposable = HttpFactory.getProtocol(IUserHttp::class.java)
+						.getUserInfoByName(userName)
 		                .subscribeOn(Schedulers.io())
 		                .observeOn(AndroidSchedulers.mainThread())
 		                .subscribeEx({
@@ -113,7 +118,37 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 			...
 		｝
 
-* 5、一个View对应一个Presenter，View与Presenter交互通过Contract接口进行限制，一个Presenter可具备多个Protocol，每个Protocol都是单例.
+* 5、每个Protocol对象建议通过Factory产出，并定义相关约束接口，从而减轻Presenter对Model层的直接访问；
+
+		object HttpFactory {
+		
+		    private val mHttpGroup = HttpFactoryGroup()
+		
+		    @Suppress("UNCHECKED_CAST")
+		    fun <T : HttpInterface> getProtocol(clazz: Class<T>): T {
+		        return mHttpGroup.getProtocol(clazz) ?: registerNewProtocol(clazz)
+		    }
+		
+		    @Suppress("UNCHECKED_CAST")
+		    private fun <T : HttpInterface> registerNewProtocol(clazz: Class<T>): T {
+		        //TODO 在此处注册Http接口
+		        val protocol = when (clazz) {
+		            IUserHttp::class.java -> UserHttpProtocol
+		            else -> throw IllegalStateException("Http Interface Class Object NotFound : ${clazz.name}")
+		        } as T
+		        mHttpGroup.register(clazz, protocol)
+		        return protocol
+		    }
+		}
+
+
+> 例如：通过HttpFactory获取UserHttpProtocol的向上转型IUserHttp接口引用，而不是它的自身引用，从而避免直接操作接口约束之外的公共域：
+
+	HttpFactory.getProtocol(IUserHttp::class.java).getUserInfoByName(userName)
+		
+
+
+* 6、一个View对应一个Presenter，View与Presenter交互通过Contract接口进行限制，一个Presenter通过Factory可操作多个Protocol，每个Protocol都是单例.
 
 
 ## 截图：

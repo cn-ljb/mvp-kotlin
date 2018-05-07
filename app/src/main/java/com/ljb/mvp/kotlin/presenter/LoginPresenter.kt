@@ -37,7 +37,7 @@ class LoginPresenter(mvpView: LoginContract.IView) : BaseRxLifePresenter<LoginCo
         mLoginDisposable = HttpFactory.getProtocol(IUserHttp::class.java)
                 .getUserInfoByName(userName)
                 .map {
-                    if (it.message.isNullOrBlank()) {
+                     if (it.message.isNullOrBlank()) {
                         if (DaoFactory.getProtocol(IUserDao::class.java).findUserByUserId(getContext(), it.id) == null) {
                             DaoFactory.getProtocol(IUserDao::class.java).saveUser(getContext(), it)
                         } else {

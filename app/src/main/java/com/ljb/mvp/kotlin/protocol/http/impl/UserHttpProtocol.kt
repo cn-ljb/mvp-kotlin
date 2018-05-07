@@ -6,6 +6,7 @@ import com.ljb.mvp.kotlin.net.XgoHttpClient
 import com.ljb.mvp.kotlin.protocol.http.base.BaseHttpProtocol
 import com.ljb.mvp.kotlin.common.HTTP_API_DOMAIN
 import com.ljb.mvp.kotlin.protocol.http.IUserHttp
+import com.ljb.mvp.kotlin.protocol.http.base.HttpFactory
 import io.reactivex.Observable
 
 /**

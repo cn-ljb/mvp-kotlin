@@ -6,15 +6,15 @@ import com.ljb.mvp.kotlin.protocol.dao.impl.UserDaoProtocol
 
 object DaoFactory {
 
-    private val mFactoryMap = DaoFactoryMap()
+    private val mDaoGroup = DaoFactoryGroup()
 
     init {
-        //在此处注册Dao接口
-        mFactoryMap.register(IUserDao::class.java, UserDaoProtocol)
+        //TODO 在此处注册Dao接口
+        mDaoGroup.register(IUserDao::class.java, UserDaoProtocol)
     }
 
     fun <T : DaoInterface> getProtocol(clazz: Class<T>): T {
-        return mFactoryMap.getProtocol(clazz)
+        return mDaoGroup.getProtocol(clazz)
     }
 
 }
