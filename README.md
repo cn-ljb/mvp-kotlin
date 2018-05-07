@@ -104,11 +104,11 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 		}
 
 
-* 4、Modle层抽取出Protocol层，用于包装数据源并提供转换为Observable的函数，从而方便与Rxjava2结合使用（项目中提供两个基础的BaseDAOProtocol、BaseHttpProtocol，也可自行定义适合自己的数据源封装类）；
+* 4、Modle层封装Protocol，用于包装数据源并提供转换为Observable的函数，从而方便与Rxjava2结合使用（项目中提供两个基础的BaseDAOProtocol、BaseHttpProtocol，也可自行定义适合自己的数据源封装类），并实现自身向Presenter公开的约束接口；
 
-		object UserProtocol : BaseHttpProtocol() {
+		object UserProtocol :  BaseHttpProtocol(), IUserHttp {
 		
-		    fun getUserInfoByName(userName: String): Observable<User> {
+		   override fun getUserInfoByName(userName: String): Observable<User> {
 		        val url = "$HTTP_API_DOMAIN/users/${nvl(userName)}"
 		        return createObservable(url, XgoHttpClient.METHOD_GET) {
 		            JsonParser.fromJsonObj(it, User::class.java)
@@ -118,7 +118,20 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 			...
 		｝
 
-* 5、每个Protocol对象建议通过Factory产出，并定义相关约束接口，从而减轻Presenter对Model层的直接访问；
+	--------------- 分割线 ------------------
+		
+		//Model层对外提供的约束接口
+		interface IUserHttp : HttpInterface {
+		    /**
+		     * @param userName 用户名
+		     * @return  用户基本信息
+		     * */
+		    fun getUserInfoByName(userName: String): Observable<User>
+		
+			...
+		｝
+
+* 5、每个Protocol对象建议通过Factory产出；
 
 		object HttpFactory {
 		
@@ -142,13 +155,13 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 		}
 
 
-> 例如：通过HttpFactory获取UserHttpProtocol的向上转型IUserHttp接口引用，而不是它的自身引用，从而避免直接操作接口约束之外的公共域：
+> 例如：通过HttpFactory获取UserHttpProtocol的父级IUserHttp接口引用，而不是它的自身引用，从而避免直接操作接口约束之外的公共域：
 
 	HttpFactory.getProtocol(IUserHttp::class.java).getUserInfoByName(userName)
 		
 
 
-* 6、一个View对应一个Presenter，View与Presenter交互通过Contract接口进行限制，一个Presenter通过Factory可操作多个Protocol，每个Protocol都是单例.
+* 6、一个View对应一个Presenter，View与Presenter交互通过Contract接口进行约束，一个Presenter通过Factory可操作多个Protocol，每个Protocol都是单例.
 
 
 ## 截图：
