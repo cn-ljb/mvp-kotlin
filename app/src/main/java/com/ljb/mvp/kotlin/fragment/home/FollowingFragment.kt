@@ -49,7 +49,7 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
         }
         refresh_layout.apply {
             setColorSchemeResources(R.color.colorBlue)
-            setOnRefreshListener { mPresenter.onRefresh() }
+            setOnRefreshListener { getPresenter().onRefresh() }
         }
         recycler_view.apply {
             layoutManager = GridLayoutManager(context, 3)
@@ -59,16 +59,16 @@ class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
     }
 
     private fun initData() {
-        mPresenter.onRefresh()
+        getPresenter().onRefresh()
     }
 
     override fun onLoadMore() {
-        mPresenter.onLoadMore()
+        getPresenter().onLoadMore()
     }
 
     override fun onErrorClick() {
         page_layout.setPage(PageState.STATE_LOADING)
-        mPresenter.onRefresh()
+        getPresenter().onRefresh()
     }
 
     override fun showPage(data: MutableList<Following>, page: Int) {

@@ -3,12 +3,10 @@ package com.ljb.mvp.kotlin.presenter
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.contract.LoginContract
 import com.ljb.mvp.kotlin.mvp.presenter.getContext
-import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
+import com.ljb.mvp.kotlin.mvp.presenter.BaseRxLifePresenter
 import com.ljb.mvp.kotlin.protocol.dao.IUserDao
 import com.ljb.mvp.kotlin.protocol.dao.base.DaoFactory
 import com.ljb.mvp.kotlin.protocol.http.base.HttpFactory
-import com.ljb.mvp.kotlin.protocol.dao.impl.UserDaoProtocol
-import com.ljb.mvp.kotlin.protocol.dao.impl.UserDaoProtocol.findUserByUserId
 import com.ljb.mvp.kotlin.protocol.http.IUserHttp
 import com.ljb.mvp.kotlin.utils.RxUtils
 import io.reactivex.Observable

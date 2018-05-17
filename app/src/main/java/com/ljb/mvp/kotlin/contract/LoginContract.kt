@@ -1,7 +1,7 @@
 package com.ljb.mvp.kotlin.contract
 
-import com.ljb.mvp.kotlin.mvp.contract.IBasePresenterContract
-import com.ljb.mvp.kotlin.mvp.contract.IBaseViewContract
+import com.ljb.mvp.kotlin.mvp.contract.IPresenterContract
+import com.ljb.mvp.kotlin.mvp.contract.IViewContract
 
 /**
  * 登录页View层\Presenter层通讯契约接口
@@ -9,13 +9,13 @@ import com.ljb.mvp.kotlin.mvp.contract.IBaseViewContract
  */
 interface LoginContract {
 
-    interface IView : IBaseViewContract {
+    interface IView : IViewContract {
         fun loginSuccess()
         fun loginError(errorMsg: String?)
         fun goHome()
     }
 
-    interface IPresenter : IBasePresenterContract {
+    interface IPresenter : IPresenterContract {
         fun login(userName: String)
         fun delayGoHomeTask()
     }

@@ -40,7 +40,7 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
         if (LoginUser.name.isBlank()) {
             showLogin()
         } else {
-            mPresenter.delayGoHomeTask()
+            getPresenter().delayGoHomeTask()
         }
     }
 
@@ -82,7 +82,7 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
             return
         }
         mLoadingDialog.show()
-        mPresenter.login(et_github.text.trim().toString())
+        getPresenter().login(et_github.text.trim().toString())
     }
 
 }

@@ -41,7 +41,7 @@ class MyFragment : BaseMvpFragment<MyPresenter>(),
                 .setMessage(R.string.logout_user)
                 .setLeftButtonInfo(R.string.cancel)
                 .setRightButtonInfo(R.string.enter, DialogInterface.OnClickListener { _, _ ->
-                    mPresenter.logout()
+                    getPresenter().logout()
                 })
     }
 
@@ -71,7 +71,7 @@ class MyFragment : BaseMvpFragment<MyPresenter>(),
     }
 
     private fun initData() {
-        mPresenter.getUserInfo()
+        getPresenter().getUserInfo()
     }
 
     override fun logoutSuccess() {

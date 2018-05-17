@@ -2,16 +2,17 @@ package com.ljb.mvp.kotlin.mvp.view
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import com.ljb.mvp.kotlin.mvp.contract.IBasePresenterContract
+import com.ljb.mvp.kotlin.mvp.contract.IPresenterContract
+import com.ljb.mvp.kotlin.mvp.contract.IViewContract
 
 /**
  * Created by L on 2017/7/10.
  */
-abstract class BaseMvpFragment<out T : IBasePresenterContract> : Fragment() {
+abstract class BaseMvpFragment<out P : IPresenterContract> : Fragment(), IBaseView<P>, IViewContract {
 
-    protected val mPresenter: T by lazy { createPresenter() }
+    private val mPresenter: P by lazy { createPresenter() }
 
-    protected abstract fun createPresenter(): T
+    fun getPresenter() = mPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

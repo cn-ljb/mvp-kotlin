@@ -2,7 +2,7 @@ package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.contract.EventsContract
-import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
+import com.ljb.mvp.kotlin.mvp.presenter.BaseRxLifePresenter
 import com.ljb.mvp.kotlin.protocol.http.base.HttpFactory
 import com.ljb.mvp.kotlin.protocol.http.IUserHttp
 import io.reactivex.android.schedulers.AndroidSchedulers

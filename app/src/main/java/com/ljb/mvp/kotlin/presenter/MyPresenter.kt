@@ -3,7 +3,7 @@ package com.ljb.mvp.kotlin.presenter
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.contract.MyContract
 import com.ljb.mvp.kotlin.mvp.presenter.getContext
-import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
+import com.ljb.mvp.kotlin.mvp.presenter.BaseRxLifePresenter
 import com.ljb.mvp.kotlin.protocol.dao.IUserDao
 import com.ljb.mvp.kotlin.protocol.dao.base.DaoFactory
 import com.ljb.mvp.kotlin.protocol.http.base.HttpFactory

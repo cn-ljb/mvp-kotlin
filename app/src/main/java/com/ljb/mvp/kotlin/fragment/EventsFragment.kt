@@ -55,16 +55,16 @@ class EventsFragment : BaseMvpFragment<EventsContract.IPresenter>(),
     }
 
     private fun initData() {
-        mPresenter.onRefresh()
+        getPresenter().onRefresh()
     }
 
     override fun onLoadMore() {
-        mPresenter.onLoadMore()
+        getPresenter().onLoadMore()
     }
 
     override fun onErrorClick() {
         page_layout.setPage(PageState.STATE_LOADING)
-        mPresenter.onRefresh()
+        getPresenter().onRefresh()
     }
 
     override fun showPage(data: MutableList<Event>, page: Int) {

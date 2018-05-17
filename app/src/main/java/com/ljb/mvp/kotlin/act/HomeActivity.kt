@@ -44,6 +44,7 @@ class HomeActivity : FragmentActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
         outState.putInt("index", mCurIndex)
     }
 
@@ -61,17 +62,11 @@ class HomeActivity : FragmentActivity() {
     }
 
     override fun onBackPressed() {
-        if (mFirstDownBack == 0L) {
-            mFirstDownBack = System.currentTimeMillis()
+        if (System.currentTimeMillis() - mFirstDownBack > 2000) {
             Toast.makeText(this, R.string.exit_go_out, Toast.LENGTH_SHORT).show()
-        } else {
-            val nextDownBack = System.currentTimeMillis()
-            if (nextDownBack - mFirstDownBack < 2000L) {
-                super.onBackPressed()
-            } else {
-                mFirstDownBack = nextDownBack
-                Toast.makeText(this, R.string.exit_go_out, Toast.LENGTH_SHORT).show()
-            }
+            mFirstDownBack = System.currentTimeMillis()
+            return
         }
+        super.onBackPressed()
     }
 }

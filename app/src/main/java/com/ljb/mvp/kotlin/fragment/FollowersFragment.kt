@@ -56,16 +56,16 @@ class FollowersFragment : BaseMvpFragment<FollowersContract.IPresenter>(), Follo
     }
 
     private fun initData() {
-        mPresenter.onRefresh()
+        getPresenter().onRefresh()
     }
 
     override fun onLoadMore() {
-        mPresenter.onLoadMore()
+        getPresenter().onLoadMore()
     }
 
     override fun onErrorClick() {
         page_layout.setPage(PageState.STATE_LOADING)
-        mPresenter.onRefresh()
+        getPresenter().onRefresh()
     }
 
     override fun showPage(data: MutableList<Follower>, page: Int) {

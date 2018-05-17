@@ -51,7 +51,7 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
         }
         refresh_layout.apply {
             setColorSchemeResources(R.color.colorBlue)
-            setOnRefreshListener { mPresenter.onRefresh() }
+            setOnRefreshListener { getPresenter().onRefresh() }
         }
         recycler_view.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -61,16 +61,16 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
     }
 
     private fun initData() {
-        mPresenter.onRefresh()
+        getPresenter().onRefresh()
     }
 
     override fun onLoadMore() {
-        mPresenter.onLoadMore()
+        getPresenter().onLoadMore()
     }
 
     override fun onErrorClick() {
         page_layout.setPage(PageState.STATE_LOADING)
-        mPresenter.onRefresh()
+        getPresenter().onRefresh()
     }
 
     override fun showPage(data: MutableList<Repository>, page: Int) {
