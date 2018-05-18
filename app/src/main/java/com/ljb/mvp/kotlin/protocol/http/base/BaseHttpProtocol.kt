@@ -21,7 +21,9 @@ abstract class BaseHttpProtocol {
             val response = XgoHttpClient.execute(request)
             val json = response.body()?.string()
             if (json.isNullOrBlank()) {
-                it.onError(Throwable("not http data"))
+                if (!it.isDisposed) {
+                    it.onError(Throwable("not http data"))
+                }
             } else {
                 it.onNext(json!!)
                 it.onComplete()
@@ -40,17 +42,15 @@ abstract class BaseHttpProtocol {
     protected fun <T> createObservable(url: String, method: String, params: Map<String, String>?, parser: (String) -> T): Observable<T> {
         return Observable.create {
             val request = XgoHttpClient.getRequest(url, method, params)
-            try {
-                val response = XgoHttpClient.execute(request)
-                val json = response.body()?.string()
-                if (json.isNullOrBlank()) {
+            val response = XgoHttpClient.execute(request)
+            val json = response.body()?.string()
+            if (json.isNullOrBlank()) {
+                if (!it.isDisposed) {
                     it.onError(Throwable("not http data"))
-                } else {
-                    it.onNext(parser.invoke(json!!))
-                    it.onComplete()
                 }
-            } catch (e: Exception) {
-                it.onError(Throwable("net error"))
+            } else {
+                it.onNext(parser.invoke(json!!))
+                it.onComplete()
             }
         }
     }
