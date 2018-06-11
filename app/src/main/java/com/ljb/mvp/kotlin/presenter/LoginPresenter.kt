@@ -2,7 +2,7 @@ package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.contract.LoginContract
-import com.ljb.mvp.kotlin.mvp.presenter.getContext
+import com.ljb.mvp.kotlin.mvp.presenter.getContextEx
 import com.ljb.mvp.kotlin.mvp.presenter.BaseRxLifePresenter
 import com.ljb.mvp.kotlin.protocol.dao.IUserDao
 import com.ljb.mvp.kotlin.protocol.dao.base.DaoFactory
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
  * 2、通过泛型告诉Presenter层，当前View使用的通讯契约
  * 3、实现自身的通讯契约
  */
-class LoginPresenter(mvpView: LoginContract.IView) : BaseRxLifePresenter<LoginContract.IView>(mvpView), LoginContract.IPresenter {
+class LoginPresenter : BaseRxLifePresenter<LoginContract.IView>(), LoginContract.IPresenter {
 
     private var mLoginDisposable: Disposable? = null
 
@@ -35,11 +35,11 @@ class LoginPresenter(mvpView: LoginContract.IView) : BaseRxLifePresenter<LoginCo
         mLoginDisposable = HttpFactory.getProtocol(IUserHttp::class.java)
                 .getUserInfoByName(userName)
                 .map {
-                     if (it.message.isNullOrBlank()) {
-                        if (DaoFactory.getProtocol(IUserDao::class.java).findUserByUserId(getContext(), it.id) == null) {
-                            DaoFactory.getProtocol(IUserDao::class.java).saveUser(getContext(), it)
+                    if (it.message.isNullOrBlank()) {
+                        if (DaoFactory.getProtocol(IUserDao::class.java).findUserByUserId(getContextEx(), it.id) == null) {
+                            DaoFactory.getProtocol(IUserDao::class.java).saveUser(getContextEx(), it)
                         } else {
-                            DaoFactory.getProtocol(IUserDao::class.java).updateUser(getContext(), it)
+                            DaoFactory.getProtocol(IUserDao::class.java).updateUser(getContextEx(), it)
                         }
                     }
                     it

@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/9/14.
  */
-class EventPresenter(mvpView: EventsContract.IView) : BaseRxLifePresenter<EventsContract.IView>(mvpView),
+class EventPresenter : BaseRxLifePresenter<EventsContract.IView>(),
         EventsContract.IPresenter {
 
     private var mPage = 1

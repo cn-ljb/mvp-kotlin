@@ -20,14 +20,13 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
 /**
  * Created by L on 2017/7/19.
  */
-class EventsFragment : BaseMvpFragment<EventsContract.IPresenter>(),
-        EventsContract.IView,
+class EventsFragment : BaseMvpFragment<EventsContract.IPresenter>(), EventsContract.IView,
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 
-    private val mAdapter by lazy { EventAdapter(activity, mutableListOf()) }
+    override fun registerPresenter() = EventPresenter::class.java
 
-    override fun createPresenter() = EventPresenter(this)
+    private val mAdapter by lazy { EventAdapter(activity, mutableListOf()) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_events, container, false)

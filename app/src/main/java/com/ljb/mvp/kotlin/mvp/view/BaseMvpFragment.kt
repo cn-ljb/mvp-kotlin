@@ -10,7 +10,13 @@ import com.ljb.mvp.kotlin.mvp.contract.IViewContract
  */
 abstract class BaseMvpFragment<out P : IPresenterContract> : Fragment(), IBaseView<P>, IViewContract {
 
-    private val mPresenter: P by lazy { createPresenter() }
+    private val mPresenter: P by lazy {
+        val clazz = registerPresenter()
+        val constructor = clazz.getConstructor()
+        val presenter = constructor.newInstance()
+        presenter.registerMvpView(this)
+        presenter
+    }
 
     fun getPresenter() = mPresenter
 

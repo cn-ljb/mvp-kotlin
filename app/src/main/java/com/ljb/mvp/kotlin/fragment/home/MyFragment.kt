@@ -25,8 +25,9 @@ import kotlinx.android.synthetic.main.fragment_my.*
 /**
  * Created by L on 2017/7/18.
  */
-class MyFragment : BaseMvpFragment<MyPresenter>(),
-        MyContract.IMyView {
+class MyFragment : BaseMvpFragment<MyContract.IMyPresenter>(), MyContract.IMyView {
+
+    override fun registerPresenter() = MyPresenter::class.java
 
     private val mTabArr by lazy {
         arrayOf(
@@ -44,8 +45,6 @@ class MyFragment : BaseMvpFragment<MyPresenter>(),
                     getPresenter().logout()
                 })
     }
-
-    override fun createPresenter() = MyPresenter(this)
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =

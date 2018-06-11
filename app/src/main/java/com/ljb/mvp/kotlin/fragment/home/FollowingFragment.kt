@@ -20,14 +20,13 @@ import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
 /**
  * Created by L on 2017/7/18.
  */
-class FollowingFragment : BaseMvpFragment<FollowingPresenter>(),
-        FollowingContract.IView,
+class FollowingFragment : BaseMvpFragment<FollowingContract.IPresenter>(), FollowingContract.IView,
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 
     private val mAdapter by lazy { FollowingAdapter(activity, mutableListOf()) }
 
-    override fun createPresenter() = FollowingPresenter(this)
+    override fun registerPresenter() = FollowingPresenter::class.java
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(R.layout.fragment_following, container, false)

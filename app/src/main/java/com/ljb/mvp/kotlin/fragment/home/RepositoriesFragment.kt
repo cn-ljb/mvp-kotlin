@@ -21,14 +21,14 @@ import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
  * Repos page
  * Created by L on 2017/7/18.
  */
-class RepositoriesFragment : BaseMvpFragment<RepositoriesPresenter>(),
-        RepositoriesContract.IView,
+class RepositoriesFragment : BaseMvpFragment<RepositoriesContract.IPresenter>(), RepositoriesContract.IView,
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 
+    override fun registerPresenter() = RepositoriesPresenter::class.java
+
     private val mAdapter by lazy { RepositoriesAdapter(activity, mutableListOf()) }
 
-    override fun createPresenter() = RepositoriesPresenter(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(R.layout.fragment_repos, container, false)

@@ -20,14 +20,14 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
 /**
  * Created by L on 2017/7/19.
  */
-class StarredFragment : BaseMvpFragment<StarredContract.IPresenter>(),
-        StarredContract.IView,
+class StarredFragment : BaseMvpFragment<StarredContract.IPresenter>(), StarredContract.IView,
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 
-    private val mAdapter: StarredAdapter by lazy { StarredAdapter(activity, mutableListOf()) }
+    override fun registerPresenter() = StarredPresenter::class.java
 
-    override fun createPresenter() = StarredPresenter(this)
+
+    private val mAdapter: StarredAdapter by lazy { StarredAdapter(activity, mutableListOf()) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater.inflate(R.layout.fragment_starred, container, false)

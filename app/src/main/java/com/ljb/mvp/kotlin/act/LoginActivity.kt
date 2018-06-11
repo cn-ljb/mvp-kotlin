@@ -20,9 +20,11 @@ import kotlinx.android.synthetic.main.activity_login.*
  */
 class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract.IView {
 
+    override fun registerPresenter() = LoginPresenter::class.java
+
+
     private val mLoadingDialog by lazy { LoadingDialog(this) }
 
-    override fun createPresenter() = LoginPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,9 +70,7 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
         val alpha = PropertyValuesHolder.ofFloat("alpha", 0f, 1f)
         val scaleX = PropertyValuesHolder.ofFloat("scaleX", 0.5f, 1f)
         val scaleY = PropertyValuesHolder.ofFloat("scaleY", 0.5f, 1f)
-        ObjectAnimator.ofPropertyValuesHolder(ll_login, alpha, scaleX, scaleY)
-                .setDuration(1000)
-                .start()
+        ObjectAnimator.ofPropertyValuesHolder(ll_login, alpha, scaleX, scaleY).setDuration(1000).start()
         ll_login.visibility = View.VISIBLE
     }
 

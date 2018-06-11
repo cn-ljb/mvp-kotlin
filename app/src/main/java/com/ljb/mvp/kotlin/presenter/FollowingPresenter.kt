@@ -11,7 +11,7 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/10/9.
  */
-class FollowingPresenter(mvpView: FollowingContract.IView) : BaseRxLifePresenter<FollowingContract.IView>(mvpView),
+class FollowingPresenter : BaseRxLifePresenter<FollowingContract.IView>(),
         FollowingContract.IPresenter {
 
 

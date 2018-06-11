@@ -24,9 +24,10 @@ class FollowersFragment : BaseMvpFragment<FollowersContract.IPresenter>(), Follo
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 
+    override fun registerPresenter() = FollowersPresenter::class.java
+
     private val mAdapter by lazy { FollowersAdapter(activity, mutableListOf()) }
 
-    override fun createPresenter() = FollowersPresenter(this)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_followers, container, false)

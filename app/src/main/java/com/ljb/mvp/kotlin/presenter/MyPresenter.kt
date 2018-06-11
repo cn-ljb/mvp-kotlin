@@ -2,7 +2,7 @@ package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.contract.MyContract
-import com.ljb.mvp.kotlin.mvp.presenter.getContext
+import com.ljb.mvp.kotlin.mvp.presenter.getContextEx
 import com.ljb.mvp.kotlin.mvp.presenter.BaseRxLifePresenter
 import com.ljb.mvp.kotlin.protocol.dao.IUserDao
 import com.ljb.mvp.kotlin.protocol.dao.base.DaoFactory
@@ -16,13 +16,13 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/7/18.
  */
-class MyPresenter(mvpView: MyContract.IMyView) : BaseRxLifePresenter<MyContract.IMyView>(mvpView),
+class MyPresenter : BaseRxLifePresenter<MyContract.IMyView>(),
         MyContract.IMyPresenter {
 
     override fun getUserInfo() {
         Observable.concat(
                 UserDaoProtocol.createObservable {
-                    DaoFactory.getProtocol(IUserDao::class.java).findUserByName(getContext(), LoginUser.name)
+                    DaoFactory.getProtocol(IUserDao::class.java).findUserByName(getContextEx(), LoginUser.name)
                 },
                 HttpFactory.getProtocol(IUserHttp::class.java).getUserInfoByName(LoginUser.name)
         ).filter { it != null }

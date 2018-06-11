@@ -11,8 +11,7 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by L on 2017/9/21.
  */
-class StarredPresenter(mvpView: StarredContract.IView) : BaseRxLifePresenter<StarredContract.IView>(mvpView)
-        , StarredContract.IPresenter {
+class StarredPresenter : BaseRxLifePresenter<StarredContract.IView>(), StarredContract.IPresenter {
 
     private var mPage = 1
 

@@ -1,10 +1,11 @@
 package com.ljb.mvp.kotlin.mvp.contract
 
+
 /**
  * 公共Presenter层契约接口
  * Created by L on 2017/7/10.
  * */
-interface IPresenterContract{
+interface IPresenterContract {
     fun onCreate()
 
     fun onStart()
@@ -16,4 +17,6 @@ interface IPresenterContract{
     fun onStop()
 
     fun onDestroy()
+
+    fun registerMvpView(mvpView: IViewContract)
 }

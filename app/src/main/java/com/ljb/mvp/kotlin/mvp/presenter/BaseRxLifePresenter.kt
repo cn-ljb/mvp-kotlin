@@ -11,15 +11,23 @@ import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import java.net.SocketTimeoutException
 
-abstract class BaseRxLifePresenter<out V : IViewContract>(private val mMVPView: V) : IBasePresenter<V>, IPresenterContract {
+abstract class BaseRxLifePresenter<out V : IViewContract> : IBasePresenter<V>, IPresenterContract {
 
+    private lateinit var mMVPView: V
+
+    @Suppress("UNCHECKED_CAST")
+    override fun registerMvpView(mvpView: IViewContract) {
+        mMVPView = mvpView as V
+    }
+
+    override fun getMvpView() = mMVPView
+    
     enum class RxLife {
         ON_CREATE, ON_START, ON_RESUME, ON_PAUSE, ON_STOP, ON_DESTROY
     }
 
     private val mRxLifeMap = HashMap<RxLife, ArrayList<Disposable>>()
 
-    override fun getMvpView() = mMVPView
 
     override fun onCreate() {
         destroyRxLife(RxLife.ON_CREATE)
@@ -77,10 +85,10 @@ abstract class BaseRxLifePresenter<out V : IViewContract>(private val mMVPView: 
             onNext.invoke(it)
         }, {
             //编写订阅失败的公共代码
-            if (!NetUtils.checkHasNet(getContext())) {
-                Toast.makeText(getContext(), R.string.net_error, Toast.LENGTH_SHORT).show()
+            if (!NetUtils.checkHasNet(getContextEx())) {
+                Toast.makeText(getContextEx(), R.string.net_error, Toast.LENGTH_SHORT).show()
             } else if (it is SocketTimeoutException) {
-                Toast.makeText(getContext(), R.string.net_time_out, Toast.LENGTH_SHORT).show()
+                Toast.makeText(getContextEx(), R.string.net_time_out, Toast.LENGTH_SHORT).show()
             }
             onError.invoke(it)
         }, {
