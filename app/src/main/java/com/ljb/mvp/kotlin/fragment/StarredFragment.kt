@@ -2,14 +2,12 @@ package com.ljb.mvp.kotlin.fragment
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.adapter.StarredAdapter
+import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.StarredContract
 import com.ljb.mvp.kotlin.domain.Starred
-import com.ljb.mvp.kotlin.mvp.view.BaseMvpFragment
 import com.ljb.mvp.kotlin.presenter.StarredPresenter
 import com.ljb.mvp.kotlin.widget.PageStateLayout
 import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
@@ -24,13 +22,11 @@ class StarredFragment : BaseMvpFragment<StarredContract.IPresenter>(), StarredCo
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 
+    private val mAdapter: StarredAdapter by lazy { StarredAdapter(activity!!, mutableListOf()) }
+
+    override fun getLayoutId() = R.layout.fragment_starred
+
     override fun registerPresenter() = StarredPresenter::class.java
-
-
-    private val mAdapter: StarredAdapter by lazy { StarredAdapter(activity, mutableListOf()) }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-            inflater.inflate(R.layout.fragment_starred, container, false)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -38,7 +34,7 @@ class StarredFragment : BaseMvpFragment<StarredContract.IPresenter>(), StarredCo
         initData()
     }
 
-    private fun initView() {
+    override fun initView() {
         page_layout.apply {
             setContentView(View.inflate(activity, R.layout.layout_recycler_view, null))
             addCallBack(this@StarredFragment)
@@ -50,7 +46,7 @@ class StarredFragment : BaseMvpFragment<StarredContract.IPresenter>(), StarredCo
         }
     }
 
-    private fun initData() {
+    override fun initData() {
         getPresenter().onRefresh()
     }
 

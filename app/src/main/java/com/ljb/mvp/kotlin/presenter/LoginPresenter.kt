@@ -1,18 +1,19 @@
 package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.common.LoginUser
+import com.ljb.mvp.kotlin.common.ex.subscribeEx
 import com.ljb.mvp.kotlin.contract.LoginContract
-import com.ljb.mvp.kotlin.mvp.presenter.getContextEx
-import com.ljb.mvp.kotlin.mvp.presenter.BaseRxLifePresenter
+import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
 import com.ljb.mvp.kotlin.protocol.dao.IUserDao
 import com.ljb.mvp.kotlin.protocol.dao.base.DaoFactory
-import com.ljb.mvp.kotlin.protocol.http.base.HttpFactory
-import com.ljb.mvp.kotlin.protocol.http.IUserHttp
+import com.ljb.mvp.kotlin.protocol.http.IUserHttpProtocol
 import com.ljb.mvp.kotlin.utils.RxUtils
+import com.ljb.mvp.presenter.getContextEx
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import net.ljb.kt.client.HttpFactory
 import java.util.concurrent.TimeUnit
 
 /**
@@ -32,7 +33,7 @@ class LoginPresenter : BaseRxLifePresenter<LoginContract.IView>(), LoginContract
 
     override fun login(userName: String) {
         RxUtils.dispose(mLoginDisposable)
-        mLoginDisposable = HttpFactory.getProtocol(IUserHttp::class.java)
+        mLoginDisposable = HttpFactory.getProtocol(IUserHttpProtocol::class.java)
                 .getUserInfoByName(userName)
                 .map {
                     if (it.message.isNullOrBlank()) {

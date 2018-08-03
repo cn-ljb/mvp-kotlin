@@ -1,10 +1,11 @@
 package com.ljb.mvp.kotlin.protocol.dao.base
 
+import java.util.*
 
 
 class DaoFactoryGroup {
 
-    private val map = HashMap<Class<out DaoInterface>, BaseDaoProtocol>()
+    private val map = WeakHashMap<Class<out DaoInterface>, BaseDaoProtocol>()
 
     fun register(key: Class<out DaoInterface>, value: BaseDaoProtocol) {
         if (key.isAssignableFrom(value::class.java)) map[key] = value

@@ -1,7 +1,7 @@
 package com.ljb.mvp.kotlin.contract.base
 
-import com.ljb.mvp.kotlin.mvp.contract.IPresenterContract
-import com.ljb.mvp.kotlin.mvp.contract.IViewContract
+import com.ljb.mvp.contract.IPresenterContract
+import com.ljb.mvp.contract.IViewContract
 
 
 interface ListContract {

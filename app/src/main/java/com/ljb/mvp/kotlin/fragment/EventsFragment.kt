@@ -1,15 +1,12 @@
 package com.ljb.mvp.kotlin.fragment
 
-import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.adapter.EventAdapter
+import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.EventsContract
 import com.ljb.mvp.kotlin.domain.Event
-import com.ljb.mvp.kotlin.mvp.view.BaseMvpFragment
 import com.ljb.mvp.kotlin.presenter.EventPresenter
 import com.ljb.mvp.kotlin.widget.PageStateLayout
 import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
@@ -24,24 +21,13 @@ class EventsFragment : BaseMvpFragment<EventsContract.IPresenter>(), EventsContr
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 
+    private val mAdapter by lazy { EventAdapter(activity!!, mutableListOf()) }
+
+    override fun getLayoutId() = R.layout.fragment_events
+
     override fun registerPresenter() = EventPresenter::class.java
 
-    private val mAdapter by lazy { EventAdapter(activity, mutableListOf()) }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_events, container, false)
-
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initView()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initData()
-    }
-
-    private fun initView() {
+    override fun initView() {
         page_layout.apply {
             setContentView(View.inflate(activity, R.layout.layout_recycler_view, null))
             addCallBack(this@EventsFragment)
@@ -53,7 +39,7 @@ class EventsFragment : BaseMvpFragment<EventsContract.IPresenter>(), EventsContr
         }
     }
 
-    private fun initData() {
+    override fun initData() {
         getPresenter().onRefresh()
     }
 

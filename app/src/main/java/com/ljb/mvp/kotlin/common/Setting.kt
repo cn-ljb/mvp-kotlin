@@ -1,14 +1,15 @@
 package com.ljb.mvp.kotlin.common
 
-import com.ljb.mvp.kotlin.net.log.XgoLog.Companion.LEVEL_ALL
+import com.ljb.mvp.kotlin.BuildConfig
 import com.ljb.mvp.kotlin.utils.SPUtils
+import net.ljb.kt.utils.NetLog.LEVEL_ALL
 
 
 /** 服务器Host */
 const val HTTP_API_DOMAIN = "https://api.github.com"
 
-/** Log级别 */
-const val LV_LOG = LEVEL_ALL
+/** Log */
+val LOG_DEBUG = BuildConfig.DEBUG
 
 /** GitHub接口身份验证 */
 var GITHUB_CLIENT_ID = ""

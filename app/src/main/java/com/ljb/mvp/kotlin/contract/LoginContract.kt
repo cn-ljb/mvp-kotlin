@@ -1,10 +1,10 @@
 package com.ljb.mvp.kotlin.contract
 
-import com.ljb.mvp.kotlin.mvp.contract.IPresenterContract
-import com.ljb.mvp.kotlin.mvp.contract.IViewContract
+import com.ljb.mvp.contract.IPresenterContract
+import com.ljb.mvp.contract.IViewContract
 
 /**
- * 登录页View层\Presenter层通讯契约接口
+ * 登录页View层\Presenter层通讯接口
  * Created by L on 2017/7/13.
  */
 interface LoginContract {

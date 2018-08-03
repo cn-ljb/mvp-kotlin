@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ljb.mvp.kotlin.R
-import com.ljb.mvp.kotlin.net.log.XgoLog
+import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter.Companion.PAGE_DATA_SIZE
+import net.ljb.kt.utils.NetLog
 
 /**
  * Created by L on 2017/7/24.
  */
 abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: MutableList<T>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
 
     companion object {
         val PAGE_DATA_SIZE = 30
@@ -29,14 +29,14 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
     override fun getItemId(position: Int) = position.toLong()
 
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder? {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == TYPE_LOAD_MORE) {  //加载更多
             if (mLoadMoreHolder == null) {
                 val loadView = LayoutInflater.from(mContext).inflate(R.layout.layout_load_more, parent, false)
                 mLoadMoreHolder = LoadMoreHolder(loadView, this)
             }
             initLoadStatusForSize(mData)
-            return mLoadMoreHolder
+            return mLoadMoreHolder!!
         }
         return getItemHolder(parent, viewType)
     }
@@ -49,13 +49,14 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
         if (itemViewType == TYPE_ITEM) {
             onBindData(holder, position)
             //设置点击事件
-            if (mOnItemClickListener != null) {
+            mOnItemClickListener?.apply {
                 holder.itemView.setOnClickListener {
-                    mOnItemClickListener!!.onItemClick(holder.itemView, position)
+                    this.onItemClick(holder.itemView, position)
                 }
             }
+
         } else if (itemViewType == TYPE_LOAD_MORE) {
-            XgoLog.i("TYPE_LOAD_MORE")
+            NetLog.i("TYPE_LOAD_MORE")
             loadMore()
         }
     }

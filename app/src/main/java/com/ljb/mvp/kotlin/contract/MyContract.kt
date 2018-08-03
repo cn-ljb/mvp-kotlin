@@ -1,20 +1,20 @@
 package com.ljb.mvp.kotlin.contract
 
+import com.ljb.mvp.contract.IPresenterContract
+import com.ljb.mvp.contract.IViewContract
 import com.ljb.mvp.kotlin.domain.User
-import com.ljb.mvp.kotlin.mvp.contract.IPresenterContract
-import com.ljb.mvp.kotlin.mvp.contract.IViewContract
 
 /**
  * Created by L on 2017/7/18.
  */
 interface MyContract {
 
-    interface IMyView : IViewContract {
+    interface IView : IViewContract {
         fun logoutSuccess()
         fun showUserInfo(user: User)
     }
 
-    interface IMyPresenter : IPresenterContract {
+    interface IPresenter : IPresenterContract {
         fun logout()
         fun getUserInfo()
     }

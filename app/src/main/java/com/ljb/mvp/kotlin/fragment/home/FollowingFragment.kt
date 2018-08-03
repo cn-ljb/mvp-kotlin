@@ -1,15 +1,12 @@
 package com.ljb.mvp.kotlin.fragment.home
 
-import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.adapter.FollowingAdapter
+import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.FollowingContract
 import com.ljb.mvp.kotlin.domain.Following
-import com.ljb.mvp.kotlin.mvp.view.BaseMvpFragment
 import com.ljb.mvp.kotlin.presenter.FollowingPresenter
 import com.ljb.mvp.kotlin.widget.PageStateLayout
 import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
@@ -24,24 +21,13 @@ class FollowingFragment : BaseMvpFragment<FollowingContract.IPresenter>(), Follo
         PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 
-    private val mAdapter by lazy { FollowingAdapter(activity, mutableListOf()) }
+    private val mAdapter by lazy { FollowingAdapter(activity!!, mutableListOf()) }
+
+    override fun getLayoutId() = R.layout.fragment_following
 
     override fun registerPresenter() = FollowingPresenter::class.java
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-            inflater.inflate(R.layout.fragment_following, container, false)
-
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initView()
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initData()
-    }
-
-    private fun initView() {
+    override fun initView() {
         page_layout.apply {
             setContentView(View.inflate(activity, R.layout.layout_refresh_recycler_view, null))
             addCallBack(this@FollowingFragment)
@@ -57,7 +43,7 @@ class FollowingFragment : BaseMvpFragment<FollowingContract.IPresenter>(), Follo
         }
     }
 
-    private fun initData() {
+    override fun initData() {
         getPresenter().onRefresh()
     }
 

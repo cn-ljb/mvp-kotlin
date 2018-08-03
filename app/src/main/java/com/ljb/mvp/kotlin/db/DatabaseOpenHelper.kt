@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.ljb.mvp.kotlin.common.Constant.DBProvider.Companion.DATABASE_NAME
 import com.ljb.mvp.kotlin.common.Constant.DBProvider.Companion.DATABASE_VERSION
-import com.ljb.mvp.kotlin.net.log.XgoLog
+import net.ljb.kt.utils.NetLog
 
 /**
  * 数据库
@@ -34,7 +34,7 @@ class DatabaseOpenHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     private val mDatabaseColumnsHelper = DatabaseColumnsHelper()
 
     override fun onCreate(db: SQLiteDatabase) {
-        XgoLog.i("database onCreate")
+        NetLog.i("database onCreate")
         createTables(db)
     }
 
@@ -48,7 +48,7 @@ class DatabaseOpenHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
 
     private fun createTable(db: SQLiteDatabase, tableName: String) {
         val columns = mDatabaseColumnsHelper.getCreateTableSql(tableName)
-        XgoLog.i("create table if not exists $tableName$columns")
+        NetLog.i("create table if not exists $tableName$columns")
         db.execSQL("create table if not exists $tableName$columns")
     }
 

@@ -1,12 +1,13 @@
 package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.common.LoginUser
+import com.ljb.mvp.kotlin.common.ex.subscribeEx
 import com.ljb.mvp.kotlin.contract.RepositoriesContract
-import com.ljb.mvp.kotlin.mvp.presenter.BaseRxLifePresenter
-import com.ljb.mvp.kotlin.protocol.http.base.HttpFactory
-import com.ljb.mvp.kotlin.protocol.http.IUserHttp
+import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
+import com.ljb.mvp.kotlin.protocol.http.IUserHttpProtocol
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import net.ljb.kt.client.HttpFactory
 
 /**
  * Created by L on 2017/9/27.
@@ -27,7 +28,7 @@ class RepositoriesPresenter : BaseRxLifePresenter<RepositoriesContract.IView>(),
     }
 
     private fun getDataFromNet(page: Int) {
-        HttpFactory.getProtocol(IUserHttp::class.java)
+        HttpFactory.getProtocol(IUserHttpProtocol::class.java)
                 .getRepositoriesByName(LoginUser.name, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

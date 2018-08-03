@@ -8,9 +8,9 @@ import android.net.Uri
 import com.ljb.mvp.kotlin.common.Constant.DBProvider.TABLE_USERS
 import com.ljb.mvp.kotlin.db.DatabaseProvider
 import com.ljb.mvp.kotlin.domain.User
-import com.ljb.mvp.kotlin.net.log.XgoLog
 import com.ljb.mvp.kotlin.protocol.dao.IUserDao
 import com.ljb.mvp.kotlin.protocol.dao.base.BaseDaoProtocol
+import net.ljb.kt.utils.NetLog
 
 /**
  * Created by L on 2017/7/17.
@@ -57,7 +57,7 @@ object UserDaoProtocol : BaseDaoProtocol(), IUserDao {
                 result = true
             }
         } catch (e: Exception) {
-            XgoLog.e(e)
+            NetLog.e(e)
         }
         return result
     }
@@ -102,7 +102,7 @@ object UserDaoProtocol : BaseDaoProtocol(), IUserDao {
                     "${TABLE_USERS.COLUMN_USER_ID}=?",
                     arrayOf("${user.id}"))
         } catch (e: Exception) {
-            XgoLog.e(e)
+            NetLog.e(e)
         }
         return count
     }
@@ -150,7 +150,7 @@ object UserDaoProtocol : BaseDaoProtocol(), IUserDao {
                 return User(login, userID, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin == 1, name, company, blog, location, email, hireable, bio, public_repos, public_gists, followers, following, created_at, updated_at)
             }
         } catch (e: Exception) {
-            XgoLog.e(e)
+            NetLog.e(e)
         } finally {
             c?.close()
         }
@@ -199,7 +199,7 @@ object UserDaoProtocol : BaseDaoProtocol(), IUserDao {
                 return User(login, userID, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin == 1, name, company, blog, location, email, hireable, bio, public_repos, public_gists, followers, following, created_at, updated_at)
             }
         } catch (e: Exception) {
-            XgoLog.e(e)
+            NetLog.e(e)
         } finally {
             c?.close()
         }

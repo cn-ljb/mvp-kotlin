@@ -78,7 +78,7 @@ class PageStateLayout : FrameLayout {
      */
     private fun initErrorView(context: Context): View {
         val errorView = LayoutInflater.from(context).inflate(loading_page_error, this, false)
-        errorView.findViewById(R.id.tv_reload).setOnClickListener {
+        errorView.findViewById<View>(R.id.tv_reload).setOnClickListener {
             mCallBack?.onErrorClick()
         }
         return errorView

@@ -7,28 +7,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.domain.Follower
 import com.ljb.mvp.kotlin.img.ImageLoader
 import com.ljb.mvp.kotlin.widget.findViewByIdEx
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 /**
  * Created by L on 2017/7/19.
  */
 class FollowersAdapter(mContext: Context, mData: MutableList<Follower>) : LoadMoreRecyclerAdapter<Follower>(mContext, mData) {
+
+
     override fun getItemHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder =
             FollowersViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_followers, parent, false))
 
     override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is FollowersViewHolder) {
             val item = mData[position]
-            ImageLoader.load(context = mContext,
-                    url = item.avatar_url,
-                    img = holder.iv_avatar,
-                    loadingImgResId = R.drawable.default_header,
-                    loadErrorImgResId = R.drawable.default_header,
-                    form = ImageLoader.ImageForm.ROUND)
+            ImageLoader.load(mContext, item.avatar_url, holder.iv_avatar,
+                    ImageLoader.getRoundRequest(10, RoundedCornersTransformation.CornerType.ALL))
             holder.tv_follower_name.text = item.login
         }
     }

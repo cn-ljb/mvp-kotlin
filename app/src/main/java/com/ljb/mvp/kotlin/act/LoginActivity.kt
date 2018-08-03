@@ -7,8 +7,8 @@ import android.os.Bundle
 import android.view.View
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.common.LoginUser
+import com.ljb.mvp.kotlin.common.act.BaseMvpActivity
 import com.ljb.mvp.kotlin.contract.LoginContract
-import com.ljb.mvp.kotlin.mvp.view.BaseMvpActivity
 import com.ljb.mvp.kotlin.presenter.LoginPresenter
 import com.ljb.mvp.kotlin.widget.dialog.LoadingDialog
 import kotlinx.android.synthetic.main.activity_login.*
@@ -20,25 +20,17 @@ import kotlinx.android.synthetic.main.activity_login.*
  */
 class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract.IView {
 
-    override fun registerPresenter() = LoginPresenter::class.java
-
-
     private val mLoadingDialog by lazy { LoadingDialog(this) }
 
+    override fun getLayoutId() = R.layout.activity_login
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        initView()
-        initData()
-    }
+    override fun registerPresenter() = LoginPresenter::class.java
 
-
-    private fun initView() {
+    override fun initView() {
         btn_login.setOnClickListener { login() }
     }
 
-    private fun initData() {
+    override fun initData() {
         if (LoginUser.name.isBlank()) {
             showLogin()
         } else {
