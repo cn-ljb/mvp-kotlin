@@ -1,6 +1,6 @@
 package net.ljb.kt.client
 
-import net.ljb.kt.WBHttpConfig
+import net.ljb.kt.HttpConfig
 import net.ljb.kt.interceptor.AddGlobalParamInterceptor
 import net.ljb.kt.utils.NetLog
 import okhttp3.*
@@ -30,7 +30,7 @@ object HttpClient {
     private val mRetrofit by lazy {
         Retrofit.Builder()
                 .client(mHttpClient)
-                .baseUrl(WBHttpConfig.BASE_URL)
+                .baseUrl(HttpConfig.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
@@ -38,7 +38,7 @@ object HttpClient {
     private val mStrRetrofit by lazy {
         Retrofit.Builder()
                 .client(mHttpClient)
-                .baseUrl(WBHttpConfig.BASE_URL)
+                .baseUrl(HttpConfig.BASE_URL)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(StringConverterFactory())
                 .build()
