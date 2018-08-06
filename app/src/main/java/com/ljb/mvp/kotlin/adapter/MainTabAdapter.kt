@@ -1,4 +1,4 @@
-package com.wuba.weizhang.adapter
+package com.ljb.mvp.kotlin.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

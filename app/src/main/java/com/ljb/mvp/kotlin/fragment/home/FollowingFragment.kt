@@ -3,7 +3,8 @@ package com.ljb.mvp.kotlin.fragment.home
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.ljb.mvp.kotlin.R
-import com.ljb.mvp.kotlin.adapter.FollowingAdapter
+import com.ljb.mvp.kotlin.adapter.rv.FollowersDecoration
+import com.ljb.mvp.kotlin.adapter.rv.FollowingAdapter
 import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.FollowingContract
 import com.ljb.mvp.kotlin.domain.Following
@@ -38,6 +39,7 @@ class FollowingFragment : BaseMvpFragment<FollowingContract.IPresenter>(), Follo
         }
         recycler_view.apply {
             layoutManager = GridLayoutManager(context, 3)
+            addItemDecoration(FollowersDecoration())
             adapter = mAdapter
             mAdapter.setOnLoadMoreListener(this@FollowingFragment)
         }

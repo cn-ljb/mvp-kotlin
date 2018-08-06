@@ -8,14 +8,14 @@ import android.net.Uri
 import com.ljb.mvp.kotlin.common.Constant.DBProvider.TABLE_USERS
 import com.ljb.mvp.kotlin.db.DatabaseProvider
 import com.ljb.mvp.kotlin.domain.User
-import com.ljb.mvp.kotlin.protocol.dao.IUserDao
+import com.ljb.mvp.kotlin.protocol.dao.IUserDaoProtocol
 import com.ljb.mvp.kotlin.protocol.dao.base.BaseDaoProtocol
 import net.ljb.kt.utils.NetLog
 
 /**
  * Created by L on 2017/7/17.
  */
-object UserDaoProtocol : BaseDaoProtocol(), IUserDao {
+object UserDaoProtocol : BaseDaoProtocol(), IUserDaoProtocol {
 
 
     override fun saveUser(context: Context, user: User): Boolean {

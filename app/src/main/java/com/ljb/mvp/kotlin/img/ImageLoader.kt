@@ -36,8 +36,8 @@ object ImageLoader {
         return RequestOptions
                 .bitmapTransform(RoundedCornersTransformation(radius, 0, type))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.color.color999)
-                .error(R.color.color999)
+                .placeholder(R.color.colorD2D2D2)
+                .error(R.color.colorD2D2D2)
     }
 
     fun getCircleRequest(): RequestOptions {

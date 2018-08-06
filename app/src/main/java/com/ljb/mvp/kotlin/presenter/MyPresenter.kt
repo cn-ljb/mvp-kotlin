@@ -4,7 +4,7 @@ import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.common.ex.subscribeEx
 import com.ljb.mvp.kotlin.contract.MyContract
 import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
-import com.ljb.mvp.kotlin.protocol.dao.IUserDao
+import com.ljb.mvp.kotlin.protocol.dao.IUserDaoProtocol
 import com.ljb.mvp.kotlin.protocol.dao.base.DaoFactory
 import com.ljb.mvp.kotlin.protocol.dao.impl.UserDaoProtocol
 import com.ljb.mvp.kotlin.protocol.http.IUserHttpProtocol
@@ -23,7 +23,7 @@ class MyPresenter : BaseRxLifePresenter<MyContract.IView>(),
     override fun getUserInfo() {
         Observable.concat(
                 UserDaoProtocol.createObservable {
-                    DaoFactory.getProtocol(IUserDao::class.java).findUserByName(getContextEx(), LoginUser.name)
+                    DaoFactory.getProtocol(IUserDaoProtocol::class.java).findUserByName(getContextEx(), LoginUser.name)
                 },
                 HttpFactory.getProtocol(IUserHttpProtocol::class.java).getUserInfoByName(LoginUser.name)
         ).filter { it != null }

@@ -1,4 +1,4 @@
-package com.ljb.mvp.kotlin.adapter
+package com.ljb.mvp.kotlin.adapter.rv
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.domain.Following
 import com.ljb.mvp.kotlin.img.ImageLoader
@@ -20,7 +18,6 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation
  * Created by L on 2017/10/9.
  */
 class FollowingAdapter(mContext: Context, mData: MutableList<Following>) : LoadMoreRecyclerAdapter<Following>(mContext, mData) {
-
 
     override fun getItemHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder =
             FollowingViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_following, parent, false))

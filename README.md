@@ -8,7 +8,7 @@
 
 * [20180427更新日志](./updatelog/20180427UpdateLog.md "20180427更新日志")
 
-
+* [20180806更新日志](./updatelog/20180806UpdateLog.md "20180806更新日志")
 
 
 ## 概述
@@ -106,13 +106,23 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 
 * 4、Modle层封装Protocol，用于包装数据源并提供转换为Observable的函数，从而方便与Rxjava2结合使用（项目中提供两个基础的BaseDAOProtocol、BaseHttpProtocol，也可自行定义适合自己的数据源封装类），并实现自身向Presenter公开的约束接口；
 
-		object UserProtocol :  BaseHttpProtocol(), IUserHttp {
+		object UserDaoProtocol : BaseDaoProtocol(), IUserDaoProtocol {
 		
-		   override fun getUserInfoByName(userName: String): Observable<User> {
-		        val url = "$HTTP_API_DOMAIN/users/${nvl(userName)}"
-		        return createObservable(url, XgoHttpClient.METHOD_GET) {
-		            JsonParser.fromJsonObj(it, User::class.java)
+		
+		    override fun saveUser(context: Context, user: User): Boolean {
+		        var result = false
+		        val values = ContentValues()
+		        values.put(TABLE_USERS.COLUMN_LOGIN, user.login)
+		        ...
+		        try {
+		            val uri = context.contentResolver.insert(Uri.parse(DatabaseProvider.USER_CONTENT_URI), values)
+		            if (uri != null && ContentUris.parseId(uri) > 0) {
+		                result = true
+		            }
+		        } catch (e: Exception) {
+		            NetLog.e(e)
 		        }
+		        return result
 		    }
 			
 			...
@@ -121,47 +131,48 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 	--------------- 分割线 ------------------
 		
 		//Model层对外提供的约束接口
-		interface IUserHttp : HttpInterface {
+		interface IUserDaoProtocol : DaoInterface {
 		    /**
-		     * @param userName 用户名
-		     * @return  用户基本信息
+		     * 保存用户信息
 		     * */
-		    fun getUserInfoByName(userName: String): Observable<User>
-		
+		    fun saveUser(context: Context, user: User): Boolean
+
 			...
-		｝
-
-* 5、每个Protocol对象建议通过Factory产出；
-
-		object HttpFactory {
-		
-		    private val mHttpGroup = HttpFactoryGroup()
-		
-		    @Suppress("UNCHECKED_CAST")
-		    fun <T : HttpInterface> getProtocol(clazz: Class<T>): T {
-		        return mHttpGroup.getProtocol(clazz) ?: registerNewProtocol(clazz)
-		    }
-		
-		    @Suppress("UNCHECKED_CAST")
-		    private fun <T : HttpInterface> registerNewProtocol(clazz: Class<T>): T {
-		        //TODO 在此处注册Http接口
-		        val protocol = when (clazz) {
-		            IUserHttp::class.java -> UserHttpProtocol
-		            else -> throw IllegalStateException("Http Interface Class Object NotFound : ${clazz.name}")
-		        } as T
-		        mHttpGroup.register(clazz, protocol)
-		        return protocol
-		    }
 		}
 
+* 5、每个Protocol对象建议通过Factory产出，从而与Presenter进行解耦；
 
-> 例如：通过HttpFactory获取UserHttpProtocol的父级IUserHttp接口引用，而不是它的自身引用，从而避免直接操作接口约束之外的公共域：
+		object DaoFactory {
+		
+		    private val mDaoGroup = DaoFactoryGroup()
+		
+		    //TODO 在此处注册DAO接口
+		    @Suppress("UNCHECKED_CAST")
+		    private fun <T> getNewProtocol(clazz: Class<T>): T = when (clazz) {
+		        IUserDaoProtocol::class.java -> UserDaoProtocol
+		        else -> throw IllegalStateException("NotFound Dao Interface Object  : ${clazz.name}")
+		    } as T
+		
+		    @Suppress("UNCHECKED_CAST")
+		    fun <T : DaoInterface> getProtocol(clazz: Class<T>): T {
+		        return mDaoGroup.getProtocol(clazz) ?: registerNewProtocol(clazz)
+		    }
+		
+		    private fun <T : DaoInterface> registerNewProtocol(clazz: Class<T>): T {
+		        val protocol = getNewProtocol(clazz)
+		        mDaoGroup.register(clazz, protocol)
+		        return protocol
+		    }
+		
+		}
 
-	HttpFactory.getProtocol(IUserHttp::class.java).getUserInfoByName(userName)
+> 例如：通过DaoFactory获取UserDAOProtocol的父级IUserDaoProtocol接口引用，而不是它的自身引用，避免直接操作接口约束之外的公共域：
+
+	   DaoFactory.getProtocol(IUserDaoProtocol::class.java).saveUser(context, user)
 		
 
 
-* 6、一个View对应一个Presenter，View与Presenter交互通过Contract接口进行约束，一个Presenter通过Factory可操作多个Protocol，每个Protocol都是单例.
+* 6、一个View对应一个Presenter，View与Presenter交互通过Contract接口进行约束，一个Presenter对应多可Modle对象，这些Modle对象通过Factory产出（Protocol，每个Protocol都应该是可复用的）.
 
 
 ## 截图：

@@ -2,7 +2,9 @@ package com.ljb.mvp.kotlin.fragment.home
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.support.v4.content.ContextCompat.startActivity
 import com.ljb.mvp.kotlin.R
+import com.ljb.mvp.kotlin.R.id.*
 import com.ljb.mvp.kotlin.act.LoginActivity
 import com.ljb.mvp.kotlin.adapter.MyTabAdapter
 import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
@@ -23,7 +25,7 @@ import kotlinx.android.synthetic.main.fragment_my.*
  */
 class MyFragment : BaseMvpFragment<MyContract.IPresenter>(), MyContract.IView {
 
-    private val mTabArr by lazy {
+    private val mTabArr by  lazy {
         arrayOf(
                 MyTabFragmentBean(getString(R.string.events), EventsFragment()),
                 MyTabFragmentBean(getString(R.string.starred), StarredFragment()),

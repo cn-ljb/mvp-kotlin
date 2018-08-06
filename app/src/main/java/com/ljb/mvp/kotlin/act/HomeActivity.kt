@@ -9,7 +9,7 @@ import com.ljb.mvp.kotlin.domain.TabBean
 import com.ljb.mvp.kotlin.fragment.home.FollowingFragment
 import com.ljb.mvp.kotlin.fragment.home.MyFragment
 import com.ljb.mvp.kotlin.fragment.home.RepositoriesFragment
-import com.wuba.weizhang.adapter.MainTabAdapter
+import com.ljb.mvp.kotlin.adapter.MainTabAdapter
 import kotlinx.android.synthetic.main.activity_home.*
 
 /**

@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.ljb.mvp.kotlin.R
-import com.ljb.mvp.kotlin.adapter.StarredAdapter
+import com.ljb.mvp.kotlin.adapter.rv.StarredAdapter
 import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.StarredContract
 import com.ljb.mvp.kotlin.domain.Starred
@@ -27,12 +27,6 @@ class StarredFragment : BaseMvpFragment<StarredContract.IPresenter>(), StarredCo
     override fun getLayoutId() = R.layout.fragment_starred
 
     override fun registerPresenter() = StarredPresenter::class.java
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        initView()
-        initData()
-    }
 
     override fun initView() {
         page_layout.apply {

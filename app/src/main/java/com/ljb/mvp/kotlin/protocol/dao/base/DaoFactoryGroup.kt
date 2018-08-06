@@ -5,17 +5,17 @@ import java.util.*
 
 class DaoFactoryGroup {
 
-    private val map = WeakHashMap<Class<out DaoInterface>, BaseDaoProtocol>()
+    private val map = WeakHashMap<Class<out DaoInterface>, DaoInterface>()
 
-    fun register(key: Class<out DaoInterface>, value: BaseDaoProtocol) {
+    fun register(key: Class<out DaoInterface>, value: DaoInterface) {
         if (key.isAssignableFrom(value::class.java)) map[key] = value
-        else throw IllegalStateException("DAO interface register error ： value implements key ?")
+        else throw IllegalStateException("Dao interface register error ： value implements key ?")
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : DaoInterface> getProtocol(key: Class<T>): T {
-        val protocol = map[key] ?: throw IllegalStateException("DAO interface unregistered")
-        if (key.isAssignableFrom(protocol::class.java)) return protocol as T
-        else throw IllegalStateException("DAO interface register error ： value implements key ?")
+    fun <T : DaoInterface> getProtocol(key: Class<T>): T? {
+        val protocol = map[key]
+        return if (protocol == null) null
+        else protocol as T
     }
 }

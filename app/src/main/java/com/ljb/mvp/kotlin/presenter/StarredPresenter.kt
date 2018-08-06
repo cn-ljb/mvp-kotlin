@@ -32,7 +32,9 @@ class StarredPresenter : BaseRxLifePresenter<StarredContract.IView>(), StarredCo
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeEx(
-                        { getMvpView().showPage(it, page) },
+                        {
+                            getMvpView().showPage(it, page)
+                        },
                         { getMvpView().errorPage(it, page) }
                 ).bindRxLifeEx(RxLife.ON_DESTROY)
     }

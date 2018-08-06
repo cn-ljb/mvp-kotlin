@@ -1,6 +1,7 @@
 package net.ljb.kt.client
 
 import net.ljb.kt.WBHttpConfig
+import net.ljb.kt.interceptor.AddGlobalParamInterceptor
 import net.ljb.kt.utils.NetLog
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
@@ -44,14 +45,13 @@ object HttpClient {
     }
 
     private val mHttpClient by lazy {
-        val logInterceptor = HttpLoggingInterceptor {
-            NetLog.d(it)
-        }
+        val logInterceptor = HttpLoggingInterceptor { NetLog.d(it) }
         logInterceptor.level = HttpLoggingInterceptor.Level.BODY
         OkHttpClient.Builder()
                 .sslSocketFactory(createSSLSocketFactory())
                 .hostnameVerifier { _, _ -> true }
                 .addInterceptor(logInterceptor)
+                .addInterceptor(AddGlobalParamInterceptor())
                 .connectTimeout(DEFAULT_TIME_OUT, TimeUnit.MILLISECONDS)
                 .build()
     }

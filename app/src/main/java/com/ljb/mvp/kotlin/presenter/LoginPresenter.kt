@@ -4,7 +4,7 @@ import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.common.ex.subscribeEx
 import com.ljb.mvp.kotlin.contract.LoginContract
 import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
-import com.ljb.mvp.kotlin.protocol.dao.IUserDao
+import com.ljb.mvp.kotlin.protocol.dao.IUserDaoProtocol
 import com.ljb.mvp.kotlin.protocol.dao.base.DaoFactory
 import com.ljb.mvp.kotlin.protocol.http.IUserHttpProtocol
 import com.ljb.mvp.kotlin.utils.RxUtils
@@ -37,10 +37,10 @@ class LoginPresenter : BaseRxLifePresenter<LoginContract.IView>(), LoginContract
                 .getUserInfoByName(userName)
                 .map {
                     if (it.message.isNullOrBlank()) {
-                        if (DaoFactory.getProtocol(IUserDao::class.java).findUserByUserId(getContextEx(), it.id) == null) {
-                            DaoFactory.getProtocol(IUserDao::class.java).saveUser(getContextEx(), it)
+                        if (DaoFactory.getProtocol(IUserDaoProtocol::class.java).findUserByUserId(getContextEx(), it.id) == null) {
+                            DaoFactory.getProtocol(IUserDaoProtocol::class.java).saveUser(getContextEx(), it)
                         } else {
-                            DaoFactory.getProtocol(IUserDao::class.java).updateUser(getContextEx(), it)
+                            DaoFactory.getProtocol(IUserDaoProtocol::class.java).updateUser(getContextEx(), it)
                         }
                     }
                     it

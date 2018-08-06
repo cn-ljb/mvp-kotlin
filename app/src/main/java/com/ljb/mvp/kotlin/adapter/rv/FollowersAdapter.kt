@@ -1,4 +1,4 @@
-package com.ljb.mvp.kotlin.adapter
+package com.ljb.mvp.kotlin.adapter.rv
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.domain.Follower
 import com.ljb.mvp.kotlin.img.ImageLoader

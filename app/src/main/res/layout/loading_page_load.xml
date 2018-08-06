@@ -8,10 +8,11 @@
 
     <com.ljb.mvp.kotlin.widget.ProgressWheel
         android:id="@+id/view_load"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
         wheel:matProg_barColor="@color/colorBlue"
+        wheel:matProg_barWidth="3.5dp"
         wheel:matProg_progressIndeterminate="true" />
 
 </FrameLayout>

@@ -3,7 +3,7 @@ package com.ljb.mvp.kotlin.fragment.home
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.ljb.mvp.kotlin.R
-import com.ljb.mvp.kotlin.adapter.RepositoriesAdapter
+import com.ljb.mvp.kotlin.adapter.rv.RepositoriesAdapter
 import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.RepositoriesContract
 import com.ljb.mvp.kotlin.domain.Repository

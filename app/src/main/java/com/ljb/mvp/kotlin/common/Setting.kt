@@ -12,8 +12,8 @@ const val HTTP_API_DOMAIN = "https://api.github.com"
 val LOG_DEBUG = BuildConfig.DEBUG
 
 /** GitHub接口身份验证 */
-var GITHUB_CLIENT_ID = ""
-var GITHUB_CLIENT_SECRET = ""
+var GITHUB_CLIENT_ID = "c68ea892fdebf06c418b"
+var GITHUB_CLIENT_SECRET = "e2cf54c4dd27c702ca1d218ff87cbfc8fc6daccf"
 
 /** 用户登录信息 */
 class LoginUser {

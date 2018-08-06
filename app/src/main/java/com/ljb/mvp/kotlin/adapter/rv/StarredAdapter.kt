@@ -1,4 +1,4 @@
-package com.ljb.mvp.kotlin.adapter
+package com.ljb.mvp.kotlin.adapter.rv
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView

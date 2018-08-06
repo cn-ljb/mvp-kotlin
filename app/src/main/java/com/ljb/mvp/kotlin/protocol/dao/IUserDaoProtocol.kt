@@ -4,7 +4,7 @@ import android.content.Context
 import com.ljb.mvp.kotlin.domain.User
 import com.ljb.mvp.kotlin.protocol.dao.base.DaoInterface
 
-interface IUserDao : DaoInterface {
+interface IUserDaoProtocol : DaoInterface {
     /**
      * 保存用户信息
      * */
