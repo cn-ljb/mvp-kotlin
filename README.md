@@ -1,6 +1,6 @@
 # MVPKotlin
 
-该项目是使用Kotlin语言搭建的Android MVP架构实现案例。
+该项目是使用Kotlin语言搭建的Android MVP架构案例。
 
 ## 更新日志
 
