@@ -2,7 +2,6 @@ package com.ljb.mvp.kotlin.common
 
 import com.ljb.mvp.kotlin.BuildConfig
 import com.ljb.mvp.kotlin.utils.SPUtils
-import kt.utils.NetLog.LEVEL_ALL
 
 
 /** 服务器Host */

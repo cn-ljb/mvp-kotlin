@@ -6,7 +6,6 @@ import com.ljb.mvp.kotlin.common.GITHUB_CLIENT_SECRET
 import com.ljb.mvp.kotlin.common.HTTP_API_DOMAIN
 import com.ljb.mvp.kotlin.utils.SPUtils
 import com.squareup.leakcanary.LeakCanary
-import kt.HttpConfig
 import net.ljb.kt.HttpConfig
 
 /**

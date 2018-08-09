@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import net.ljb.kt.utils.NetLog
+import com.ljb.mvp.kotlin.R
 
 /**
  * Created by L on 2017/7/24.
@@ -54,7 +54,6 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
             }
 
         } else if (itemViewType == TYPE_LOAD_MORE) {
-            NetLog.i("TYPE_LOAD_MORE")
             loadMore()
         }
     }
