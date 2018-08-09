@@ -25,12 +25,12 @@ import javax.net.ssl.X509TrustManager
 object HttpClient {
 
     private const val DEFAULT_TIME_OUT = 1000L * 10
-    private const val DEFAULT_DOWN_TIME_OUT = 1000L * 60 * 5
+    private const val DEFAULT_DOWN_TIME_OUT = 1000L * 60 * 3
 
     private val mRetrofit by lazy {
         Retrofit.Builder()
                 .client(mHttpClient)
-                .baseUrl(HttpConfig.BASE_URL)
+                .baseUrl(HttpConfig.getBaseUrl())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
@@ -38,7 +38,7 @@ object HttpClient {
     private val mStrRetrofit by lazy {
         Retrofit.Builder()
                 .client(mHttpClient)
-                .baseUrl(HttpConfig.BASE_URL)
+                .baseUrl(HttpConfig.getBaseUrl())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(StringConverterFactory())
                 .build()
@@ -56,7 +56,7 @@ object HttpClient {
                 .build()
     }
 
-    private val mDownHttpClient by lazy {
+    private val mLongTimeHttpClient by lazy {
         OkHttpClient.Builder()
                 .sslSocketFactory(createSSLSocketFactory())
                 .hostnameVerifier { _, _ -> true }
@@ -88,7 +88,7 @@ object HttpClient {
 
     fun getHttpClient(): OkHttpClient = mHttpClient
 
-    fun getDownHttpClient() = mDownHttpClient
+    fun getDownHttpClient() = mLongTimeHttpClient
 
     /**
      * Retrofit
@@ -118,11 +118,9 @@ object HttpClient {
         if (HttpMethod.GET == method) {
             builder.url(initGetRequest(url, params ?: HashMap())).get()
         } else if (HttpMethod.POST == method) {
-            builder.url(url).post(initRequestBody(params
-                    ?: HashMap()))
+            builder.url(url).post(initRequestBody(params ?: HashMap()))
         } else if (HttpMethod.PUT == method) {
-            builder.url(url).put(initRequestBody(params
-                    ?: HashMap()))
+            builder.url(url).put(initRequestBody(params ?: HashMap()))
         } else if (HttpMethod.DELETE == method) {
             if (params == null || params.isEmpty()) {
                 builder.url(url).delete()
@@ -139,9 +137,7 @@ object HttpClient {
      * */
     private fun initRequestBody(params: Map<String, String>): RequestBody {
         val bodyBuilder = MultipartBody.Builder().setType(MultipartBody.FORM)
-        params.map {
-            bodyBuilder.addFormDataPart(it.key, it.value)
-        }
+        params.map { bodyBuilder.addFormDataPart(it.key, it.value) }
         return bodyBuilder.build()
     }
 

@@ -1,36 +1,42 @@
 package net.ljb.kt.interceptor
 
-import com.ljb.mvp.kotlin.common.GITHUB_CLIENT_ID
-import com.ljb.mvp.kotlin.common.GITHUB_CLIENT_SECRET
+import net.ljb.kt.HttpConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 
 /**
- * 添加公共参数
- * */
+ * Author:Ljb
+ * Time:2018/8/9
+ * There is a lot of misery in life
+ **/
 class AddGlobalParamInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
 
-        val paramMap = mapOf(
-                "client_id" to GITHUB_CLIENT_ID,
-                "client_secret" to GITHUB_CLIENT_SECRET
-        )
+        val paramMap = HttpConfig.getParam()
+        val headerMap = HttpConfig.getHeader()
         val oldRequest = chain.request()
-        // 添加新的参数
-        val authorizedUrlBuilder = oldRequest.url()
-                .newBuilder()
-                .scheme(oldRequest.url().scheme())
-                .host(oldRequest.url().host())
+        val newRequestBuilder = oldRequest.newBuilder()
 
-        paramMap.map {
-            authorizedUrlBuilder.addQueryParameter(it.key, it.value)
+        // 添加公共Header
+        if (headerMap != null && headerMap.isNotEmpty()) {
+            val newHeaderBuilder = oldRequest.headers().newBuilder()
+            headerMap.map { newHeaderBuilder.add(it.key, it.value) }
+            newRequestBuilder.headers(newHeaderBuilder.build())
+        }
+
+        // 添加公共的Param
+        if (paramMap != null && paramMap.isNotEmpty()) {
+            val newUrlBuilder = oldRequest.url().newBuilder()
+            newUrlBuilder.scheme(oldRequest.url().scheme())
+            newUrlBuilder.host(oldRequest.url().host())
+            paramMap.map { newUrlBuilder.addQueryParameter(it.key, it.value) }
+            newRequestBuilder.url(newUrlBuilder.build())
         }
 
         // 新的请求
-        val newRequest = oldRequest.newBuilder()
+        val newRequest = newRequestBuilder
                 .method(oldRequest.method(), oldRequest.body())
-                .url(authorizedUrlBuilder.build())
                 .build()
         return chain.proceed(newRequest)
     }

@@ -2,13 +2,13 @@ package net.ljb.kt.utils
 
 import android.util.Log
 import com.ljb.mvp.kotlin.common.LOG_DEBUG
+import net.ljb.kt.HttpConfig
 
 object NetLog {
 
-    val DEBUG = LOG_DEBUG
 
     /** 日志输出时的TAG  */
-    private const val mTag = "58che"
+    private const val mTag = "HttpLog"
 
     /** 日志输出级别All */
     const val LEVEL_ALL = 10
@@ -31,7 +31,7 @@ object NetLog {
     /** 日志输出级别E  */
     const val LEVEL_ERROR = 5
 
-    private val DEBUG_LEVEL = if (DEBUG) LEVEL_ALL else LEVEL_NONE
+    private val DEBUG_LEVEL = HttpConfig.getLogLv()
 
 
     /** 以级别为v 的形式输出LOG  */
