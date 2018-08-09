@@ -10,7 +10,7 @@ import com.ljb.mvp.kotlin.db.DatabaseProvider
 import com.ljb.mvp.kotlin.domain.User
 import com.ljb.mvp.kotlin.protocol.dao.IUserDaoProtocol
 import com.ljb.mvp.kotlin.protocol.dao.base.BaseDaoProtocol
-import net.ljb.kt.utils.NetLog
+import kt.utils.NetLog
 
 /**
  * Created by L on 2017/7/17.

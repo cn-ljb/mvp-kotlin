@@ -3,9 +3,9 @@ package com.ljb.mvp.kotlin.common.act
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
-import com.ljb.mvp.contract.IPresenterContract
+import mvp.ljb.kt.contract.IPresenterContract
 import com.ljb.mvp.kotlin.common.listener.FragmentOnBackListener
-import com.ljb.mvp.view.MvpFragmentActivity
+import mvp.ljb.kt.view.MvpFragmentActivity
 
 abstract class BaseMvpFragmentActivity<out P : IPresenterContract> : MvpFragmentActivity<P>() {
 

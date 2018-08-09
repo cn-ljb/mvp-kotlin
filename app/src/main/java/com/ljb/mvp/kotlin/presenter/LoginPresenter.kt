@@ -8,7 +8,7 @@ import com.ljb.mvp.kotlin.protocol.dao.IUserDaoProtocol
 import com.ljb.mvp.kotlin.protocol.dao.base.DaoFactory
 import com.ljb.mvp.kotlin.protocol.http.IUserHttpProtocol
 import com.ljb.mvp.kotlin.utils.RxUtils
-import com.ljb.mvp.presenter.getContextEx
+import mvp.ljb.kt.presenter.getContextEx
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

@@ -3,8 +3,8 @@ package com.ljb.mvp.kotlin.common.act
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
-import com.ljb.mvp.contract.IPresenterContract
-import com.ljb.mvp.view.MvpActivity
+import mvp.ljb.kt.contract.IPresenterContract
+import mvp.ljb.kt.view.MvpActivity
 
 abstract class BaseMvpActivity<out P : IPresenterContract> : MvpActivity<P>() {
 

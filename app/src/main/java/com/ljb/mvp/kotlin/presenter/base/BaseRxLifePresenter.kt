@@ -1,8 +1,8 @@
 package com.ljb.mvp.kotlin.presenter.base
 
-import com.ljb.mvp.contract.IPresenterContract
-import com.ljb.mvp.contract.IViewContract
-import com.ljb.mvp.presenter.IBasePresenter
+import mvp.ljb.kt.contract.IPresenterContract
+import mvp.ljb.kt.contract.IViewContract
+import mvp.ljb.kt.presenter.IBasePresenter
 import io.reactivex.disposables.Disposable
 import java.lang.ref.WeakReference
 import java.util.*

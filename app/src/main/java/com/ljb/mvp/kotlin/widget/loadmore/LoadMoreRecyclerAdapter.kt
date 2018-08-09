@@ -5,8 +5,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ljb.mvp.kotlin.R
-import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter.Companion.PAGE_DATA_SIZE
 import net.ljb.kt.utils.NetLog
 
 /**

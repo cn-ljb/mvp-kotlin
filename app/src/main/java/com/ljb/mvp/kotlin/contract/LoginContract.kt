@@ -1,7 +1,7 @@
 package com.ljb.mvp.kotlin.contract
 
-import com.ljb.mvp.contract.IPresenterContract
-import com.ljb.mvp.contract.IViewContract
+import mvp.ljb.kt.contract.IPresenterContract
+import mvp.ljb.kt.contract.IViewContract
 
 /**
  * 登录页View层\Presenter层通讯接口

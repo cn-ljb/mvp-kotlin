@@ -1,7 +1,7 @@
 package com.ljb.mvp.kotlin.contract
 
-import com.ljb.mvp.contract.IPresenterContract
-import com.ljb.mvp.contract.IViewContract
+import mvp.ljb.kt.contract.IPresenterContract
+import mvp.ljb.kt.contract.IViewContract
 import com.ljb.mvp.kotlin.domain.User
 
 /**
