@@ -140,15 +140,15 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 
 * 5、每个Protocol对象建议通过Factory产出（DaoProtocol需在DaoFactoryConfig中进行配置，HttpProtocol得益于Retrofit自身的实现，不需要我们手动关联工厂代码），从而与Presenter进行解耦；
 	
-	object DaoFactoryConfig {
-	
-	    //TODO  在此处配置DAO接口
-	    @Suppress("UNCHECKED_CAST")
-	    fun <T> configProtocol(clazz: Class<T>): T = when (clazz) {
-	        IUserDaoProtocol::class.java -> UserDaoProtocol()
-	        else -> throw IllegalStateException("NotFound Dao Interface Object  : ${clazz.name}")
-	    } as T
-	}
+		object DaoFactoryConfig {
+		
+		    //TODO  在此处配置DAO接口
+		    @Suppress("UNCHECKED_CAST")
+		    fun <T> configProtocol(clazz: Class<T>): T = when (clazz) {
+		        IUserDaoProtocol::class.java -> UserDaoProtocol()
+		        else -> throw IllegalStateException("NotFound Dao Interface Object  : ${clazz.name}")
+		    } as T
+		}
 
 > 例如：通过DaoFactory获取UserDAOProtocol的父级IUserDaoProtocol接口引用，而不是它的自身引用，避免直接操作接口约束之外的公共域：
 

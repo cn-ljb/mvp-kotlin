@@ -48,7 +48,6 @@ class LoginPresenter : BaseRxLifePresenter<LoginContract.IView>(), LoginContract
                 }).bindRxLifeEx(RxLife.ON_DESTROY)
     }
 
-
     private fun handlerUser(user: User): User {
         if (user.message.isNullOrBlank()) {
             LoginUser.name = user.login
