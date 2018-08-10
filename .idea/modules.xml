@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/MVPKotlin.iml" filepath="$PROJECT_DIR$/MVPKotlin.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mvp-kotlin.iml" filepath="$PROJECT_DIR$/mvp-kotlin.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvplib/mvplib.iml" filepath="$PROJECT_DIR$/mvplib/mvplib.iml" />
       <module fileurl="file://$PROJECT_DIR$/netlib/netlib.iml" filepath="$PROJECT_DIR$/netlib/netlib.iml" />
     </modules>
