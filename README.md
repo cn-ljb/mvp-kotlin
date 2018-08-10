@@ -19,7 +19,7 @@
 
 >**什么是MVP架构？**
 
-MVP架构的概念其实也不必我多说了，网上有大把大把的详解文章，这里就简单介绍下：
+简单介绍下：
 
 通常一般的Android项目结构，我们会在Activity\Fragment中编写大量代码，例如：网络请求、数据填充、页面切换等等，这种项目结构宏观的称之为MVC。
 
@@ -88,7 +88,7 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 		    }
 		｝
 
-* 3、View层与Presenter层的交互通过接口的形式规范行为进行解耦。例如上方的LoginActivity与LoginPresenter的交互范围都在LoginContract中进行限制；
+* 3、View层与Presenter层的交互通过接口进行解耦。例如上方的LoginActivity与LoginPresenter的交互都在LoginContract中进行限制；
 
 		/**
 		 * 登录页View层\Presenter层通讯契约接口
