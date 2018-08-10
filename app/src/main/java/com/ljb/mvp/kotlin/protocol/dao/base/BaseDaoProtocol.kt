@@ -14,5 +14,4 @@ abstract class BaseDaoProtocol {
             it.onComplete()
         }
     }
-
 }

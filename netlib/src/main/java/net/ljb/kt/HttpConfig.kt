@@ -12,7 +12,7 @@ object HttpConfig {
         setBaseUrl(baseUrl)
         headers?.apply { setHeader(this) }
         params?.apply { setParam(this) }
-
+        setLogEnable(isLog)
     }
 
     fun setBaseUrl(url: String) {
@@ -40,7 +40,7 @@ object HttpConfig {
     }
 
     fun setLogEnable(isLog: Boolean) {
-        HttpConfig.isLog = isLog
+        this.isLog = isLog
     }
 
     fun getLogLv(): Int {

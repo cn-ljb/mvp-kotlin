@@ -3,6 +3,7 @@ package com.ljb.mvp.kotlin.presenter
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.common.ex.subscribeEx
 import com.ljb.mvp.kotlin.contract.MyContract
+import com.ljb.mvp.kotlin.domain.User
 import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
 import com.ljb.mvp.kotlin.protocol.dao.IUserDaoProtocol
 import com.ljb.mvp.kotlin.protocol.dao.base.DaoFactory
@@ -22,11 +23,9 @@ class MyPresenter : BaseRxLifePresenter<MyContract.IView>(),
 
     override fun getUserInfo() {
         Observable.concat(
-                UserDaoProtocol.createObservable {
-                    DaoFactory.getProtocol(IUserDaoProtocol::class.java).findUserByName(getContextEx(), LoginUser.name)
-                },
+                DaoFactory.getProtocol(IUserDaoProtocol::class.java).findUserByName(getContextEx(), LoginUser.name),
                 HttpFactory.getProtocol(IUserHttpProtocol::class.java).getUserInfoByName(LoginUser.name)
-        ).filter { it != null }
+        ).filter { user: User? -> user != null }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeEx({ getMvpView().showUserInfo(it!!) })

@@ -2,6 +2,7 @@ package com.ljb.mvp.kotlin.common.ex
 
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
+import net.ljb.kt.utils.NetLog
 
 /**
  * 扩展方法：用于处理订阅事件发生时的公共代码
@@ -13,6 +14,7 @@ fun <T> Observable<T>.subscribeEx(onNext: (data: T) -> Unit = {}, onError: (e: T
     }, {
         //编写订阅失败的公共代码
         onError.invoke(it)
+        NetLog.e(it)
     }, {
         //编写订阅完成后的公共代码
         onComplete.invoke()

@@ -1,8 +1,10 @@
 package com.ljb.mvp.kotlin.presenter
 
+import android.os.Looper
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.common.ex.subscribeEx
 import com.ljb.mvp.kotlin.contract.LoginContract
+import com.ljb.mvp.kotlin.domain.User
 import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
 import com.ljb.mvp.kotlin.protocol.dao.IUserDaoProtocol
 import com.ljb.mvp.kotlin.protocol.dao.base.DaoFactory
@@ -33,29 +35,28 @@ class LoginPresenter : BaseRxLifePresenter<LoginContract.IView>(), LoginContract
 
     override fun login(userName: String) {
         RxUtils.dispose(mLoginDisposable)
-        mLoginDisposable = HttpFactory.getProtocol(IUserHttpProtocol::class.java)
-                .getUserInfoByName(userName)
-                .map {
-                    if (it.message.isNullOrBlank()) {
-                        if (DaoFactory.getProtocol(IUserDaoProtocol::class.java).findUserByUserId(getContextEx(), it.id) == null) {
-                            DaoFactory.getProtocol(IUserDaoProtocol::class.java).saveUser(getContextEx(), it)
-                        } else {
-                            DaoFactory.getProtocol(IUserDaoProtocol::class.java).updateUser(getContextEx(), it)
-                        }
-                    }
-                    it
-                }.subscribeOn(Schedulers.io())
+        mLoginDisposable = HttpFactory.getProtocol(IUserHttpProtocol::class.java).getUserInfoByName(userName)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeEx({
-                    if (it.message.isNullOrBlank()) {
-                        LoginUser.name = it.login
-                        getMvpView().loginSuccess()
-                    } else {
-                        getMvpView().loginError(it.message)
-                    }
-                }, {
-                    getMvpView().loginError(null)
+                .map { handlerUser(it) }
+                .filter { it.message.isNullOrBlank() }
+                .observeOn(Schedulers.io())
+                .flatMap { DaoFactory.getProtocol(IUserDaoProtocol::class.java).saveUser(getContextEx(), it) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeEx(onError = {
+                    getMvpView().loginError(it.message)
                 }).bindRxLifeEx(RxLife.ON_DESTROY)
+    }
+
+
+    private fun handlerUser(user: User): User {
+        if (user.message.isNullOrBlank()) {
+            LoginUser.name = user.login
+            getMvpView().loginSuccess()
+        } else {
+            getMvpView().loginError(user.message)
+        }
+        return user
     }
 
 }

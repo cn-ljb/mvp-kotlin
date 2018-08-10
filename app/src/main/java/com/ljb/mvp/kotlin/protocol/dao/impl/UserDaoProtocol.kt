@@ -14,10 +14,25 @@ import com.ljb.mvp.kotlin.protocol.dao.base.BaseDaoProtocol
 /**
  * Created by L on 2017/7/17.
  */
-object UserDaoProtocol : BaseDaoProtocol(), IUserDaoProtocol {
+class UserDaoProtocol : BaseDaoProtocol(), IUserDaoProtocol {
+
+    override fun saveUser(context: Context, user: User) = createObservable {
+        saveUserImpl(context, user)
+    }
+
+    private fun saveUserImpl(context: Context, user: User): Boolean =
+            if (findUserByUserIdImpl(context, user.id) == null) {
+                insertUserImpl(context, user)
+            } else {
+                updateUserImpl(context, user)
+            }
 
 
-    override fun saveUser(context: Context, user: User): Boolean {
+    override fun insertUser(context: Context, user: User) = createObservable {
+        insertUserImpl(context, user)
+    }
+
+    private fun insertUserImpl(context: Context, user: User): Boolean {
         var result = false
         val values = ContentValues()
         values.put(TABLE_USERS.COLUMN_LOGIN, user.login)
@@ -62,8 +77,12 @@ object UserDaoProtocol : BaseDaoProtocol(), IUserDaoProtocol {
     }
 
 
-    override fun updateUser(context: Context, user: User): Int {
-        var count = 0
+    override fun updateUser(context: Context, user: User) = createObservable {
+        updateUserImpl(context, user)
+    }
+
+    private fun updateUserImpl(context: Context, user: User): Boolean {
+        var result = false
         val values = ContentValues()
         values.put(TABLE_USERS.COLUMN_LOGIN, user.login)
         values.put(TABLE_USERS.COLUMN_USER_ID, user.id)
@@ -96,18 +115,24 @@ object UserDaoProtocol : BaseDaoProtocol(), IUserDaoProtocol {
         values.put(TABLE_USERS.COLUMN_CREATED_AT, user.created_at)
         values.put(TABLE_USERS.COLUMN_UPDATED_AT, user.updated_at)
         try {
-            count = context.contentResolver.update(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
+            val count = context.contentResolver.update(
+                    Uri.parse(DatabaseProvider.USER_CONTENT_URI),
                     values,
                     "${TABLE_USERS.COLUMN_USER_ID}=?",
                     arrayOf("${user.id}"))
+            result = count > 0
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        return count
+        return result
     }
 
-    override fun findUserByUserId(context: Context, userId: Long): User? {
-        val user: User? = null
+    override fun findUserByUserId(context: Context, userId: Long) = createObservable {
+        findUserByUserIdImpl(context, userId)
+    }
+
+    private fun findUserByUserIdImpl(context: Context, userId: Long): User? {
+        var user: User? = null
         var c: Cursor? = null
         try {
             c = context.contentResolver.query(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
@@ -146,7 +171,7 @@ object UserDaoProtocol : BaseDaoProtocol(), IUserDaoProtocol {
                 val following = c.getInt(c.getColumnIndex(TABLE_USERS.COLUMN_FOLLOWING))
                 val created_at = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_CREATED_AT))
                 val updated_at = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_UPDATED_AT))
-                return User(login, userID, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin == 1, name, company, blog, location, email, hireable, bio, public_repos, public_gists, followers, following, created_at, updated_at)
+                user = User(login, userID, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin == 1, name, company, blog, location, email, hireable, bio, public_repos, public_gists, followers, following, created_at, updated_at)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -156,7 +181,12 @@ object UserDaoProtocol : BaseDaoProtocol(), IUserDaoProtocol {
         return user
     }
 
-    override fun findUserByName(context: Context, userName: String): User? {
+    override fun findUserByName(context: Context, userName: String) = createObservable {
+        findUserByNameImpl(context, userName)
+    }
+
+    private fun findUserByNameImpl(context: Context, userName: String): User? {
+        var user: User? = null
         var c: Cursor? = null
         try {
             c = context.contentResolver.query(Uri.parse(DatabaseProvider.USER_CONTENT_URI),
@@ -195,14 +225,14 @@ object UserDaoProtocol : BaseDaoProtocol(), IUserDaoProtocol {
                 val following = c.getInt(c.getColumnIndex(TABLE_USERS.COLUMN_FOLLOWING))
                 val created_at = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_CREATED_AT))
                 val updated_at = c.getString(c.getColumnIndex(TABLE_USERS.COLUMN_UPDATED_AT))
-                return User(login, userID, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin == 1, name, company, blog, location, email, hireable, bio, public_repos, public_gists, followers, following, created_at, updated_at)
+                user = User(login, userID, avatar_url, gravatar_id, url, html_url, followers_url, following_url, gists_url, starred_url, subscriptions_url, organizations_url, repos_url, events_url, received_events_url, type, site_admin == 1, name, company, blog, location, email, hireable, bio, public_repos, public_gists, followers, following, created_at, updated_at)
             }
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
             c?.close()
         }
-        return null
+        return user
     }
 
 }

@@ -4,6 +4,8 @@
 
 ## 更新日志
 
+* [20180810更新日志](./updatelog/20180810UpdateLog.md "20180810更新日志")
+
 * [20180809更新日志](./updatelog/20180809UpdateLog.md "20180809更新日志")
 
 * [20180806更新日志](./updatelog/20180806UpdateLog.md "20180806更新日志")
@@ -106,26 +108,20 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 		}
 
 
-* 4、Modle层封装Protocol，用于包装数据源并提供转换为Observable的函数，从而方便与Rxjava2结合使用（项目中提供两个基础的BaseDAOProtocol、BaseHttpProtocol，也可自行定义适合自己的数据源封装类），并实现自身向Presenter公开的约束接口；
+* 4、Modle层封装Protocol，用于包装数据源并提供转换为Observable的函数，方便与Rxjava2结合使用（项目中DaoProtocol通过继承BaseDAOProtocol实现，HttpProtocol通过Retrofit实现，这块可以根据自己实际情况封装），并实现自身向Presenter公开的约束接口；
 
-		object UserDaoProtocol : BaseDaoProtocol(), IUserDaoProtocol {
+		class UserDaoProtocol : BaseDaoProtocol(), IUserDaoProtocol {
 		
-		
-		    override fun saveUser(context: Context, user: User): Boolean {
-		        var result = false
-		        val values = ContentValues()
-		        values.put(TABLE_USERS.COLUMN_LOGIN, user.login)
-		        ...
-		        try {
-		            val uri = context.contentResolver.insert(Uri.parse(DatabaseProvider.USER_CONTENT_URI), values)
-		            if (uri != null && ContentUris.parseId(uri) > 0) {
-		                result = true
-		            }
-		        } catch (e: Exception) {
-		            NetLog.e(e)
-		        }
-		        return result
+		    override fun saveUser(context: Context, user: User) = createObservable {
+		        saveUserImpl(context, user)
 		    }
+		
+		    private fun saveUserImpl(context: Context, user: User): Boolean =
+		            if (findUserByUserIdImpl(context, user.id) == null) {
+		                insertUserImpl(context, user)
+		            } else {
+		                updateUserImpl(context, user)
+		            }
 			
 			...
 		｝
@@ -137,44 +133,34 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 		    /**
 		     * 保存用户信息
 		     * */
-		    fun saveUser(context: Context, user: User): Boolean
+		    fun saveUser(context: Context, user: User): Observable<Boolean>
 
 			...
 		}
 
-* 5、每个Protocol对象建议通过Factory产出，从而与Presenter进行解耦；
-
-		object DaoFactory {
-		
-		    private val mDaoGroup = DaoFactoryGroup()
-		
-		    //TODO 在此处注册DAO接口
-		    @Suppress("UNCHECKED_CAST")
-		    private fun <T> getNewProtocol(clazz: Class<T>): T = when (clazz) {
-		        IUserDaoProtocol::class.java -> UserDaoProtocol
-		        else -> throw IllegalStateException("NotFound Dao Interface Object  : ${clazz.name}")
-		    } as T
-		
-		    @Suppress("UNCHECKED_CAST")
-		    fun <T : DaoInterface> getProtocol(clazz: Class<T>): T {
-		        return mDaoGroup.getProtocol(clazz) ?: registerNewProtocol(clazz)
-		    }
-		
-		    private fun <T : DaoInterface> registerNewProtocol(clazz: Class<T>): T {
-		        val protocol = getNewProtocol(clazz)
-		        mDaoGroup.register(clazz, protocol)
-		        return protocol
-		    }
-		
-		}
+* 5、每个Protocol对象建议通过Factory产出（DaoProtocol需在DaoFactoryConfig中进行配置，HttpProtocol得益于Retrofit自身的实现，不需要我们手动关联工厂代码），从而与Presenter进行解耦；
+	
+	object DaoFactoryConfig {
+	
+	    //TODO  在此处配置DAO接口
+	    @Suppress("UNCHECKED_CAST")
+	    fun <T> configProtocol(clazz: Class<T>): T = when (clazz) {
+	        IUserDaoProtocol::class.java -> UserDaoProtocol()
+	        else -> throw IllegalStateException("NotFound Dao Interface Object  : ${clazz.name}")
+	    } as T
+	}
 
 > 例如：通过DaoFactory获取UserDAOProtocol的父级IUserDaoProtocol接口引用，而不是它的自身引用，避免直接操作接口约束之外的公共域：
 
-	   DaoFactory.getProtocol(IUserDaoProtocol::class.java).saveUser(context, user)
+    DaoFactory.getProtocol(IUserDaoProtocol::class.java).saveUser(context, user)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe()
+
 		
 
 
-* 6、一个View对应一个Presenter，View与Presenter交互通过Contract接口进行约束，一个Presenter对应多可Modle对象，这些Modle对象通过Factory产出（Protocol，每个Protocol都应该是可复用的）.
+* 6、一个View对应一个Presenter，View与Presenter交互通过Contract接口进行约束，一个Presenter可对应多个Modle对象，这些Modle对象通过Factory产出（Protocol，每个Protocol都应该是可复用，且内存安全的）.
 
 
 ## 截图：

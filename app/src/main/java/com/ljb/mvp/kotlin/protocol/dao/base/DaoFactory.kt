@@ -1,19 +1,13 @@
 package com.ljb.mvp.kotlin.protocol.dao.base
 
-import com.ljb.mvp.kotlin.protocol.dao.IUserDaoProtocol
-import com.ljb.mvp.kotlin.protocol.dao.impl.UserDaoProtocol
+import com.ljb.mvp.kotlin.protocol.dao.DaoFactoryConfig
 
 
 object DaoFactory {
 
     private val mDaoGroup = DaoFactoryGroup()
 
-    //TODO 在此处注册DAO接口
-    @Suppress("UNCHECKED_CAST")
-    private fun <T> getNewProtocol(clazz: Class<T>): T = when (clazz) {
-        IUserDaoProtocol::class.java -> UserDaoProtocol
-        else -> throw IllegalStateException("NotFound Dao Interface Object  : ${clazz.name}")
-    } as T
+    private fun <T> getNewProtocol(clazz: Class<T>): T = DaoFactoryConfig.configProtocol(clazz)
 
     @Suppress("UNCHECKED_CAST")
     fun <T : DaoInterface> getProtocol(clazz: Class<T>): T {

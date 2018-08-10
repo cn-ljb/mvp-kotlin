@@ -9,6 +9,12 @@ import java.util.*
 
 abstract class BaseRxLifePresenter<out V : IViewContract> : IBasePresenter<V>, IPresenterContract {
 
+    enum class RxLife {
+        ON_CREATE, ON_START, ON_RESUME, ON_PAUSE, ON_STOP, ON_DESTROY
+    }
+
+    private val mRxLifeMap = WeakHashMap<RxLife, ArrayList<WeakReference<Disposable>>>()
+
     private var mMVPView: V? = null
 
     @Suppress("UNCHECKED_CAST")
@@ -17,12 +23,6 @@ abstract class BaseRxLifePresenter<out V : IViewContract> : IBasePresenter<V>, I
     }
 
     override fun getMvpView() = mMVPView!!
-
-    enum class RxLife {
-        ON_CREATE, ON_START, ON_RESUME, ON_PAUSE, ON_STOP, ON_DESTROY
-    }
-
-    private val mRxLifeMap = WeakHashMap<RxLife, ArrayList<WeakReference<Disposable>>>()
 
     override fun onCreate() {
         destroyRxLife(RxLife.ON_CREATE)
