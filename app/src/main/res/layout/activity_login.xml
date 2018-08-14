@@ -10,7 +10,7 @@
         android:layout_height="267dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:src="@drawable/logo_github" />
+        android:src="@drawable/icon_logo_github" />
 
     <TextView
         android:layout_width="wrap_content"

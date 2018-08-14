@@ -8,10 +8,11 @@
     <application
         android:name=".KotlinMVPApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon_app"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".act.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,15 +20,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".act.HomeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".act.WebActivity"
             android:screenOrientation="portrait" />
 
         <provider
             android:name=".db.DatabaseProvider"
             android:authorities="com.ljb.mvp.kotlin.provider"
             android:exported="false" />
-
 
     </application>
 

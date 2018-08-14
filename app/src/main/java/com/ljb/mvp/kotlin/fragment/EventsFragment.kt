@@ -8,7 +8,6 @@ import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.EventsContract
 import com.ljb.mvp.kotlin.domain.Event
 import com.ljb.mvp.kotlin.presenter.EventPresenter
-import com.ljb.mvp.kotlin.widget.PageStateLayout
 import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_events.*
@@ -18,7 +17,6 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
  * Created by L on 2017/7/19.
  */
 class EventsFragment : BaseMvpFragment<EventsContract.IPresenter>(), EventsContract.IView,
-        PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 
     private val mAdapter by lazy { EventAdapter(activity!!, mutableListOf()) }
@@ -30,7 +28,7 @@ class EventsFragment : BaseMvpFragment<EventsContract.IPresenter>(), EventsContr
     override fun initView() {
         page_layout.apply {
             setContentView(View.inflate(activity, R.layout.layout_recycler_view, null))
-            addCallBack(this@EventsFragment)
+            setOnPageErrorClickListener { onReload() }
         }
         recycler_view.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -47,7 +45,7 @@ class EventsFragment : BaseMvpFragment<EventsContract.IPresenter>(), EventsContr
         getPresenter().onLoadMore()
     }
 
-    override fun onErrorClick() {
+    private fun onReload() {
         page_layout.setPage(PageState.STATE_LOADING)
         getPresenter().onRefresh()
     }

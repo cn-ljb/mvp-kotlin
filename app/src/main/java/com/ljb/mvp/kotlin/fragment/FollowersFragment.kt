@@ -3,13 +3,13 @@ package com.ljb.mvp.kotlin.fragment
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.ljb.mvp.kotlin.R
+import com.ljb.mvp.kotlin.act.WebActivity
 import com.ljb.mvp.kotlin.adapter.rv.FollowersAdapter
 import com.ljb.mvp.kotlin.adapter.rv.FollowersDecoration
 import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.FollowersContract
 import com.ljb.mvp.kotlin.domain.Follower
 import com.ljb.mvp.kotlin.presenter.FollowersPresenter
-import com.ljb.mvp.kotlin.widget.PageStateLayout
 import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_followers.*
@@ -19,8 +19,7 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
  * Created by L on 2017/7/19.
  */
 class FollowersFragment : BaseMvpFragment<FollowersContract.IPresenter>(), FollowersContract.IView,
-        PageStateLayout.PageStateCallBack,
-        LoadMoreRecyclerAdapter.LoadMoreListener {
+        LoadMoreRecyclerAdapter.LoadMoreListener, LoadMoreRecyclerAdapter.OnItemClickListener {
 
     private val mAdapter by lazy { FollowersAdapter(activity!!, mutableListOf()) }
 
@@ -31,13 +30,14 @@ class FollowersFragment : BaseMvpFragment<FollowersContract.IPresenter>(), Follo
     override fun initView() {
         page_layout.apply {
             setContentView(View.inflate(activity, R.layout.layout_recycler_view, null))
-            addCallBack(this@FollowersFragment)
+            setOnPageErrorClickListener { onReload() }
         }
         recycler_view.apply {
             layoutManager = GridLayoutManager(context, 3)
             addItemDecoration(FollowersDecoration())
             adapter = mAdapter
             mAdapter.setOnLoadMoreListener(this@FollowersFragment)
+            mAdapter.setOnItemClickListener(this@FollowersFragment)
         }
     }
 
@@ -49,7 +49,7 @@ class FollowersFragment : BaseMvpFragment<FollowersContract.IPresenter>(), Follo
         getPresenter().onLoadMore()
     }
 
-    override fun onErrorClick() {
+    private fun onReload() {
         page_layout.setPage(PageState.STATE_LOADING)
         getPresenter().onRefresh()
     }
@@ -82,5 +82,10 @@ class FollowersFragment : BaseMvpFragment<FollowersContract.IPresenter>(), Follo
         } else {
             mAdapter.onError()
         }
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        val itemData = mAdapter.mData[position]
+        WebActivity.startActivity(activity!!, itemData.html_url)
     }
 }

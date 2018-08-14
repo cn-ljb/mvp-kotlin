@@ -1,6 +1,5 @@
 package com.ljb.mvp.kotlin.presenter
 
-import android.os.Looper
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.common.ex.subscribeEx
 import com.ljb.mvp.kotlin.contract.LoginContract
@@ -10,11 +9,11 @@ import com.ljb.mvp.kotlin.protocol.dao.IUserDaoProtocol
 import com.ljb.mvp.kotlin.protocol.dao.base.DaoFactory
 import com.ljb.mvp.kotlin.protocol.http.IUserHttpProtocol
 import com.ljb.mvp.kotlin.utils.RxUtils
-import mvp.ljb.kt.presenter.getContextEx
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import mvp.ljb.kt.presenter.getContextEx
 import net.ljb.kt.client.HttpFactory
 import java.util.concurrent.TimeUnit
 

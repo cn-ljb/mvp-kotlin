@@ -3,13 +3,13 @@ package com.ljb.mvp.kotlin.fragment.home
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.ljb.mvp.kotlin.R
+import com.ljb.mvp.kotlin.act.WebActivity
 import com.ljb.mvp.kotlin.adapter.rv.FollowersDecoration
 import com.ljb.mvp.kotlin.adapter.rv.FollowingAdapter
 import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.FollowingContract
 import com.ljb.mvp.kotlin.domain.Following
 import com.ljb.mvp.kotlin.presenter.FollowingPresenter
-import com.ljb.mvp.kotlin.widget.PageStateLayout
 import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_following.*
@@ -19,8 +19,7 @@ import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
  * Created by L on 2017/7/18.
  */
 class FollowingFragment : BaseMvpFragment<FollowingContract.IPresenter>(), FollowingContract.IView,
-        PageStateLayout.PageStateCallBack,
-        LoadMoreRecyclerAdapter.LoadMoreListener {
+        LoadMoreRecyclerAdapter.LoadMoreListener, LoadMoreRecyclerAdapter.OnItemClickListener {
 
     private val mAdapter by lazy { FollowingAdapter(activity!!, mutableListOf()) }
 
@@ -31,7 +30,7 @@ class FollowingFragment : BaseMvpFragment<FollowingContract.IPresenter>(), Follo
     override fun initView() {
         page_layout.apply {
             setContentView(View.inflate(activity, R.layout.layout_refresh_recycler_view, null))
-            addCallBack(this@FollowingFragment)
+            setOnPageErrorClickListener { onReload() }
         }
         refresh_layout.apply {
             setColorSchemeResources(R.color.colorBlue)
@@ -42,6 +41,7 @@ class FollowingFragment : BaseMvpFragment<FollowingContract.IPresenter>(), Follo
             addItemDecoration(FollowersDecoration())
             adapter = mAdapter
             mAdapter.setOnLoadMoreListener(this@FollowingFragment)
+            mAdapter.setOnItemClickListener(this@FollowingFragment)
         }
     }
 
@@ -53,7 +53,7 @@ class FollowingFragment : BaseMvpFragment<FollowingContract.IPresenter>(), Follo
         getPresenter().onLoadMore()
     }
 
-    override fun onErrorClick() {
+    private fun onReload() {
         page_layout.setPage(PageState.STATE_LOADING)
         getPresenter().onRefresh()
     }
@@ -65,6 +65,7 @@ class FollowingFragment : BaseMvpFragment<FollowingContract.IPresenter>(), Follo
                 page_layout.setPage(PageState.STATE_EMPTY)
             } else {
                 page_layout.setPage(PageState.STATE_SUCCEED)
+                mAdapter.apply { }
                 mAdapter.mData.clear()
                 mAdapter.mData.addAll(data)
                 mAdapter.initLoadStatusForSize(data)
@@ -88,5 +89,11 @@ class FollowingFragment : BaseMvpFragment<FollowingContract.IPresenter>(), Follo
             mAdapter.onError()
         }
     }
+
+    override fun onItemClick(view: View, position: Int) {
+        val itemData = mAdapter.mData[position]
+        WebActivity.startActivity(activity!!, itemData.html_url)
+    }
+
 
 }

@@ -3,8 +3,8 @@ package com.ljb.mvp.kotlin.db
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.ljb.mvp.kotlin.common.Constant.DBProvider.Companion.DATABASE_NAME
-import com.ljb.mvp.kotlin.common.Constant.DBProvider.Companion.DATABASE_VERSION
+import com.ljb.mvp.kotlin.common.Constant.DBProvider.DATABASE_NAME
+import com.ljb.mvp.kotlin.common.Constant.DBProvider.DATABASE_VERSION
 
 /**
  * 数据库

@@ -8,7 +8,6 @@ import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.RepositoriesContract
 import com.ljb.mvp.kotlin.domain.Repository
 import com.ljb.mvp.kotlin.presenter.RepositoriesPresenter
-import com.ljb.mvp.kotlin.widget.PageStateLayout
 import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import kotlinx.android.synthetic.main.fragment_repos.*
@@ -19,7 +18,6 @@ import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
  * Created by L on 2017/7/18.
  */
 class RepositoriesFragment : BaseMvpFragment<RepositoriesContract.IPresenter>(), RepositoriesContract.IView,
-        PageStateLayout.PageStateCallBack,
         LoadMoreRecyclerAdapter.LoadMoreListener {
 
     private val mAdapter by lazy { RepositoriesAdapter(activity!!, mutableListOf()) }
@@ -31,7 +29,7 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesContract.IPresenter>(),
     override fun initView() {
         page_layout.apply {
             setContentView(View.inflate(activity, R.layout.layout_refresh_recycler_view, null))
-            addCallBack(this@RepositoriesFragment)
+            setOnPageErrorClickListener { onReload() }
         }
         refresh_layout.apply {
             setColorSchemeResources(R.color.colorBlue)
@@ -52,7 +50,7 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesContract.IPresenter>(),
         getPresenter().onLoadMore()
     }
 
-    override fun onErrorClick() {
+    private fun onReload() {
         page_layout.setPage(PageState.STATE_LOADING)
         getPresenter().onRefresh()
     }
