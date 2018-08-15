@@ -3,6 +3,7 @@ package com.ljb.mvp.kotlin.fragment.home
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.ljb.mvp.kotlin.R
+import com.ljb.mvp.kotlin.act.WebActivity
 import com.ljb.mvp.kotlin.adapter.rv.RepositoriesAdapter
 import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.RepositoriesContract
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
  * Created by L on 2017/7/18.
  */
 class RepositoriesFragment : BaseMvpFragment<RepositoriesContract.IPresenter>(), RepositoriesContract.IView,
-        LoadMoreRecyclerAdapter.LoadMoreListener {
+        LoadMoreRecyclerAdapter.LoadMoreListener, LoadMoreRecyclerAdapter.OnItemClickListener {
 
     private val mAdapter by lazy { RepositoriesAdapter(activity!!, mutableListOf()) }
 
@@ -39,6 +40,7 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesContract.IPresenter>(),
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = mAdapter
             mAdapter.setOnLoadMoreListener(this@RepositoriesFragment)
+            mAdapter.setOnItemClickListener(this@RepositoriesFragment)
         }
     }
 
@@ -69,7 +71,7 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesContract.IPresenter>(),
             }
         } else {
             if (data.isEmpty()) {
-                mAdapter.onNotMore()
+                mAdapter.onNoMore()
             } else {
                 mAdapter.mData.addAll(data)
                 mAdapter.initLoadStatusForSize(data)
@@ -84,6 +86,11 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesContract.IPresenter>(),
         } else {
             mAdapter.onError()
         }
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        val itemData = mAdapter.mData[position]
+        WebActivity.startActivity(activity!!, itemData.html_url)
     }
 
 }

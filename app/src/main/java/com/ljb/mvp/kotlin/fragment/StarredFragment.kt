@@ -3,6 +3,7 @@ package com.ljb.mvp.kotlin.fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.ljb.mvp.kotlin.R
+import com.ljb.mvp.kotlin.act.WebActivity
 import com.ljb.mvp.kotlin.adapter.rv.StarredAdapter
 import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.StarredContract
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.layout_recycler_view.*
  * Created by L on 2017/7/19.
  */
 class StarredFragment : BaseMvpFragment<StarredContract.IPresenter>(), StarredContract.IView,
-        LoadMoreRecyclerAdapter.LoadMoreListener {
+        LoadMoreRecyclerAdapter.LoadMoreListener, LoadMoreRecyclerAdapter.OnItemClickListener {
 
     private val mAdapter: StarredAdapter by lazy { StarredAdapter(activity!!, mutableListOf()) }
 
@@ -34,6 +35,7 @@ class StarredFragment : BaseMvpFragment<StarredContract.IPresenter>(), StarredCo
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = mAdapter
             mAdapter.setOnLoadMoreListener(this@StarredFragment)
+            mAdapter.setOnItemClickListener(this@StarredFragment)
         }
     }
 
@@ -63,7 +65,7 @@ class StarredFragment : BaseMvpFragment<StarredContract.IPresenter>(), StarredCo
             }
         } else {
             if (data.isEmpty()) {
-                mAdapter.onNotMore()
+                mAdapter.onNoMore()
             } else {
                 mAdapter.mData.addAll(data)
                 mAdapter.initLoadStatusForSize(data)
@@ -78,5 +80,10 @@ class StarredFragment : BaseMvpFragment<StarredContract.IPresenter>(), StarredCo
         } else {
             mAdapter.onError()
         }
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        val itemData = mAdapter.mData[position]
+        WebActivity.startActivity(activity!!, itemData.html_url)
     }
 }

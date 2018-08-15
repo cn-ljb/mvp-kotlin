@@ -72,25 +72,25 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
 
     fun onError() {
         isLoading = false
-        mLoadMoreHolder?.setStatus(LoadMoreHolder.LoadMoreType.error)
+        mLoadMoreHolder?.setStatus(LoadMoreHolder.LoadMoreType.Error)
     }
 
 
     fun initLoadStatusForSize(data: List<T>) {
         if (data.size < PAGE_DATA_SIZE) {
-            setLoadMoreStatus(LoadMoreHolder.LoadMoreType.notMore)
+            setLoadMoreStatus(LoadMoreHolder.LoadMoreType.NoMore)
         } else {
-            setLoadMoreStatus(LoadMoreHolder.LoadMoreType.loading)
+            setLoadMoreStatus(LoadMoreHolder.LoadMoreType.LoadMore)
         }
     }
 
-    fun setLoadMoreStatus(status: LoadMoreHolder.LoadMoreType) {
+    private fun setLoadMoreStatus(status: LoadMoreHolder.LoadMoreType) {
         isLoading = false
         mLoadMoreHolder?.setStatus(status)
     }
 
-    fun onNotMore() {
-        setLoadMoreStatus(LoadMoreHolder.LoadMoreType.notMore)
+    fun onNoMore() {
+        setLoadMoreStatus(LoadMoreHolder.LoadMoreType.NoMore)
     }
 
 
@@ -99,7 +99,7 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
      *  2、点击重新加载时触发
      * */
     fun loadMore() {
-        if (!isLoading && mLoadMoreListener != null && mLoadMoreHolder!!.getType() == LoadMoreHolder.LoadMoreType.loading) {
+        if (!isLoading && mLoadMoreListener != null && mLoadMoreHolder!!.getType() == LoadMoreHolder.LoadMoreType.LoadMore) {
             isLoading = true
             mLoadMoreListener!!.onLoadMore()
         }

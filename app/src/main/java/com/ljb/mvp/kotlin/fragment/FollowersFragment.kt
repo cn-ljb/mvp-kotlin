@@ -67,7 +67,7 @@ class FollowersFragment : BaseMvpFragment<FollowersContract.IPresenter>(), Follo
             }
         } else {
             if (data.isEmpty()) {
-                mAdapter.onNotMore()
+                mAdapter.onNoMore()
             } else {
                 mAdapter.mData.addAll(data)
                 mAdapter.initLoadStatusForSize(data)

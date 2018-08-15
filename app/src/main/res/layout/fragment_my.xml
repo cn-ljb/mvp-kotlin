@@ -14,6 +14,7 @@
         android:background="@drawable/bg_my_header">
 
         <RelativeLayout
+            android:minHeight="0dp"
             android:id="@+id/rl_header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

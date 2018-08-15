@@ -10,13 +10,13 @@ import com.ljb.mvp.kotlin.R
  */
 class LoadMoreHolder(view: View, private val mAdapter: LoadMoreRecyclerAdapter<*>) : RecyclerView.ViewHolder(view) {
 
-    private var mCurType: LoadMoreType = LoadMoreType.loading
+    private var mCurType: LoadMoreType = LoadMoreType.LoadMore
     private var rl_more_loading: RelativeLayout? = null
     private var rl_more_error: RelativeLayout? = null
     private var rl_more_not: RelativeLayout? = null
 
     enum class LoadMoreType {
-        loading, error, notMore
+        LoadMore, Error, NoMore
     }
 
     init {
@@ -32,14 +32,14 @@ class LoadMoreHolder(view: View, private val mAdapter: LoadMoreRecyclerAdapter<*
     }
 
     private fun initStatus() {
-        rl_more_loading!!.visibility = if (mCurType == LoadMoreType.loading) View.VISIBLE else View.GONE
-        rl_more_error!!.visibility = if (mCurType == LoadMoreType.error) View.VISIBLE else View.GONE
-        rl_more_not!!.visibility = if (mCurType == LoadMoreType.notMore) View.VISIBLE else View.GONE
+        rl_more_loading!!.visibility = if (mCurType == LoadMoreType.LoadMore) View.VISIBLE else View.GONE
+        rl_more_error!!.visibility = if (mCurType == LoadMoreType.Error) View.VISIBLE else View.GONE
+        rl_more_not!!.visibility = if (mCurType == LoadMoreType.NoMore) View.VISIBLE else View.GONE
     }
 
     private fun reLoadMore() {
-        if (mCurType == LoadMoreType.error) {
-            mCurType = LoadMoreType.loading
+        if (mCurType == LoadMoreType.Error) {
+            mCurType = LoadMoreType.LoadMore
             initStatus()
             mAdapter.loadMore()
         }
