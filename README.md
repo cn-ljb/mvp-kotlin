@@ -48,7 +48,7 @@ MVP：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fra
 		 */
 		class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract.IView {
 		
-		    override fun createPresenter() = LoginPresenter(this)
+		     override fun registerPresenter() = LoginPresenter::class.java
 			...
 		｝	
 
