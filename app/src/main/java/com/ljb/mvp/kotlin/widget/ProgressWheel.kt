@@ -130,8 +130,7 @@ class ProgressWheel : View {
      */
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
 
-        parseAttributes(context.obtainStyledAttributes(attrs,
-                R.styleable.ProgressWheel))
+        parseAttributes(context.obtainStyledAttributes(attrs, R.styleable.ProgressWheel))
     }
 
     /**
