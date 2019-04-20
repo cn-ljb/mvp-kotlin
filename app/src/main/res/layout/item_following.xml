@@ -24,7 +24,7 @@
         android:layout_below="@id/iv_avatar"
         android:layout_centerHorizontal="true"
         android:text="cn-ljb"
-        android:textColor="@color/color333"
+        android:textColor="@color/color_333"
         android:textSize="16sp" />
 
 

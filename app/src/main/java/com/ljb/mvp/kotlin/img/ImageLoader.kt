@@ -14,7 +14,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.ljb.mvp.kotlin.R
-import jp.wasabeef.glide.transformations.CropCircleTransformation
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 object ImageLoader {
@@ -25,7 +24,7 @@ object ImageLoader {
             .error(R.color.bg_page)
 
     private val mCircleRequestOptions = RequestOptions
-            .bitmapTransform(CropCircleTransformation())
+            .circleCropTransform()
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .placeholder(R.color.bg_page)
             .error(R.color.bg_page)

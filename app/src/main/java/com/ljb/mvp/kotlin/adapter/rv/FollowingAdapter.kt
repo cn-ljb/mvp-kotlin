@@ -10,7 +10,6 @@ import android.widget.TextView
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.domain.Following
 import com.ljb.mvp.kotlin.img.ImageLoader
-import com.ljb.mvp.kotlin.widget.findViewByIdEx
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
@@ -31,9 +30,8 @@ class FollowingAdapter(mContext: Context, mData: MutableList<Following>) : LoadM
         }
     }
 
-
     class FollowingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tv_following_name by lazy { itemView.findViewByIdEx<TextView>(R.id.tv_following_name) }
-        val iv_avatar by lazy { itemView.findViewByIdEx<ImageView>(R.id.iv_avatar) }
+        val tv_following_name by lazy { itemView.findViewById<TextView>(R.id.tv_following_name) }
+        val iv_avatar by lazy { itemView.findViewById<ImageView>(R.id.iv_avatar) }
     }
 }

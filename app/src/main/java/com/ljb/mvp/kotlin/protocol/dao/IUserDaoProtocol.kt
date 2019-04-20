@@ -2,32 +2,24 @@ package com.ljb.mvp.kotlin.protocol.dao
 
 import android.content.Context
 import com.ljb.mvp.kotlin.domain.User
-import com.ljb.mvp.kotlin.protocol.dao.base.DaoInterface
+import com.ljb.mvp.kotlin.table.UserTable
+import dao.ljb.kt.core.IDaoInterface
 import io.reactivex.Observable
 
-interface IUserDaoProtocol : DaoInterface {
-    /**
-     * 插入新用户信息
-     * */
-    fun insertUser(context: Context, user: User): Observable<Boolean>
+/**
+ * Author:Ljb
+ * Time:2019/4/20
+ * There is a lot of misery in life
+ **/
 
-    /**
-     * 更新用户信息
-     * */
-    fun updateUser(context: Context, user: User): Observable<Boolean>
-
+interface IUserDaoProtocol : IDaoInterface {
     /**
      * 通过用户id查询用户信息
      * */
-    fun findUserByUserId(context: Context, userId: Long): Observable<User?>
-
-    /**
-     * 通过用户名查询用户信息
-     * */
-    fun findUserByName(context: Context, userName: String): Observable<User?>
+    fun queryUserByUserId(table: UserTable, userId: String): Observable<User>
 
     /**
      * 保存用户
      * */
-    fun saveUser(context: Context, user: User): Observable<Boolean>
+    fun saveUser(table: UserTable, user: User): Observable<Boolean>
 }

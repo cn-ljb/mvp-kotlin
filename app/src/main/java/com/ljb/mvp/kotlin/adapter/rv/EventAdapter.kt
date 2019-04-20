@@ -9,7 +9,6 @@ import android.widget.TextView
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.domain.Event
 import com.ljb.mvp.kotlin.domain.EventCommit
-import com.ljb.mvp.kotlin.widget.findViewByIdEx
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 import java.lang.StringBuilder
 
@@ -63,12 +62,12 @@ class EventAdapter(mContext: Context, mData: MutableList<Event>) : LoadMoreRecyc
     override fun getItemCount(): Int = mData.size
 
     class EventViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tv_type by lazy { itemView.findViewByIdEx<TextView>(R.id.tv_type) }
-        val tv_project_name by lazy { itemView.findViewByIdEx<TextView>(R.id.tv_project_name) }
-        val tv_url by lazy { itemView.findViewByIdEx<TextView>(R.id.tv_url) }
-        val tv_commit by lazy { itemView.findViewByIdEx<TextView>(R.id.tv_commit) }
-        val tv_submitter by lazy { itemView.findViewByIdEx<TextView>(R.id.tv_submitter) }
-        val tv_time by lazy { itemView.findViewByIdEx<TextView>(R.id.tv_time) }
+        val tv_type by lazy { itemView.findViewById<TextView>(R.id.tv_type) }
+        val tv_project_name by lazy { itemView.findViewById<TextView>(R.id.tv_project_name) }
+        val tv_url by lazy { itemView.findViewById<TextView>(R.id.tv_url) }
+        val tv_commit by lazy { itemView.findViewById<TextView>(R.id.tv_commit) }
+        val tv_submitter by lazy { itemView.findViewById<TextView>(R.id.tv_submitter) }
+        val tv_time by lazy { itemView.findViewById<TextView>(R.id.tv_time) }
     }
 
 }

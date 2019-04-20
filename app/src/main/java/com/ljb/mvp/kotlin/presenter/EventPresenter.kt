@@ -1,24 +1,24 @@
 package com.ljb.mvp.kotlin.presenter
 
 import com.ljb.mvp.kotlin.common.LoginUser
-import com.ljb.mvp.kotlin.common.ex.subscribeEx
+import com.ljb.mvp.kotlin.common.rx.subscribeNet
 import com.ljb.mvp.kotlin.contract.EventsContract
-import com.ljb.mvp.kotlin.presenter.base.BaseRxLifePresenter
 import com.ljb.mvp.kotlin.protocol.http.IReposHttpProtocol
 import com.ljb.mvp.kotlin.protocol.http.IUserHttpProtocol
 import com.ljb.mvp.kotlin.utils.RxUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import mvp.ljb.kt.presenter.BaseMvpPresenter
+import mvp.ljb.kt.presenter.getContextEx
 import net.ljb.kt.client.HttpFactory
 
 /**
- * Created by L on 2017/9/14.
- */
-class EventPresenter : BaseRxLifePresenter<EventsContract.IView>(),
-        EventsContract.IPresenter {
+ * @Author:Kotlin MVP Plugin
+ * @Date:2019/04/20
+ * @Description input description
+ **/
+class EventPresenter : BaseMvpPresenter<EventsContract.IView>(), EventsContract.IPresenter {
 
-    private var mReposDisposable: Disposable? = null
     private var mPage = 1
 
     override fun onLoadMore() {
@@ -33,26 +33,26 @@ class EventPresenter : BaseRxLifePresenter<EventsContract.IView>(),
 
     private fun getDataFromNet(page: Int) {
         HttpFactory.getProtocol(IUserHttpProtocol::class.java)
-                .getEventsByName(LoginUser.name, page)
+                .getEventsByName(LoginUser.login, page)
+                .compose(RxUtils.bindToLifecycle(getMvpView()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeEx(
-                        { getMvpView().showPage(it, page) },
-                        { getMvpView().errorPage(it, page) }
-                ).bindRxLifeEx(RxLife.ON_DESTROY)
+                .subscribeNet(getContextEx()) {
+                    onNextEx { getMvpView().showPage(it, page) }
+                    onErrorEx { getMvpView().errorPage(it, page) }
+                }
     }
 
     override fun getReposFromUrl(url: String) {
-        RxUtils.dispose(mReposDisposable)
-        mReposDisposable = HttpFactory.getProtocol(IReposHttpProtocol::class.java)
+        HttpFactory.getProtocol(IReposHttpProtocol::class.java)
                 .getReposFromUrl(url)
+                .compose(RxUtils.bindToLifecycle(getMvpView()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeEx({
-                    getMvpView().setRepos(it)
-                }, {
-                    getMvpView().setRepos(null)
-                }).bindRxLifeEx(RxLife.ON_DESTROY)
+                .subscribeNet(getContextEx()) {
+                    onNextEx { getMvpView().setRepos(it) }
+                    onErrorEx { getMvpView().setRepos(null) }
+                }
     }
 
 }

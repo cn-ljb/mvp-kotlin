@@ -12,7 +12,7 @@ interface IUserHttpProtocol {
      * @return  用户基本信息
      * */
     @GET("/users/{userName}")
-    fun getUserInfoByName(@Path("userName") userName: String): Observable<User?>
+    fun getUserInfoByName(@Path("userName") userName: String): Observable<User>
 
     /**
      * @param userName 用户名

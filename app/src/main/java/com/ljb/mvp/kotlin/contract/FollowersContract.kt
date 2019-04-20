@@ -4,8 +4,10 @@ import com.ljb.mvp.kotlin.contract.base.ListContract
 import com.ljb.mvp.kotlin.domain.Follower
 
 /**
- * Created by L on 2017/9/22.
- */
+ * @Author:Kotlin MVP Plugin
+ * @Date:2019/04/20
+ * @Description input description
+ **/
 interface FollowersContract {
 
     interface IView :  ListContract.IView<Follower>

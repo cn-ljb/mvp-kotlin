@@ -5,8 +5,10 @@ import mvp.ljb.kt.contract.IViewContract
 import com.ljb.mvp.kotlin.domain.User
 
 /**
- * Created by L on 2017/7/18.
- */
+ * @Author:Kotlin MVP Plugin
+ * @Date:2019/04/20
+ * @Description input description
+ **/
 interface MyContract {
 
     interface IView : IViewContract {

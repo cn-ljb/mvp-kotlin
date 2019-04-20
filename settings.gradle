@@ -1,1 +1,1 @@
-include ':app', ':mvplib', ':netlib'
+include ':app'

@@ -3,16 +3,16 @@ package com.ljb.mvp.kotlin.fragment.home
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.ljb.mvp.kotlin.R
-import com.ljb.mvp.kotlin.act.WebActivity
+import com.ljb.mvp.kotlin.act.WebViewActivity
 import com.ljb.mvp.kotlin.adapter.rv.RepositoriesAdapter
-import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.RepositoriesContract
 import com.ljb.mvp.kotlin.domain.Repository
 import com.ljb.mvp.kotlin.presenter.RepositoriesPresenter
-import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
+import com.ljb.page.PageState
 import kotlinx.android.synthetic.main.fragment_repos.*
 import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
+import mvp.ljb.kt.fragment.BaseMvpFragment
 
 /**
  * Repos page
@@ -28,12 +28,9 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesContract.IPresenter>(),
     override fun registerPresenter() = RepositoriesPresenter::class.java
 
     override fun initView() {
-        page_layout.apply {
-            setContentView(View.inflate(activity, R.layout.layout_refresh_recycler_view, null))
-            setOnPageErrorClickListener { onReload() }
-        }
+        page_layout.setOnPageErrorClickListener { onReload() }
         refresh_layout.apply {
-            setColorSchemeResources(R.color.colorBlue)
+            setColorSchemeResources(R.color.color_39B6DF)
             setOnRefreshListener { getPresenter().onRefresh() }
         }
         recycler_view.apply {
@@ -63,20 +60,14 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesContract.IPresenter>(),
             if (data.isEmpty()) {
                 page_layout.setPage(PageState.STATE_EMPTY)
             } else {
-                page_layout.setPage(PageState.STATE_SUCCEED)
+                page_layout.setPage(PageState.STATE_SUCCESS)
                 mAdapter.mData.clear()
                 mAdapter.mData.addAll(data)
-                mAdapter.initLoadStatusForSize(data)
-                mAdapter.notifyDataSetChanged()
+                mAdapter.onLoadStatus(data)
             }
         } else {
-            if (data.isEmpty()) {
-                mAdapter.onNoMore()
-            } else {
-                mAdapter.mData.addAll(data)
-                mAdapter.initLoadStatusForSize(data)
-                mAdapter.notifyDataSetChanged()
-            }
+            mAdapter.mData.addAll(data)
+            mAdapter.onLoadStatus(data)
         }
     }
 
@@ -84,13 +75,13 @@ class RepositoriesFragment : BaseMvpFragment<RepositoriesContract.IPresenter>(),
         if (page == 1) {
             page_layout.setPage(PageState.STATE_ERROR)
         } else {
-            mAdapter.onError()
+            mAdapter.onErrorStatus()
         }
     }
 
     override fun onItemClick(view: View, position: Int) {
         val itemData = mAdapter.mData[position]
-        WebActivity.startActivity(activity!!, itemData.html_url)
+        WebViewActivity.startActivity(activity!!, itemData.html_url)
     }
 
 }

@@ -18,14 +18,14 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:padding="10dp"
-            android:textColor="@color/color333"
+            android:textColor="@color/color_333"
             android:textSize="15sp" />
     </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/colorD2D2D2" />
+        android:background="@color/color_D2D2D2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,16 +38,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorWhite"
+            android:background="@color/color_fff"
             android:gravity="center"
             android:text="@string/cancel"
-            android:textColor="@color/color666"
+            android:textColor="@color/color_666"
             android:textSize="16sp" />
 
         <View
             android:layout_width="1px"
             android:layout_height="match_parent"
-            android:background="@color/colorD2D2D2" />
+            android:background="@color/color_D2D2D2" />
 
         <Button
             android:textAllCaps="false"
@@ -55,10 +55,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorWhite"
+            android:background="@color/color_fff"
             android:gravity="center"
             android:text="@string/enter"
-            android:textColor="@color/color666"
+            android:textColor="@color/color_666"
             android:textSize="16sp" />
 
     </LinearLayout>
@@ -66,7 +66,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/colorD2D2D2" />
+        android:background="@color/color_D2D2D2" />
 
 
 </LinearLayout>

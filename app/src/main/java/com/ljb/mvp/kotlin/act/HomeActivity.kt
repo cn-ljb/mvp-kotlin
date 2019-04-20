@@ -2,20 +2,24 @@ package com.ljb.mvp.kotlin.act
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.widget.Toast
 import com.ljb.mvp.kotlin.R
+import com.ljb.mvp.kotlin.adapter.MainTabAdapter
+import com.ljb.mvp.kotlin.contract.HomeContract
 import com.ljb.mvp.kotlin.domain.TabBean
 import com.ljb.mvp.kotlin.fragment.home.FollowingFragment
 import com.ljb.mvp.kotlin.fragment.home.MyFragment
 import com.ljb.mvp.kotlin.fragment.home.RepositoriesFragment
-import com.ljb.mvp.kotlin.adapter.MainTabAdapter
+import com.ljb.mvp.kotlin.presenter.HomePresenter
 import kotlinx.android.synthetic.main.activity_home.*
+import mvp.ljb.kt.act.BaseMvpFragmentActivity
 
 /**
- * Created by L on 2017/7/14.
- */
-class HomeActivity : FragmentActivity() {
+ * @Author:Kotlin MVP Plugin
+ * @Date:2019/04/20
+ * @Description input description
+ **/
+class HomeActivity : BaseMvpFragmentActivity<HomeContract.IPresenter>(), HomeContract.IView {
 
     private var mFirstDownBack: Long = 0L
     private var mCurIndex: Int = 0
@@ -30,17 +34,22 @@ class HomeActivity : FragmentActivity() {
             TabBean(R.drawable.bottom_tab_following, R.string.following),
             TabBean(R.drawable.bottom_tab_my, R.string.my))
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        savedInstanceState?.let { supportFragmentManager.popBackStackImmediate(null, 1) }
-        setContentView(R.layout.activity_home)
-        initView(savedInstanceState)
+    override fun registerPresenter() = HomePresenter::class.java
+
+    override fun getLayoutId() = R.layout.activity_home
+
+    override fun init(savedInstanceState: Bundle?) {
+        super.init(savedInstanceState)
+        savedInstanceState?.let {
+            supportFragmentManager.popBackStackImmediate(null, 1)
+            mCurIndex = it.getInt("index")
+        }
     }
 
-    private fun initView(savedInstanceState: Bundle?) {
+    override fun initView() {
         tgv_group.setOnItemClickListener { openTabFragment(it) }
         tgv_group.setAdapter(MainTabAdapter(this, mTabList))
-        openTabFragment(savedInstanceState?.getInt("index") ?: 0)
+        openTabFragment(mCurIndex)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

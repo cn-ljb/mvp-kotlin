@@ -5,16 +5,16 @@
     <color name="colorAccent">#d3d3d3</color>
 
     <color name="bg_page">#F0EFF5</color>
-    <color name="color333">#333</color>
-    <color name="colorBlue">#39B6DF</color>
-    <color name="color666">#666</color>
-    <color name="color999">#999</color>
-    <color name="colorRed">#FF1A1A</color>
-    <color name="colorD2D2D2">#d2d2d2</color>
-    <color name="colorTabDef">#A6B6BB</color>
-    <color name="colorOrange">#F18E33</color>
-    <color name="colorGreen">#239A3B</color>
-    <color name="colorWhite">#fff</color>
-    <color name="color9000">#9000</color>
+    <color name="color_333">#333</color>
+    <color name="color_39B6DF">#39B6DF</color>
+    <color name="color_666">#666</color>
+    <color name="color_999">#999</color>
+    <color name="color_FF1A1A">#FF1A1A</color>
+    <color name="color_D2D2D2">#d2d2d2</color>
+    <color name="color_A6B6BB">#A6B6BB</color>
+    <color name="color_F18E33">#F18E33</color>
+    <color name="color_239A3B">#239A3B</color>
+    <color name="color_fff">#fff</color>
+    <color name="color_9000">#9000</color>
 
 </resources>

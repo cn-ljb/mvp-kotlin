@@ -4,12 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.ljb.mvp.kotlin.widget.ProgressWheel
+    <FrameLayout
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
-        wheel:matProg_barColor="@color/colorBlue"
-        wheel:matProg_progressIndeterminate="true" />
+        android:background="@drawable/shape_loading_dialog_bg">
+
+        <com.ljb.mvp.kotlin.widget.ProgressWheel
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            wheel:matProg_barColor="@color/color_39B6DF"
+            wheel:matProg_barWidth="3dp"
+            wheel:matProg_progressIndeterminate="true" />
+
+
+    </FrameLayout>
 
 
 </FrameLayout>

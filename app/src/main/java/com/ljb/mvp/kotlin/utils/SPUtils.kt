@@ -1,13 +1,18 @@
 package com.ljb.mvp.kotlin.utils
 
-
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import com.ljb.mvp.kotlin.BuildConfig
 
-
+/**
+ * Author:Ljb
+ * Time:2018/12/28
+ * There is a lot of misery in life
+ **/
 object SPUtils {
 
-    private const val SP_NAME = "sp58che"
+    private const val SP_NAME = "sp_${BuildConfig.APPLICATION_ID}"
 
     private var instance: SharedPreferences? = null
 
@@ -26,10 +31,16 @@ object SPUtils {
         instance!!.edit().putString(key, value).apply()
     }
 
-
-    fun getString(key: String): String {
+    @SuppressLint("ApplySharedPref")
+    fun putStringCommit(key: String, value: String) {
         checkInstance()
-        return instance!!.getString(key, "")
+        instance!!.edit().putString(key, value).commit()
+    }
+
+
+    fun getString(key: String, def: String = ""): String {
+        checkInstance()
+        return instance!!.getString(key, def)
     }
 
     fun putBoolean(key: String, value: Boolean) {
@@ -37,8 +48,8 @@ object SPUtils {
         instance!!.edit().putBoolean(key, value).apply()
     }
 
-    fun getBoolean(key: String): Boolean {
-        return instance!!.getBoolean(key, false)
+    fun getBoolean(key: String, def: Boolean = false): Boolean {
+        return instance!!.getBoolean(key, def)
     }
 
     fun putLong(key: String, value: Long) {
@@ -46,9 +57,9 @@ object SPUtils {
         instance!!.edit().putLong(key, value).apply()
     }
 
-    fun getLong(key: String): Long {
+    fun getLong(key: String, def: Long = 0L): Long {
         checkInstance()
-        return instance!!.getLong(key, 0L)
+        return instance!!.getLong(key, def)
     }
 
     fun putInt(key: String, value: Int) {
@@ -56,9 +67,9 @@ object SPUtils {
         instance!!.edit().putInt(key, value).apply()
     }
 
-    fun getInt(key: String): Int {
+    fun getInt(key: String, def: Int = 0): Int {
         checkInstance()
-        return instance!!.getInt(key, 0)
+        return instance!!.getInt(key, def)
     }
 
     fun putFloat(key: String, value: Float) {
@@ -66,9 +77,9 @@ object SPUtils {
         instance!!.edit().putFloat(key, value).apply()
     }
 
-    fun getFloat(key: String): Float {
+    fun getFloat(key: String, def: Float = 0f): Float {
         checkInstance()
-        return instance!!.getFloat(key, 0f)
+        return instance!!.getFloat(key, def)
     }
 
     fun putStringSet(key: String, setValue: Set<String>) {
@@ -76,9 +87,9 @@ object SPUtils {
         instance!!.edit().putStringSet(key, setValue).apply()
     }
 
-    fun getStringSet(key: String): Set<String> {
+    fun getStringSet(key: String, def: Set<String>? = null): Set<String>? {
         checkInstance()
-        return instance!!.getStringSet(key, null)
+        return instance!!.getStringSet(key, def)
     }
 
 }

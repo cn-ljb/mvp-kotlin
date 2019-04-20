@@ -13,9 +13,9 @@ import com.ljb.mvp.kotlin.R
 abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: MutableList<T>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        val PAGE_DATA_SIZE = 30
-        private val TYPE_LOAD_MORE = 0
-        private val TYPE_ITEM = 1
+        private const val PAGE_DATA_SIZE = 30
+        const val TYPE_LOAD_MORE = 0
+        const val TYPE_ITEM = 1
     }
 
     private var mLoadMoreHolder: LoadMoreHolder? = null;
@@ -33,7 +33,11 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
                 val loadView = LayoutInflater.from(mContext).inflate(R.layout.layout_load_more, parent, false)
                 mLoadMoreHolder = LoadMoreHolder(loadView, this)
             }
-            initLoadStatusForSize(mData)
+            if (mData.size < PAGE_DATA_SIZE) {
+                setLoadMoreStatus(LoadMoreHolder.LoadMoreType.NoMore)
+            } else {
+                setLoadMoreStatus(LoadMoreHolder.LoadMoreType.LoadMore)
+            }
             return mLoadMoreHolder!!
         }
         return getItemHolder(parent, viewType)
@@ -70,18 +74,19 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
     }
 
 
-    fun onError() {
+    fun onErrorStatus() {
         isLoading = false
         mLoadMoreHolder?.setStatus(LoadMoreHolder.LoadMoreType.Error)
     }
 
 
-    fun initLoadStatusForSize(data: List<T>) {
+    fun onLoadStatus(data: List<T>) {
         if (data.size < PAGE_DATA_SIZE) {
             setLoadMoreStatus(LoadMoreHolder.LoadMoreType.NoMore)
         } else {
             setLoadMoreStatus(LoadMoreHolder.LoadMoreType.LoadMore)
         }
+        notifyDataSetChanged()
     }
 
     private fun setLoadMoreStatus(status: LoadMoreHolder.LoadMoreType) {
@@ -89,9 +94,6 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
         mLoadMoreHolder?.setStatus(status)
     }
 
-    fun onNoMore() {
-        setLoadMoreStatus(LoadMoreHolder.LoadMoreType.NoMore)
-    }
 
 
     /**

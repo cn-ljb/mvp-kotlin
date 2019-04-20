@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:text="PushEvent"
-        android:textColor="@color/colorGreen"
+        android:textColor="@color/color_239A3B"
         android:textSize="15sp" />
 
 
@@ -28,7 +28,7 @@
         android:layout_alignParentRight="true"
         android:layout_gravity="right"
         android:text="cn-ljb/mvp-kotlin"
-        android:textColor="@color/color333"
+        android:textColor="@color/color_333"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="https://api.github.com/repos/cn-ljb/mvp-kotlin"
-        android:textColor="@color/color333"
+        android:textColor="@color/color_333"
         android:textSize="14sp" />
 
     <TextView
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="commits:\nadd home bottom tabs\nupdate app icon and login process\nadd test\n..."
-        android:textColor="@color/colorOrange"
+        android:textColor="@color/color_F18E33"
         android:textSize="16sp" />
 
 
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="submitter：cn_ljb"
-            android:textColor="@color/color666"
+            android:textColor="@color/color_666"
             android:textSize="12sp" />
 
         <TextView
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="2017-07-18T08:09:13Z"
-            android:textColor="@color/color666"
+            android:textColor="@color/color_666"
             android:textSize="12sp" />
     </RelativeLayout>
 

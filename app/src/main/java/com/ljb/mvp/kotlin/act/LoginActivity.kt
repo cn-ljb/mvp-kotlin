@@ -3,21 +3,20 @@ package com.ljb.mvp.kotlin.act
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.common.LoginUser
-import com.ljb.mvp.kotlin.common.act.BaseMvpActivity
 import com.ljb.mvp.kotlin.contract.LoginContract
 import com.ljb.mvp.kotlin.presenter.LoginPresenter
 import com.ljb.mvp.kotlin.widget.dialog.LoadingDialog
 import kotlinx.android.synthetic.main.activity_login.*
+import mvp.ljb.kt.act.BaseMvpActivity
 
 /**
- *  1、继承BaseMvpActivity
- *  2、通过泛型告诉View层，当前Presenter使用的通讯契约
- *  3、实现自己的通讯契约
- */
+ * @Author:Kotlin MVP Plugin
+ * @Date:2019/04/20
+ * @Description input description
+ **/
 class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract.IView {
 
     private val mLoadingDialog by lazy { LoadingDialog(this) }
@@ -31,7 +30,7 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
     }
 
     override fun initData() {
-        if (LoginUser.name.isBlank()) {
+        if (LoginUser.login.isBlank()) {
             showLogin()
         } else {
             getPresenter().delayGoHomeTask()

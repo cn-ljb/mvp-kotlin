@@ -2,12 +2,10 @@ package com.ljb.mvp.kotlin.fragment.home
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.support.v4.content.ContextCompat.startActivity
+import android.support.design.widget.TabLayout
 import com.ljb.mvp.kotlin.R
-import com.ljb.mvp.kotlin.R.id.*
 import com.ljb.mvp.kotlin.act.LoginActivity
 import com.ljb.mvp.kotlin.adapter.MyTabAdapter
-import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.MyContract
 import com.ljb.mvp.kotlin.domain.MyTabFragmentBean
 import com.ljb.mvp.kotlin.domain.User
@@ -18,6 +16,7 @@ import com.ljb.mvp.kotlin.img.ImageLoader
 import com.ljb.mvp.kotlin.presenter.MyPresenter
 import com.ljb.mvp.kotlin.widget.dialog.NormalMsgDialog
 import kotlinx.android.synthetic.main.fragment_my.*
+import mvp.ljb.kt.fragment.BaseMvpFragment
 
 
 /**
@@ -25,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_my.*
  */
 class MyFragment : BaseMvpFragment<MyContract.IPresenter>(), MyContract.IView {
 
-    private val mTabArr by  lazy {
+    private val mTabArr by lazy {
         arrayOf(
                 MyTabFragmentBean(getString(R.string.events), EventsFragment()),
                 MyTabFragmentBean(getString(R.string.starred), StarredFragment()),

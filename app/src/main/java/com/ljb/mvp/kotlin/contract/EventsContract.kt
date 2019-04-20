@@ -5,8 +5,10 @@ import com.ljb.mvp.kotlin.domain.Event
 import com.ljb.mvp.kotlin.domain.Repository
 
 /**
- * Created by L on 2017/9/14.
- */
+ * @Author:Kotlin MVP Plugin
+ * @Date:2019/04/20
+ * @Description input description
+ **/
 interface EventsContract {
 
     interface IView : ListContract.IView<Event> {

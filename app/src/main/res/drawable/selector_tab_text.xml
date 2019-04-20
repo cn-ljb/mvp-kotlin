@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" android:color="@color/colorBlue" />
-    <item android:state_selected="true" android:color="@color/colorBlue" />
-    <item android:color="@color/colorTabDef" />
+    <item android:state_pressed="true" android:color="@color/color_39B6DF" />
+    <item android:state_selected="true" android:color="@color/color_39B6DF" />
+    <item android:color="@color/color_A6B6BB" />
 </selector>

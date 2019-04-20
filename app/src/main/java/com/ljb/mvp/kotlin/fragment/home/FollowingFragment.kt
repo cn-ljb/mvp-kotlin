@@ -3,17 +3,17 @@ package com.ljb.mvp.kotlin.fragment.home
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.ljb.mvp.kotlin.R
-import com.ljb.mvp.kotlin.act.WebActivity
+import com.ljb.mvp.kotlin.act.WebViewActivity
 import com.ljb.mvp.kotlin.adapter.rv.FollowersDecoration
 import com.ljb.mvp.kotlin.adapter.rv.FollowingAdapter
-import com.ljb.mvp.kotlin.common.fragment.BaseMvpFragment
 import com.ljb.mvp.kotlin.contract.FollowingContract
 import com.ljb.mvp.kotlin.domain.Following
 import com.ljb.mvp.kotlin.presenter.FollowingPresenter
-import com.ljb.mvp.kotlin.widget.PageStateLayout.PageState
 import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
+import com.ljb.page.PageState
 import kotlinx.android.synthetic.main.fragment_following.*
 import kotlinx.android.synthetic.main.layout_refresh_recycler_view.*
+import mvp.ljb.kt.fragment.BaseMvpFragment
 
 /**
  * Created by L on 2017/7/18.
@@ -28,16 +28,21 @@ class FollowingFragment : BaseMvpFragment<FollowingContract.IPresenter>(), Follo
     override fun registerPresenter() = FollowingPresenter::class.java
 
     override fun initView() {
-        page_layout.apply {
-            setContentView(View.inflate(activity, R.layout.layout_refresh_recycler_view, null))
-            setOnPageErrorClickListener { onReload() }
-        }
+        page_layout.setOnPageErrorClickListener { onReload() }
+
         refresh_layout.apply {
-            setColorSchemeResources(R.color.colorBlue)
+            setColorSchemeResources(R.color.color_39B6DF)
             setOnRefreshListener { getPresenter().onRefresh() }
         }
         recycler_view.apply {
-            layoutManager = GridLayoutManager(context, 3)
+            val manager = GridLayoutManager(context, 3)
+            manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    val itemViewType = mAdapter.getItemViewType(position)
+                    return if (itemViewType == LoadMoreRecyclerAdapter.TYPE_LOAD_MORE) 3 else 1
+                }
+            }
+            layoutManager = manager
             addItemDecoration(FollowersDecoration())
             adapter = mAdapter
             mAdapter.setOnLoadMoreListener(this@FollowingFragment)
@@ -64,21 +69,15 @@ class FollowingFragment : BaseMvpFragment<FollowingContract.IPresenter>(), Follo
             if (data.isEmpty()) {
                 page_layout.setPage(PageState.STATE_EMPTY)
             } else {
-                page_layout.setPage(PageState.STATE_SUCCEED)
+                page_layout.setPage(PageState.STATE_SUCCESS)
                 mAdapter.apply { }
                 mAdapter.mData.clear()
                 mAdapter.mData.addAll(data)
-                mAdapter.initLoadStatusForSize(data)
-                mAdapter.notifyDataSetChanged()
+                mAdapter.onLoadStatus(data)
             }
         } else {
-            if (data.isEmpty()) {
-                mAdapter.onNoMore()
-            } else {
-                mAdapter.mData.addAll(data)
-                mAdapter.initLoadStatusForSize(data)
-                mAdapter.notifyDataSetChanged()
-            }
+            mAdapter.mData.addAll(data)
+            mAdapter.onLoadStatus(data)
         }
     }
 
@@ -86,13 +85,13 @@ class FollowingFragment : BaseMvpFragment<FollowingContract.IPresenter>(), Follo
         if (page == 1) {
             page_layout.setPage(PageState.STATE_ERROR)
         } else {
-            mAdapter.onError()
+            mAdapter.onErrorStatus()
         }
     }
 
     override fun onItemClick(view: View, position: Int) {
         val itemData = mAdapter.mData[position]
-        WebActivity.startActivity(activity!!, itemData.html_url)
+        WebViewActivity.startActivity(activity!!, itemData.html_url)
     }
 
 

@@ -101,16 +101,16 @@
             android:layout_height="40dp"
             android:background="@android:color/white"
             app:tabGravity="fill"
-            app:tabIndicatorColor="@color/colorBlue"
+            app:tabIndicatorColor="@color/color_39B6DF"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/colorBlue"
+            app:tabSelectedTextColor="@color/color_39B6DF"
             app:tabTextAppearance="@style/TabLayoutTextLower"
-            app:tabTextColor="@color/colorTabDef" />
+            app:tabTextColor="@color/color_A6B6BB" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/colorD2D2D2" />
+            android:background="@color/color_D2D2D2" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"

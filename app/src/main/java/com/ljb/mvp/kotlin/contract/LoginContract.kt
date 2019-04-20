@@ -4,9 +4,10 @@ import mvp.ljb.kt.contract.IPresenterContract
 import mvp.ljb.kt.contract.IViewContract
 
 /**
- * 登录页View层\Presenter层通讯接口
- * Created by L on 2017/7/13.
- */
+ * @Author:Kotlin MVP Plugin
+ * @Date:2019/04/20
+ * @Description input description
+ **/
 interface LoginContract {
 
     interface IView : IViewContract {

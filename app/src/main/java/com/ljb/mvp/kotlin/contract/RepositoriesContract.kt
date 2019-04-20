@@ -4,8 +4,10 @@ import com.ljb.mvp.kotlin.contract.base.ListContract
 import com.ljb.mvp.kotlin.domain.Repository
 
 /**
- * Created by L on 2017/9/27.
- */
+ * @Author:Kotlin MVP Plugin
+ * @Date:2019/04/20
+ * @Description input description
+ **/
 interface RepositoriesContract {
 
     interface IView : ListContract.IView<Repository>
