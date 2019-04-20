@@ -1,13 +1,17 @@
 package com.ljb.mvp.kotlin.act
 
+import android.Manifest
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import com.ljb.mvp.kotlin.R
+import com.ljb.mvp.kotlin.common.Constant
 import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.contract.LoginContract
 import com.ljb.mvp.kotlin.presenter.LoginPresenter
+import com.ljb.mvp.kotlin.utils.PermissionUtils
 import com.ljb.mvp.kotlin.widget.dialog.LoadingDialog
 import kotlinx.android.synthetic.main.activity_login.*
 import mvp.ljb.kt.act.BaseMvpActivity
@@ -24,6 +28,21 @@ class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract
     override fun getLayoutId() = R.layout.activity_login
 
     override fun registerPresenter() = LoginPresenter::class.java
+
+    override fun init(savedInstanceState: Bundle?) {
+        initPermission()
+    }
+
+    private fun initPermission() {
+        PermissionUtils.requestPermission(this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_PHONE_STATE),
+                Constant.PermissionCode.CODE_INIT)
+        { _, _ ->
+            //在这里处理权限结果
+        }
+    }
 
     override fun initView() {
         btn_login.setOnClickListener { login() }

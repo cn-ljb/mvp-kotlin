@@ -1,6 +1,7 @@
 package com.ljb.mvp.kotlin.common
 
 import android.provider.BaseColumns
+import com.ljb.mvp.kotlin.BuildConfig
 import com.ljb.mvp.kotlin.utils.SPUtils
 
 /**
@@ -32,10 +33,15 @@ object Constant {
      * 数据库常量池
      * */
     object DB {
-
-        const val NAME = "mvpkotlindb"
+        const val NAME = "db_${BuildConfig.APPLICATION_ID}"
         const val VERSION = 1
+    }
 
+    /**
+     * 权限Code
+     * */
+    object PermissionCode {
+        const val CODE_INIT = 0x00
     }
 
 }

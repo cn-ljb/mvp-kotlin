@@ -16,7 +16,7 @@ import net.ljb.kt.HttpConfig
 /**
  * Created by L on 2017/7/14.
  */
-class KotlinMVPApplication : Application() {
+class MVPKotlinApplication : Application() {
 
     //应避免创建全局的Application引用
     override fun onCreate() {
