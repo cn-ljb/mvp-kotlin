@@ -1,6 +1,5 @@
 package com.ljb.mvp.kotlin.protocol.dao
 
-import com.ljb.mvp.kotlin.BuildConfig
 import com.ljb.mvp.kotlin.protocol.dao.impl.UserDaoProtocol
 import dao.ljb.kt.core.IDaoProtocolConfig
 

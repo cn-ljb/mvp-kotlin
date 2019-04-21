@@ -8,6 +8,7 @@ import retrofit2.http.Query
 
 interface IUserHttpProtocol {
     /**
+     * 通过用户名获取用户信息
      * @param userName 用户名
      * @return  用户基本信息
      * */
