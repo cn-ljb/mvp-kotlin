@@ -61,7 +61,7 @@ lib源码：[kotlin-mvp-lib](https://github.com/cn-ljb/kotlin-mvp-lib)、[net-li
 
 ## <div id="res3">代码示例</div>
 
-> * <div id="res3_1">**Contract接口**</div>
+> * **<div id="res3_1">Contract接口</div>**
 >
 > 内部定义IView、IPresenter小接口分别继承IViewContract、IPresenterContract.
 
@@ -78,7 +78,7 @@ lib源码：[kotlin-mvp-lib](https://github.com/cn-ljb/kotlin-mvp-lib)、[net-li
 	}
 
 
-> * <div id="res3_2">**View层** </div>
+> * **<div id="res3_2">View层</div>**
 >
 > Activity\Fragment继承BaseMvpXxx，在泛型中关联P层约束接口，并实现V层约束接口。
 
@@ -92,7 +92,7 @@ lib源码：[kotlin-mvp-lib](https://github.com/cn-ljb/kotlin-mvp-lib)、[net-li
 		...
 	}	
 
-> * <div id="res3_3">**Presenter层**</div>
+> * **<div id="res3_3">Presenter层</div>**
 >
 > Presenter继承BaseMvpPresenter，在泛型中关联V层约束接口，并实现P层约束接口。
 
@@ -103,7 +103,7 @@ lib源码：[kotlin-mvp-lib](https://github.com/cn-ljb/kotlin-mvp-lib)、[net-li
 	    }
 	}
 
-> * <div id="res3_4">**网络请求**</div>
+> * **<div id="res3_4">网络请求</div>**
 > 
 > 1、使用网络库前，需要先进行初始化，建议放到Application中进行；
 > 
@@ -152,7 +152,7 @@ lib源码：[kotlin-mvp-lib](https://github.com/cn-ljb/kotlin-mvp-lib)、[net-li
 
  是不是很眼熟？该网络库内部是通过 okhttp + retrofit + rxjava 实现。
 
-> * <div id="res3_5">**数据库操作**</div>
+> * **<div id="res3_5">数据库操作</div>**
 > 
 > 1、使用数据库前，需要先进行初始化，建议放到Application中进行；
 > 
