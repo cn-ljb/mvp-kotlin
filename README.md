@@ -1,6 +1,6 @@
 # MVPKotlin
 
-快捷、高效、低耦合的Android MVP架构。
+> 快捷、高效、低耦合的Android MVP架构。
 
 * [目录](#)
 	* [集成方式](#res1)
