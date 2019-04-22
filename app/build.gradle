@@ -40,9 +40,9 @@ dependencies {
     //mvp
     implementation 'com.github.cn-ljb:kotlin-mvp-lib:1.0.0'
     //net
-    implementation 'com.github.cn-ljb:net-lib:1.0.0'
+    implementation 'com.github.cn-ljb:netlib:1.0.0'
     //dao
-    implementation 'com.github.cn-ljb:dao-lib:1.0.0'
+    implementation 'com.github.cn-ljb:daolib:1.0.0'
     //page layout
     implementation 'com.github.cn-ljb:PageStateLayout:1.0.0'
     //rx life

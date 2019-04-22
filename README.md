@@ -1,6 +1,6 @@
 # MVPKotlin
 
-> 快捷、高效、低耦合的Android MVP架构。
+> 快捷、高效、低耦合的Android MVP架构，支持Java、Kotlin混编。
 
 扫码体验：
 
@@ -34,11 +34,11 @@
     //mvp core
     implementation 'com.github.cn-ljb:kotlin-mvp-lib:1.0.0'
     //net lib
-    implementation 'com.github.cn-ljb:net-lib:1.0.0'
+    implementation 'com.github.cn-ljb:netlib:1.0.0'
     //dao lib
-    implementation 'com.github.cn-ljb:dao-lib:1.0.0'
+    implementation 'com.github.cn-ljb:daolib:1.0.0'
 
-lib源码：[kotlin-mvp-lib](https://github.com/cn-ljb/kotlin-mvp-lib)、[net-lib](https://github.com/cn-ljb/net-lib)、[dao-lib](https://github.com/cn-ljb/dao-lib)
+lib源码：[kotlin-mvp-lib](https://github.com/cn-ljb/kotlin-mvp-lib)、[net-lib](https://github.com/cn-ljb/netlib)、[dao-lib](https://github.com/cn-ljb/daolib)
 
 
 ## <div id="res2">概述</div>
@@ -275,14 +275,29 @@ lib源码：[kotlin-mvp-lib](https://github.com/cn-ljb/kotlin-mvp-lib)、[net-li
 
 头晕？[Kotlin MVP Auto插件](https://github.com/cn-ljb/kotlin-mvp-plugin "Kotlin MVP Auto")帮你统统搞定。
 
-> * 自动生成Contract、View、Presenter文件
->
-> 操作：包目录右键->New MVP->输入模块名称->OK
+### 安装插件
 
-![Kotlin MVP Auto](/img/mvp_plugin.gif)
+> 操作： File -> Settings -> Plugins -> Kotlin MVP Auto -> install
+
+![plugin_install](./img/plugin_install.png)
+
+### 功能演示
+
+ * 自动生成Contract、View、Presenter Kotlin文件
+
+> 操作：包目录右键 -> New MVP Kotlin -> 输入模块名称 -> OK
+
+![Kotlin MVP Auto](./img/mvp_plugin.gif)
+
+
+ * 自动生成Contract、View、Presenter Java文件
+
+> 操作：包目录右键 -> New MVP Java -> 输入模块名称 -> OK
+
 
 后续功能开发中...
 
 ## <div id="res5">截图：</div>
 
-![simple](/img/anim.gif)
+![simple](./img/anim.gif)
+
