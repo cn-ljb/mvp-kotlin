@@ -32,7 +32,7 @@
 > * 2、主Module的**build.gradle**添加依赖：
 
     //mvp core
-    implementation 'com.github.cn-ljb:kotlin-mvp-lib:1.0.0'
+    implementation 'com.github.cn-ljb:kotlin-mvp-lib:1.1.0'
     //net lib
     implementation 'com.github.cn-ljb:netlib:1.0.0'
     //dao lib

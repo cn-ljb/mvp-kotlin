@@ -28,14 +28,16 @@
 
     </RelativeLayout>
 
-    <com.ljb.page.PageStateLayout
-        android:id="@+id/page_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/rl_title"
-        app:page_content="@layout/layout_refresh_recycler_view"
-        app:page_empty="@layout/layout_page_empty"
-        app:page_error="@layout/layout_page_error"
-        app:page_load="@layout/layout_page_load" />
+
+
+        <com.ljb.page.PageStateLayout
+            android:id="@+id/page_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:page_content="@layout/layout_refresh_recycler_view"
+            app:page_empty="@layout/layout_page_empty"
+            app:page_error="@layout/layout_page_error"
+            app:page_load="@layout/layout_page_load" />
+
 
 </RelativeLayout>

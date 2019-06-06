@@ -67,6 +67,14 @@ class WebViewProxy(var mContext: Context, private val mWebView: WebView, private
     private fun initWebChromeClient() {
         mWebView.webChromeClient = object : WebChromeClient() {
 
+            override fun onJsPrompt(view: WebView?, url: String?, message: String?, defaultValue: String?, result: JsPromptResult?): Boolean {
+                return super.onJsPrompt(view, url, message, defaultValue, result)
+            }
+
+            override fun onJsConfirm(view: WebView?, url: String?, message: String?, result: JsResult?): Boolean {
+                return super.onJsConfirm(view, url, message, result)
+            }
+
             //配置权限（同样在WebChromeClient中实现）
             override fun onGeolocationPermissionsShowPrompt(origin: String, callback: GeolocationPermissions.Callback) {
                 callback.invoke(origin, true, true)
