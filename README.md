@@ -42,6 +42,8 @@ lib源码：[kotlin-mvp-lib](https://github.com/cn-ljb/kotlin-mvp-lib)、[net-li
 
 ### 演示视频
 
+[视频演示地址](https://cn-ljb.github.io/2019/07/08/Kotlin-MVP%E6%9E%B6%E6%9E%84%E8%A7%86%E9%A2%91%E6%BC%94%E7%A4%BA/ "视频演示")
+
 
 ## <div id="res2">概述</div>
 
