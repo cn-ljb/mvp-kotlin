@@ -1,24 +1,23 @@
 package com.ljb.mvp.kotlin.presenter
 
-import com.ljb.mvp.kotlin.common.LoginUser
+import com.ljb.mvp.kotlin.common.rx.RxUtils
 import com.ljb.mvp.kotlin.common.rx.subscribeNet
 import com.ljb.mvp.kotlin.contract.FollowersContract
-import com.ljb.mvp.kotlin.protocol.http.IUserHttpProtocol
-import com.ljb.mvp.kotlin.utils.RxUtils
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.ljb.mvp.kotlin.domain.Follower
+import com.ljb.mvp.kotlin.model.FollowersModel
 import mvp.ljb.kt.presenter.BaseMvpPresenter
 import mvp.ljb.kt.presenter.getContextEx
-import net.ljb.kt.client.HttpFactory
 
 /**
  * @Author:Kotlin MVP Plugin
  * @Date:2019/04/20
  * @Description input description
  **/
-class FollowersPresenter : BaseMvpPresenter<FollowersContract.IView>(), FollowersContract.IPresenter {
+class FollowersPresenter : BaseMvpPresenter<FollowersContract.IView, FollowersContract.IModel>(), FollowersContract.IPresenter {
 
     private var mPage = 1
+
+    override fun registerModel() = FollowersModel::class.java
 
     override fun onLoadMore() {
         mPage++
@@ -31,15 +30,12 @@ class FollowersPresenter : BaseMvpPresenter<FollowersContract.IView>(), Follower
     }
 
     private fun getDataFromNet(page: Int) {
-        HttpFactory.getProtocol(IUserHttpProtocol::class.java)
-                .getFollowersByName(LoginUser.login, page)
+        getModel().getFollowers(page)
                 .compose(RxUtils.bindToLifecycle(getMvpView()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxUtils.schedulerIO2Main<MutableList<Follower>>())
                 .subscribeNet(getContextEx()) {
                     onNextEx { getMvpView().showPage(it, page) }
                     onErrorEx { getMvpView().errorPage(it, page) }
                 }
-
     }
 }

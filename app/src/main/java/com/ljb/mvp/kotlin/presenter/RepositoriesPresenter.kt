@@ -4,7 +4,11 @@ import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.common.rx.subscribeNet
 import com.ljb.mvp.kotlin.contract.RepositoriesContract
 import com.ljb.mvp.kotlin.protocol.http.IUserHttpProtocol
-import com.ljb.mvp.kotlin.utils.RxUtils
+import com.ljb.mvp.kotlin.common.rx.RxUtils
+import com.ljb.mvp.kotlin.contract.StarredContract
+import com.ljb.mvp.kotlin.domain.Repository
+import com.ljb.mvp.kotlin.model.RepositoriesModel
+import com.ljb.mvp.kotlin.model.StarredModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import mvp.ljb.kt.presenter.BaseMvpPresenter
@@ -16,9 +20,11 @@ import net.ljb.kt.client.HttpFactory
  * @Date:2019/04/20
  * @Description input description
  **/
-class RepositoriesPresenter : BaseMvpPresenter<RepositoriesContract.IView>(), RepositoriesContract.IPresenter {
+class RepositoriesPresenter : BaseMvpPresenter<RepositoriesContract.IView, RepositoriesContract.IModel>(), RepositoriesContract.IPresenter {
 
     private var mPage = 1
+
+    override fun registerModel() = RepositoriesModel::class.java
 
     override fun onLoadMore() {
         mPage++
@@ -31,11 +37,9 @@ class RepositoriesPresenter : BaseMvpPresenter<RepositoriesContract.IView>(), Re
     }
 
     private fun getDataFromNet(page: Int) {
-        HttpFactory.getProtocol(IUserHttpProtocol::class.java)
-                .getRepositoriesByName(LoginUser.login, page)
+        getModel().getRepositories(page)
                 .compose(RxUtils.bindToLifecycle(getMvpView()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxUtils.schedulerIO2Main<MutableList<Repository>>())
                 .subscribeNet(getContextEx()) {
                     onNextEx { getMvpView().showPage(it, page) }
                     onErrorEx { getMvpView().errorPage(it, page) }

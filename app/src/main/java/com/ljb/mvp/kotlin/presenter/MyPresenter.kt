@@ -7,7 +7,8 @@ import com.ljb.mvp.kotlin.domain.User
 import com.ljb.mvp.kotlin.protocol.dao.IUserDaoProtocol
 import com.ljb.mvp.kotlin.protocol.http.IUserHttpProtocol
 import com.ljb.mvp.kotlin.table.UserTable
-import com.ljb.mvp.kotlin.utils.RxUtils
+import com.ljb.mvp.kotlin.common.rx.RxUtils
+import com.ljb.mvp.kotlin.model.MyModel
 import dao.ljb.kt.core.DaoFactory
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,23 +22,18 @@ import net.ljb.kt.client.HttpFactory
  * @Date:2019/04/20
  * @Description input description
  **/
-class MyPresenter : BaseMvpPresenter<MyContract.IView>(), MyContract.IPresenter {
+class MyPresenter : BaseMvpPresenter<MyContract.IView, MyContract.IModel>(), MyContract.IPresenter {
 
-    private val mUserTable = UserTable()
+    override fun registerModel() = MyModel::class.java
 
     override fun getUserInfo() {
-        Observable.concat(
-                DaoFactory.getProtocol(IUserDaoProtocol::class.java).queryUserByUserId(mUserTable, LoginUser.uid),
-                HttpFactory.getProtocol(IUserHttpProtocol::class.java).getUserInfoByName(LoginUser.login)
-        ).filter { User.EMPTY != it }
+        getModel().getUserInfo()
                 .compose(RxUtils.bindToLifecycle(getMvpView()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxUtils.schedulerIO2Main())
                 .subscribeNet(getContextEx()) {
-                    onNextEx { getMvpView().showUserInfo(it!!) }
+                    onNextEx { getMvpView().showUserInfo(it) }
                 }
     }
-
 
     override fun logout() {
         LoginUser.clear()

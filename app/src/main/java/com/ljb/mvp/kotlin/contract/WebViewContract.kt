@@ -1,5 +1,6 @@
 package com.ljb.mvp.kotlin.contract
 
+import mvp.ljb.kt.contract.IModelContract
 import mvp.ljb.kt.contract.IPresenterContract
 import mvp.ljb.kt.contract.IViewContract
 
@@ -13,4 +14,6 @@ interface WebViewContract {
     interface IView : IViewContract
 
     interface IPresenter : IPresenterContract
+
+    interface IModel : IModelContract
 }

@@ -20,7 +20,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".act.LoginActivity">
+        <activity android:name=".view.act.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,11 +29,11 @@
         </activity>
 
         <activity
-            android:name=".act.HomeActivity"
+            android:name=".view.act.HomeActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".act.WebViewActivity"
+            android:name=".view.act.WebViewActivity"
             android:screenOrientation="portrait" />
 
     </application>

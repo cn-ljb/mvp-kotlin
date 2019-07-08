@@ -3,6 +3,8 @@ package com.ljb.mvp.kotlin.contract
 import com.ljb.mvp.kotlin.contract.base.ListContract
 import com.ljb.mvp.kotlin.domain.Event
 import com.ljb.mvp.kotlin.domain.Repository
+import io.reactivex.Observable
+import mvp.ljb.kt.contract.IModelContract
 
 /**
  * @Author:Kotlin MVP Plugin
@@ -17,5 +19,9 @@ interface EventsContract {
 
     interface IPresenter : ListContract.IPresenter {
         fun getReposFromUrl(url: String)
+    }
+
+    interface IModel : IModelContract {
+        fun getEvents(page: Int): Observable<MutableList<Event>>
     }
 }

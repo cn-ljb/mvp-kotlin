@@ -3,6 +3,8 @@ package com.ljb.mvp.kotlin.contract
 import mvp.ljb.kt.contract.IPresenterContract
 import mvp.ljb.kt.contract.IViewContract
 import com.ljb.mvp.kotlin.domain.User
+import io.reactivex.Observable
+import mvp.ljb.kt.contract.IModelContract
 
 /**
  * @Author:Kotlin MVP Plugin
@@ -20,4 +22,9 @@ interface MyContract {
         fun logout()
         fun getUserInfo()
     }
+
+    interface IModel : IModelContract {
+        fun getUserInfo(): Observable<User>
+    }
+
 }

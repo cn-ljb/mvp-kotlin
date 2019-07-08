@@ -1,63 +1,56 @@
 package com.ljb.mvp.kotlin.presenter
 
-import com.ljb.mvp.kotlin.common.LoginUser
 import com.ljb.mvp.kotlin.common.rx.subscribeEx
 import com.ljb.mvp.kotlin.common.rx.subscribeNet
 import com.ljb.mvp.kotlin.contract.LoginContract
-import com.ljb.mvp.kotlin.domain.User
-import com.ljb.mvp.kotlin.protocol.dao.IUserDaoProtocol
-import com.ljb.mvp.kotlin.protocol.http.IUserHttpProtocol
+import com.ljb.mvp.kotlin.model.LoginModel
 import com.ljb.mvp.kotlin.table.UserTable
-import com.ljb.mvp.kotlin.utils.RxUtils
-import dao.ljb.kt.core.DaoFactory
-import io.reactivex.Observable
+import com.ljb.mvp.kotlin.common.rx.RxUtils
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import mvp.ljb.kt.presenter.BaseMvpPresenter
 import mvp.ljb.kt.presenter.getContextEx
-import net.ljb.kt.client.HttpFactory
-import java.util.concurrent.TimeUnit
 
 /**
  * @Author:Kotlin MVP Plugin
  * @Date:2019/04/20
  * @Description input description
  **/
-class LoginPresenter : BaseMvpPresenter<LoginContract.IView>(), LoginContract.IPresenter {
+class LoginPresenter : BaseMvpPresenter<LoginContract.IView, LoginContract.IModel>(), LoginContract.IPresenter {
 
-    private val mUserTable = UserTable()
+    override fun registerModel() = LoginModel::class.java
+
+    override fun getLocLogin(): String? {
+        return getModel().getLocLogin()
+    }
 
     override fun delayGoHomeTask() {
-        Observable.timer(1500, TimeUnit.MILLISECONDS)
+        getModel().delayGoHomeTask()
                 .compose(RxUtils.bindToLifecycle(getMvpView()))
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeEx {
                     onNextEx { getMvpView().goHome() }
                 }
     }
 
     override fun login(userName: String) {
-        HttpFactory.getProtocol(IUserHttpProtocol::class.java)
-                .getUserInfoByName(userName)
-                .map { saveLoginUser2sp(it) }
-                .flatMap { DaoFactory.getProtocol(IUserDaoProtocol::class.java).saveUser(mUserTable, it) }
+        getModel().getUserInfo(userName)
+                .map { getModel().saveLoginUser2SP(it) }
+                .flatMap { getModel().saveUser2DB(it) }
                 .compose(RxUtils.bindToLifecycle(getMvpView()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxUtils.schedulerIO2Main<Boolean>())
                 .subscribeNet(getContextEx()) {
+                    onSubscribeEx {
+                        getMvpView().showLoadDialog()
+                    }
                     onNextEx {
+                        getMvpView().dismissLoadDialog()
                         getMvpView().loginSuccess()
                     }
                     onErrorEx {
+                        getMvpView().dismissLoadDialog()
                         getMvpView().loginError(it.message)
                     }
                 }
-    }
-
-    private fun saveLoginUser2sp(user: User): User {
-        LoginUser.login = user.login
-        LoginUser.uid = user.id
-        LoginUser.name = user.name ?: ""
-        LoginUser.img = user.avatar_url
-        return user
     }
 }
