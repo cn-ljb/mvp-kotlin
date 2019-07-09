@@ -2,9 +2,7 @@
 
 > 快捷、高效、低耦合的Android MVP架构，支持Java、Kotlin混编。
 
-<video  id="video" width="800" height="450" controls="" preload="none" poster="./img/插件演示.png" style="width=50%; height=50%; object-fit:fill">
-	<source id="mp4" src="./img/插件演示.mp4">
-</video>
+![kotlin-mvp](./img/mvp_plugin.gif)
 
 ## 视频演示
 
@@ -101,22 +99,20 @@ lib源码：[kotlin-mvp-lib](https://github.com/cn-ljb/kotlin-mvp-lib)、[net-li
 
 ![plugin_install](./img/plugin_install.png)
 
-#### 插件演示
+### 插件演示
 
  * 自动生成View、Presenter、Model、Contract Kotlin文件
 
 > 操作：包目录右键 -> New MVP Kotlin -> 输入模块名称 -> OK
 
-<video  id="video" width="800" height="450" controls="" preload="none" poster="./img/插件演示.png" style="width=50%; height=50%; object-fit:fill">
-	<source id="mp4" src="./img/插件演示.mp4">
-</video>
+![kotlin-mvp](./img/mvp_plugin.gif)
 
 
  * 自动生成View、Presenter、Model、Contract Java文件
 
 > 操作：包目录右键 -> New MVP Java -> 输入模块名称 -> OK
 
-## <div id="res5">截图：</div>
+## <div id="res5">Demo App 截图</div>
 
 ![simple](./img/anim.gif)
 
