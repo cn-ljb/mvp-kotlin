@@ -16,7 +16,7 @@ import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 class RepositoriesAdapter(mContext: Context, mData: MutableList<Repository>) : LoadMoreRecyclerAdapter<Repository>(mContext, mData) {
 
     override fun getItemHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder =
-            RepositoriesViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_starred, parent, false))
+            RepositoriesViewHolder(mLayoutInflater.inflate(R.layout.item_starred, parent, false))
 
     override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is RepositoriesViewHolder) {

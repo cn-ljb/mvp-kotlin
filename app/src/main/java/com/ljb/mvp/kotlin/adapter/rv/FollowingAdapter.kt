@@ -19,7 +19,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 class FollowingAdapter(mContext: Context, mData: MutableList<Following>) : LoadMoreRecyclerAdapter<Following>(mContext, mData) {
 
     override fun getItemHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder =
-            FollowingViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_following, parent, false))
+            FollowingViewHolder(mLayoutInflater.inflate(R.layout.item_following, parent, false))
 
     override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is FollowingViewHolder) {

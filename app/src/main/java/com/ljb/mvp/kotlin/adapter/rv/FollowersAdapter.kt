@@ -20,7 +20,7 @@ class FollowersAdapter(mContext: Context, mData: MutableList<Follower>) : LoadMo
 
 
     override fun getItemHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder =
-            FollowersViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_followers, parent, false))
+            FollowersViewHolder(mLayoutInflater.inflate(R.layout.item_followers, parent, false))
 
     override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is FollowersViewHolder) {

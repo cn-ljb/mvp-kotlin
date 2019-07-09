@@ -18,7 +18,7 @@ import java.lang.StringBuilder
 class EventAdapter(mContext: Context, mData: MutableList<Event>) : LoadMoreRecyclerAdapter<Event>(mContext, mData) {
 
     override fun getItemHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder =
-            EventViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_event, parent, false))
+            EventViewHolder(mLayoutInflater.inflate(R.layout.item_event, parent, false))
 
     override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is EventViewHolder) {

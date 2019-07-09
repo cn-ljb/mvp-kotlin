@@ -1,7 +1,6 @@
 package com.ljb.mvp.kotlin.widget.loadmore
 
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.RelativeLayout
 import com.ljb.mvp.kotlin.R

@@ -16,7 +16,7 @@ import com.ljb.mvp.kotlin.widget.loadmore.LoadMoreRecyclerAdapter
 class StarredAdapter(mContext: Context, mData: MutableList<Starred>) : LoadMoreRecyclerAdapter<Starred>(mContext, mData) {
 
     override fun getItemHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder =
-            StarredViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_starred, parent, false))
+            StarredViewHolder(mLayoutInflater.inflate(R.layout.item_starred, parent, false))
 
     override fun onBindData(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is StarredViewHolder) {

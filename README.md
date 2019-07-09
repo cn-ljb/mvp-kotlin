@@ -2,9 +2,19 @@
 
 > 快捷、高效、低耦合的Android MVP架构，支持Java、Kotlin混编。
 
-扫码体验：
+<video  id="video" width="800" height="450" controls="" preload="none" poster="./img/插件演示.png" style="width=50%; height=50%; object-fit:fill">
+	<source id="mp4" src="./img/插件演示.mp4">
+</video>
+
+## 视频演示
+
+[[全部视频，点击这里]](https://cn-ljb.github.io/2019/07/08/Kotlin-MVP%E6%9E%B6%E6%9E%84%E8%A7%86%E9%A2%91%E6%BC%94%E7%A4%BA/ "视频演示")
+
+
+扫码查看Demo：
 
 ![mvp](./img/qrcode.png)
+
 
 * [目录](#)
 	* [集成方式](#res1)
@@ -32,7 +42,9 @@
 > * 2、主Module的**build.gradle**添加依赖：
 
     //mvp core
-    implementation 'com.github.cn-ljb:kotlin-mvp-lib:1.1.0'
+    implementation 'com.github.cn-ljb:kotlin-mvp-lib:1.2.0'
+	
+	//网络库lib、数据库lib 根据项目实际情况引入
     //net lib
     implementation 'com.github.cn-ljb:netlib:1.0.0'
     //dao lib
@@ -40,244 +52,48 @@
 
 lib源码：[kotlin-mvp-lib](https://github.com/cn-ljb/kotlin-mvp-lib)、[net-lib](https://github.com/cn-ljb/netlib)、[dao-lib](https://github.com/cn-ljb/daolib)
 
-### 演示视频
-
-[视频演示地址](https://cn-ljb.github.io/2019/07/08/Kotlin-MVP%E6%9E%B6%E6%9E%84%E8%A7%86%E9%A2%91%E6%BC%94%E7%A4%BA/ "视频演示")
-
 
 ## <div id="res2">概述</div>
 
 > **为什么要使用MVP架构？**
 
-通常一般的Android项目结构，我们会在Activity\Fragment中编写大量代码，例如：网络请求、数据填充、页面切换等等，这种项目结构宏观的称之为MVC。
+通常Android项目结构中，我们会在Activity\Fragment中编写大量代码，例如：网络请求、IO操作、数据填充、页面切换等，这种项目结构宏观的称之为MVC。
 
 **MVC**：我们可以把数据源（网络请求、IO...）看作Model层，xml等布局文件看作View层，Activity\Fragment看作Controller层。但在android中xml能力太薄弱了，以至于Activity做了很多本不属于它的工作。
 
-**MVP**：在MVP架构中Model层与MVC一样作为数据源，不过将Activity\Fragment都看作为View层的一部分负责数据的展示和填充，将Model层与View层的关联操作交给了Presenter层。
+**MVP**：在MVP架构中Model层与MVC一样存放数据源（网络请求、IO...），将Activity\Fragment都看作为View层，仅负责UI展示和数据填充，将Model层与View层的交互操作交给Presenter层。
 
-> **该项目架构**
+> **MVP架构图**
 
 ![mvp](./img/mvp.png)
 
-> 特点：
-> 
-> * 1、V层仅由Activity和Fragmen组成，且仅负责View交互和数据填充工作；
-> * 2、M层完全与V层隔离，P层作为V层与M层的桥梁，承担中间人角色（V通过P获取M数据）；
-> * 3、V层与P层相互持有，通过Constract限制两者的访问域降低耦合；
-> * 4、P层通过Factory产出M层Protocol的接口引用降低耦合；
-> * 5、Factory产出的M层Protocol是可复用，且内存安全的。
+> **特点**
+
+ * 1、V层由Activity和Fragmen组成，且仅负责UI展示、数据填充等工作，分工明确；
+ * 2、M层完全与V层隔离，P层作为V层与M层的桥梁，承担中间人角色（V通过P获取M数据）；
+ * 3、V层与P层对象相互持有，通过Constract限制两者的访问域，降低耦合；
+ * 4、P层持有M层对象，通过Constract限制P层可访问域，降低耦合；
+
+> **扩展**
+
+考虑到实际项目中Model层主要操作是net和db，为了统一调用api，对net和db进行了封装，通过Factory.getProtocol()产出具体的操作实例。
+
+[net-lib](https://github.com/cn-ljb/netlib)： rxjava2 + rxAndroid + okhttp3 + retrofit2
+
+[dao-lib](https://github.com/cn-ljb/daolib)： rxjava2 + rxAndroid + sqlite
+
+![mvp](./img/model.png)
+
 
 ## <div id="res3">代码示例</div>
 
-> * **<div id="res3_1">Contract接口</div>**
->
-> 内部定义IView、IPresenter小接口分别继承IViewContract、IPresenterContract.
-
-	interface LoginContract {
-	
-	    interface IView : IViewContract {
-	   		...
-	    }
-	
-	    interface IPresenter : IPresenterContract {
-	        fun login()
-	        ...
-	    }
-	}
-
-
-> * **<div id="res3_2">View层</div>**
->
-> Activity\Fragment继承BaseMvpXxx，在泛型中关联P层约束接口，并实现V层约束接口。
-
-	class LoginActivity : BaseMvpActivity<LoginContract.IPresenter>(), LoginContract.IView {
-		
-	    override fun registerPresenter() = LoginPresenter::class.java
-	
-	    private fun login() {
-	        getPresenter().login()
-	    }
-		...
-	}	
-
-> * **<div id="res3_3">Presenter层</div>**
->
-> Presenter继承BaseMvpPresenter，在泛型中关联V层约束接口，并实现P层约束接口。
-
-	class LoginPresenter : BaseMvpPresenter<LoginContract.IView>(), LoginContract.IPresenter {
-	
-	    override fun login() {
-	        ...
-	    }
-	}
-
-> * **<div id="res3_4">网络请求</div>**
-> 
-> 1、使用网络库前，需要先进行初始化，建议放到Application中进行；
-> 
-> 2、编写HttpProtocol接口；
-> 
-> 3、从HttpFactory中产出HttpProtocol实例。
-	
-	/**
-	 * 1、初始化网络库
-	 * @param1: 接口base url
-	 * @param2: 公共header
-	 * @param3: 公共参数
-	 * @param4: 是否输出日志
-	 * */
-	HttpConfig.init(HTTP_API_DOMAIN, headerMap, paramMap, isLog)
-
->
-	
-	
-	/**
-	 * 2、编写HttpProtocol接口
-	 * */
-	interface IUserHttpProtocol {
-	    /**
-	     * 通过用户名获取用户信息
-	     * @param userName 用户名
-	     * @return  用户基本信息
-	     * */
-	    @GET("/users/{userName}")
-	    fun getUserInfoByName(@Path("userName") userName: String): Observable<User>
-		
-		...
-	}
-
->
-
-	/**
-	 * 3、从HttpFactory中产出HttpProtocol实例 
-	 * */
-    HttpFactory.getProtocol(IUserHttpProtocol::class.java)
-            .getUserInfoByName(userName)
-            .compose(RxUtils.bindToLifecycle(getMvpView()))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
-
- 是不是很眼熟？该网络库内部是通过 okhttp + retrofit + rxjava 实现。
-
-> * **<div id="res3_5">数据库操作</div>**
-> 
-> 1、使用数据库前，需要先进行初始化，建议放到Application中进行；
-> 
-> 2、继承BaseTable编写Table类；
-> 
-> 3、编写DaoProtocol接口；
-> 
-> 4、编写DaoProtocol接口实现类；
-> 
-> 5、关联DaoProtocol接口与DaoProtocol接口实现类；
-> 
-> 6、从DaoFactory中产出DaoProtocol实例。
-
-	
-	/**
-	 * 1、初始化数据库
-	 * @param1 数据库OpenHelper辅助类（详见项目代码）
-	 * @param2 DaoProtocol关联类
-	 * */
-	DaoConfig.init(dbHelper, protocolConfig)
-
->
-
-	/**
-	 * 2、继承BaseTable编写Table类
-	 * 实现createTableName() 和 createColumns()
-	 * Time:2019/4/20
-	 * There is a lot of misery in life
-	 **/
-	class UserTable : BaseTable() {
-	
-	    val COLUMN_ID = BaseColumns._ID
-	    val COLUMN_USER_ID = "user_id"
-	    val COLUMN_AVATAR_URL = "avatar_url"
-	    val COLUMN_NAME = "name"
-		...
-	
-		/**
-		 * 返回表名
-		 */
-	    override fun createTableName() = "tb_user"
-	
-		/**
-		 * 返回表字段
-		 */
-	    override fun createColumns(): Map<String, String> {
-	        val tableColumns = HashMap<String, String>()
-	        tableColumns[COLUMN_ID] = "integer primary key autoincrement"
-	        tableColumns[COLUMN_USER_ID] = TYPE_TEXT
-	        tableColumns[COLUMN_AVATAR_URL] = TYPE_TEXT
-	        tableColumns[COLUMN_NAME] = TYPE_TEXT
-	        ...
-	        return tableColumns
-	    }	
-	}
-
->
-
-	/**
-	 * 3、编写DaoProtocol接口
-	 **/
-	interface IUserDaoProtocol : IDaoInterface {
-	   
-	    /**
-	     * 保存用户
-	     * */
-	    fun saveUser(table: UserTable, user: User): Observable<Boolean>
-	}	
-
->
-
-	/**
-	 * 4、编写DaoProtocol接口实现类
-	 **/
-	class UserDaoProtocol : BaseDaoProtocol(), IUserDaoProtocol {
-	
-	   
-	    override fun saveUser(table: UserTable, user: User): Observable<Boolean> = createObservable {
-	        saveUserImpl(table, user)
-	    }
-	
-	    private fun saveUserImpl(table: UserTable, user: User): Boolean {
-	       ...
-	    }
-	}
-
->
-
-	/**
-	 * 5、关联DaoProtocol接口与DaoProtocol接口实现类
-	 **/
-	class ProtocolConfig : IDaoProtocolConfig {
-	
-	    @Suppress("UNCHECKED_CAST", "IMPLICIT_CAST_TO_ANY")
-	    override fun <T> transformProtocol(clazz: Class<T>) = when (clazz) {
-	        IUserDaoProtocol::class.java -> UserDaoProtocol()
-			...
-	        else -> throw IllegalStateException("not found dao interface object  : ${clazz.name}")
-	    } as T
-
-	}
-
->
-
-	/**
-	 * 6、从DaoFactory中产出DaoProtocol实例
-	 **/
-	DaoFactory.getProtocol(IUserDaoProtocol::class.java)
-			.saveUser(mUserTable, user)
-	        .compose(RxUtils.bindToLifecycle(getMvpView()))
-	        .subscribeOn(Schedulers.io())
-	        .observeOn(AndroidSchedulers.mainThread())
-	        .subscribe()
+[[祥见视频演示]](https://cn-ljb.github.io/2019/07/08/Kotlin-MVP%E6%9E%B6%E6%9E%84%E8%A7%86%E9%A2%91%E6%BC%94%E7%A4%BA/ "视频演示")
 		
 ## <div id="res4">Kotlin MVP Auto 插件</div>
 
-头晕？[Kotlin MVP Auto插件](https://github.com/cn-ljb/kotlin-mvp-plugin "Kotlin MVP Auto")帮你统统搞定。
+我们知道View、Presenter、Model、Constact需要编写固定的套路代码来进行关联，比如集成某一个Base类，实现某个固定接口。
+
+为了提高开发效率，配合该MVP库专们为开发者提供[Kotlin MVP Auto插件](https://github.com/cn-ljb/kotlin-mvp-plugin "Kotlin MVP Auto")来帮你统统搞定。
 
 ### 安装插件
 
@@ -285,21 +101,20 @@ lib源码：[kotlin-mvp-lib](https://github.com/cn-ljb/kotlin-mvp-lib)、[net-li
 
 ![plugin_install](./img/plugin_install.png)
 
-### 功能演示
+#### 插件演示
 
- * 自动生成Contract、View、Presenter Kotlin文件
+ * 自动生成View、Presenter、Model、Contract Kotlin文件
 
 > 操作：包目录右键 -> New MVP Kotlin -> 输入模块名称 -> OK
 
-![Kotlin MVP Auto](./img/mvp_plugin.gif)
+<video  id="video" width="800" height="450" controls="" preload="none" poster="./img/插件演示.png" style="width=50%; height=50%; object-fit:fill">
+	<source id="mp4" src="./img/插件演示.mp4">
+</video>
 
 
- * 自动生成Contract、View、Presenter Java文件
+ * 自动生成View、Presenter、Model、Contract Java文件
 
 > 操作：包目录右键 -> New MVP Java -> 输入模块名称 -> OK
-
-
-后续功能开发中...
 
 ## <div id="res5">截图：</div>
 
