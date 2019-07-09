@@ -18,11 +18,6 @@
 	* [集成方式](#res1)
 	* [概述](#res2)
 	* [代码示例](#res3)
-		* [Contract接口](#res3_1)
-		* [View层](#res3_2)
-		* [Presenter层](#res3_3)
-		* [网络请求](#res3_4)
-		* [数据库操作](#res3_5)
 	* [Kotlin MVP Auto 插件](#res4)
 	* [截图](#res5)
 
