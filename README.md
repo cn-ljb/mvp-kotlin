@@ -6,10 +6,10 @@
 
 ## 视频演示
 
-[[全部视频，点击这里]](https://cn-ljb.github.io/2019/07/08/Kotlin-MVP%E6%9E%B6%E6%9E%84%E8%A7%86%E9%A2%91%E6%BC%94%E7%A4%BA/ "视频演示")
+[[高清视频，点击这里]](https://cn-ljb.github.io/2019/07/08/Kotlin-MVP%E6%9E%B6%E6%9E%84%E8%A7%86%E9%A2%91%E6%BC%94%E7%A4%BA/ "视频演示")
 
 
-扫码查看Demo：
+扫码查看Demo App：
 
 ![mvp](./img/qrcode.png)
 
@@ -86,7 +86,7 @@ lib源码：[kotlin-mvp-lib](https://github.com/cn-ljb/kotlin-mvp-lib)、[net-li
 
 我们知道View、Presenter、Model、Constact需要编写固定的套路代码来进行关联，比如集成某一个Base类，实现某个固定接口。
 
-为了提高开发效率，配合该MVP库专们为开发者提供[Kotlin MVP Auto插件](https://github.com/cn-ljb/kotlin-mvp-plugin "Kotlin MVP Auto")来帮你统统搞定。
+为了提高开发效率，配合该MVP库专门为开发者提供[Kotlin MVP Auto插件](https://github.com/cn-ljb/kotlin-mvp-plugin "Kotlin MVP Auto")来帮你统统搞定。
 
 ### 安装插件
 
