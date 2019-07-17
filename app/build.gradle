@@ -20,7 +20,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        debug{
+        debug {
             buildConfigField("boolean", "VERSION_DEBUG", "$VERSION_DEBUG")
         }
     }
@@ -46,10 +46,10 @@ dependencies {
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     //mvp
     implementation 'com.github.cn-ljb:kotlin-mvp-lib:1.2.0'
-//    //net
-//    implementation 'com.github.cn-ljb:netlib:1.0.0'
+    //net
+    implementation 'com.github.cn-ljb:netlib:1.0.1'
     //dao
-    implementation 'com.github.cn-ljb:daolib:1.0.0'
+    implementation 'com.github.cn-ljb:daolib:1.0.1'
     //page layout
     implementation 'com.github.cn-ljb:PageStateLayout:1.0.0'
     //rx life
@@ -65,9 +65,6 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:3.3.0'
     //smarttablayout:
     implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
-    implementation project(path: ':netlib')
-
-
 }
 repositories {
     mavenCentral()

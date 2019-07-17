@@ -2,15 +2,14 @@ package com.ljb.mvp.kotlin.view.fragment
 
 import android.content.DialogInterface
 import android.content.Intent
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.ljb.mvp.kotlin.R
-import com.ljb.mvp.kotlin.view.act.LoginActivity
 import com.ljb.mvp.kotlin.adapter.MyTabAdapter
 import com.ljb.mvp.kotlin.contract.MyContract
 import com.ljb.mvp.kotlin.domain.MyTabFragmentBean
 import com.ljb.mvp.kotlin.domain.User
 import com.ljb.mvp.kotlin.img.ImageLoader
 import com.ljb.mvp.kotlin.presenter.MyPresenter
+import com.ljb.mvp.kotlin.view.act.LoginActivity
 import com.ljb.mvp.kotlin.widget.dialog.NormalMsgDialog
 import kotlinx.android.synthetic.main.fragment_my.*
 import mvp.ljb.kt.fragment.BaseMvpFragment

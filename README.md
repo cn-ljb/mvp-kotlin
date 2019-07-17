@@ -39,9 +39,9 @@
 	
 	//网络库lib、数据库lib 根据项目实际情况引入
     //net lib
-    implementation 'com.github.cn-ljb:netlib:1.0.0'
+    implementation 'com.github.cn-ljb:netlib:1.0.1'
     //dao lib
-    implementation 'com.github.cn-ljb:daolib:1.0.0'
+    implementation 'com.github.cn-ljb:daolib:1.0.1'
 
 lib源码：[kotlin-mvp-lib](https://github.com/cn-ljb/kotlin-mvp-lib)、[net-lib](https://github.com/cn-ljb/netlib)、[dao-lib](https://github.com/cn-ljb/daolib)
 
