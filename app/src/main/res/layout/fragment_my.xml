@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,17 +7,17 @@
     android:orientation="vertical">
 
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="270dp"
         android:background="@drawable/bg_my_header">
 
         <RelativeLayout
-            android:minHeight="0dp"
             android:id="@+id/rl_header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:minHeight="0dp"
             app:layout_scrollFlags="scroll|snap">
 
             <ImageView
@@ -87,7 +87,7 @@
 
         </RelativeLayout>
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -95,29 +95,35 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tablayout"
+        <com.ogaclejapan.smarttablayout.SmartTabLayout
+            android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@android:color/white"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@color/color_39B6DF"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/color_39B6DF"
-            app:tabTextAppearance="@style/TabLayoutTextLower"
-            app:tabTextColor="@color/color_A6B6BB" />
+            app:stl_defaultTabTextColor="@color/color_666"
+            app:stl_defaultTabTextSize="13sp"
+            app:stl_indicatorColor="@color/color_39B6DF"
+            app:stl_indicatorGravity="bottom"
+            app:stl_indicatorWithoutPadding="true"
+            android:paddingBottom="4dp"
+            app:stl_defaultTabTextMinWidth="120dp"
+            app:stl_indicatorAlwaysInCenter="true"
+            app:stl_indicatorCornerRadius="1.5dp"
+            app:stl_indicatorInterpolation="smart"
+            app:stl_indicatorThickness="3dp"
+            app:stl_underlineColor="@android:color/transparent"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="@color/color_D2D2D2" />
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
     </LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -1,7 +1,7 @@
 package com.ljb.mvp.kotlin.view.fragment
 
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.view.act.WebViewActivity
 import com.ljb.mvp.kotlin.adapter.rv.EventAdapter

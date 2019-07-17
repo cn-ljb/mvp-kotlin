@@ -1,8 +1,8 @@
 package com.ljb.mvp.kotlin.view.act
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.adapter.MainTabAdapter
 import com.ljb.mvp.kotlin.contract.HomeContract

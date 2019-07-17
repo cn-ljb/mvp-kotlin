@@ -18,6 +18,6 @@ interface IReposHttpProtocol {
      * @param url ReposUrl
      * @return Repos信息
      * */
-    @GET()
+    @GET
     fun getReposFromUrl(@Url url: String): Observable<Repository>
 }

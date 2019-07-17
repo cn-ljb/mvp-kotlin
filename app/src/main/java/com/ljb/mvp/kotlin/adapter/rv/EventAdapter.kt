@@ -1,11 +1,10 @@
 package com.ljb.mvp.kotlin.adapter.rv
 
 import android.content.Context
-import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.domain.Event
 import com.ljb.mvp.kotlin.domain.EventCommit
@@ -41,6 +40,7 @@ class EventAdapter(mContext: Context, mData: MutableList<Event>) : LoadMoreRecyc
             holder.tv_time.text = mData[position].created_at
         }
     }
+
 
     private fun getCommitStr(commits: List<EventCommit>): String {
         return StringBuilder("commits:\n").apply {

@@ -2,6 +2,7 @@ package com.ljb.mvp.kotlin.view.fragment
 
 import android.content.DialogInterface
 import android.content.Intent
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.view.act.LoginActivity
 import com.ljb.mvp.kotlin.adapter.MyTabAdapter
@@ -45,8 +46,8 @@ class MyFragment : BaseMvpFragment<MyContract.IPresenter>(), MyContract.IView {
         viewpager.apply {
             offscreenPageLimit = mTabArr.size
             adapter = MyTabAdapter(childFragmentManager, mTabArr)
-            tablayout.setupWithViewPager(this)
         }
+        tab_layout.setViewPager(viewpager)
         btn_logout.setOnClickListener { mLogoutDialog.show() }
     }
 
