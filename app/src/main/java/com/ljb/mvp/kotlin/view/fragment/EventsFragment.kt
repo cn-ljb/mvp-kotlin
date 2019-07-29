@@ -2,6 +2,7 @@ package com.ljb.mvp.kotlin.view.fragment
 
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ljb.mvp.kotlin.R
 import com.ljb.mvp.kotlin.view.act.WebViewActivity
 import com.ljb.mvp.kotlin.adapter.rv.EventAdapter
@@ -33,7 +34,7 @@ class EventsFragment : BaseMvpFragment<EventsContract.IPresenter>(), EventsContr
         page_layout.setOnPageErrorClickListener { onReload() }
 
         recycler_view.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = mAdapter
             mAdapter.setOnLoadMoreListener(this@EventsFragment)
             mAdapter.setOnItemClickListener(this@EventsFragment)

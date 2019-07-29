@@ -19,7 +19,6 @@ class FollowingPresenter : BaseMvpPresenter<FollowingContract.IView, FollowingCo
     private var mPage = 1
 
     override fun onLoadMore() {
-        mPage++
         getDataFromNet(mPage)
     }
 
@@ -33,7 +32,10 @@ class FollowingPresenter : BaseMvpPresenter<FollowingContract.IView, FollowingCo
                 .compose(RxUtils.bindToLifecycle(getMvpView()))
                 .compose(RxUtils.schedulerIO2Main())
                 .subscribeNet(getContextEx()) {
-                    onNextEx { getMvpView().showPage(it, page) }
+                    onNextEx {
+                        getMvpView().showPage(it, page)
+                        mPage++
+                    }
                     onErrorEx { getMvpView().errorPage(it, page) }
                 }
     }

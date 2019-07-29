@@ -20,7 +20,6 @@ class FollowersPresenter : BaseMvpPresenter<FollowersContract.IView, FollowersCo
     override fun registerModel() = FollowersModel::class.java
 
     override fun onLoadMore() {
-        mPage++
         getDataFromNet(mPage)
     }
 
@@ -34,7 +33,10 @@ class FollowersPresenter : BaseMvpPresenter<FollowersContract.IView, FollowersCo
                 .compose(RxUtils.bindToLifecycle(getMvpView()))
                 .compose(RxUtils.schedulerIO2Main<MutableList<Follower>>())
                 .subscribeNet(getContextEx()) {
-                    onNextEx { getMvpView().showPage(it, page) }
+                    onNextEx {
+                        getMvpView().showPage(it, page)
+                        mPage++
+                    }
                     onErrorEx { getMvpView().errorPage(it, page) }
                 }
     }

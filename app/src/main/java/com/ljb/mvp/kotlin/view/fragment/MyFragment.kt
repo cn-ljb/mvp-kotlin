@@ -1,5 +1,7 @@
 package com.ljb.mvp.kotlin.view.fragment
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.DialogInterface
 import android.content.Intent
 import com.ljb.mvp.kotlin.R
@@ -60,7 +62,6 @@ class MyFragment : BaseMvpFragment<MyContract.IPresenter>(), MyContract.IView {
 
     private fun goLogin() {
         startActivity(Intent(activity, LoginActivity::class.java))
-        activity!!.finish()
     }
 
     override fun showUserInfo(user: User) {

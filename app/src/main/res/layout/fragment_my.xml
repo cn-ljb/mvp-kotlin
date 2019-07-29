@@ -89,6 +89,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!--<androidx.core.widget.NestedScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -100,18 +105,18 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@android:color/white"
-            app:stl_defaultTabTextColor="@color/color_666"
-            app:stl_defaultTabTextSize="13sp"
-            app:stl_indicatorColor="@color/color_39B6DF"
-            app:stl_indicatorGravity="bottom"
-            app:stl_indicatorWithoutPadding="true"
             android:paddingBottom="4dp"
+            app:stl_defaultTabTextColor="@color/color_666"
             app:stl_defaultTabTextMinWidth="120dp"
+            app:stl_defaultTabTextSize="13sp"
             app:stl_indicatorAlwaysInCenter="true"
+            app:stl_indicatorColor="@color/color_39B6DF"
             app:stl_indicatorCornerRadius="1.5dp"
+            app:stl_indicatorGravity="bottom"
             app:stl_indicatorInterpolation="smart"
             app:stl_indicatorThickness="3dp"
-            app:stl_underlineColor="@android:color/transparent"/>
+            app:stl_indicatorWithoutPadding="true"
+            app:stl_underlineColor="@android:color/transparent" />
 
         <View
             android:layout_width="match_parent"
@@ -124,6 +129,9 @@
             android:layout_height="match_parent" />
 
     </LinearLayout>
+
+    <!--</androidx.core.widget.NestedScrollView>-->
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

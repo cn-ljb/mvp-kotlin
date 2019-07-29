@@ -57,7 +57,6 @@ abstract class LoadMoreRecyclerAdapter<T>(val mContext: Context, var mData: Muta
                     this.onItemClick(holder.itemView, position)
                 }
             }
-
         } else if (itemViewType == TYPE_LOAD_MORE) {
             loadMore()
         }

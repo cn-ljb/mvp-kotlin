@@ -1,11 +1,11 @@
 package com.ljb.mvp.kotlin.presenter
 
+import com.ljb.mvp.kotlin.common.rx.RxUtils
 import com.ljb.mvp.kotlin.common.rx.subscribeNet
 import com.ljb.mvp.kotlin.contract.EventsContract
-import com.ljb.mvp.kotlin.protocol.http.IReposHttpProtocol
-import com.ljb.mvp.kotlin.common.rx.RxUtils
 import com.ljb.mvp.kotlin.domain.Event
 import com.ljb.mvp.kotlin.model.EventsModel
+import com.ljb.mvp.kotlin.protocol.http.IReposHttpProtocol
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import mvp.ljb.kt.presenter.BaseMvpPresenter
@@ -24,7 +24,6 @@ class EventsPresenter : BaseMvpPresenter<EventsContract.IView, EventsContract.IM
     private var mPage = 1
 
     override fun onLoadMore() {
-        mPage++
         getDataFromNet(mPage)
     }
 
@@ -38,7 +37,10 @@ class EventsPresenter : BaseMvpPresenter<EventsContract.IView, EventsContract.IM
                 .compose(RxUtils.bindToLifecycle(getMvpView()))
                 .compose(RxUtils.schedulerIO2Main<MutableList<Event>>())
                 .subscribeNet(getContextEx()) {
-                    onNextEx { getMvpView().showPage(it, page) }
+                    onNextEx {
+                        getMvpView().showPage(it, page)
+                        mPage++
+                    }
                     onErrorEx { getMvpView().errorPage(it, page) }
                 }
     }
