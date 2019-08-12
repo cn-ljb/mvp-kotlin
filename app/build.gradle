@@ -45,7 +45,7 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     //mvp
-    implementation 'com.github.cn-ljb:kotlin-mvp-lib:1.2.0'
+    implementation 'com.github.cn-ljb:kotlin-mvp-lib:1.2.1'
     //net
     implementation 'com.github.cn-ljb:netlib:1.0.1'
     //dao
